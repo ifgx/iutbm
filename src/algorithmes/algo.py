@@ -15,17 +15,29 @@ class algo:
 			Permet au joueur d'essayer de resoudre
 			le probleme pose
 		'''
-		raise NotImplementedError
+		self._play()
 
 	def solve(self):
 		'''
 			Resolution pas-a-pas du probleme
 		'''
-		raise NotImplementedError
+		self._solve()
 	
 	def explain(self):
 		'''
 			Petit texte explicatif/historique au sujet
-			du probleme pose
+			du probleme pose : il est affiche
+			AVANT que le jeu commence.
 		'''
+#L'ideal serait une belle zone texte, avec un bete texte intrinseque
+#a chaque algo a balancer dedans
+		self._explain()
+
+	def _play(self):
+		raise NotImplementedError
+		
+	def _solve(self):
+		raise NotImplementedError
+
+	def _explain(self):	
 		raise NotImplementedError
