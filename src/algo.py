@@ -2,10 +2,6 @@
 
 import pygame
 
-import solve
-import explain
-import play
-
 class algo:
 	'''
 		Classe abstraite representant un
@@ -15,21 +11,21 @@ class algo:
 		pass
 
 	def play():
-	'''
-		Permet au joueur d'essayer de resoudre
-		le probleme pose
-	'''
+		'''
+			Permet au joueur d'essayer de resoudre
+			le probleme pose
+		'''
 		pass
 
 	def solve():
-	'''
-		Resolution pas-a-pas du probleme
-	'''
+		'''
+			Resolution pas-a-pas du probleme
+		'''
 		pass
 	
 	def explain():
-	'''
-		Petit texte explicatif/historique au sujet
-		du probleme pose
-	'''
+		'''
+			Petit texte explicatif/historique au sujet
+			du probleme pose
+		'''
 		pass
