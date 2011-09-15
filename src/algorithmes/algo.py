@@ -7,25 +7,25 @@ class algo:
 		Classe abstraite representant un
 		algorithme
 	'''
-	def __init__():
+	def __init__(self):
 		pass
 
-	def play():
+	def play(self):
 		'''
 			Permet au joueur d'essayer de resoudre
 			le probleme pose
 		'''
-		pass
+		raise NotImplementedError
 
-	def solve():
+	def solve(self):
 		'''
 			Resolution pas-a-pas du probleme
 		'''
-		pass
+		raise NotImplementedError
 	
-	def explain():
+	def explain(self):
 		'''
 			Petit texte explicatif/historique au sujet
 			du probleme pose
 		'''
-		pass
+		raise NotImplementedError
