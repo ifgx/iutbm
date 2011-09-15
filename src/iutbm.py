@@ -1,9 +1,9 @@
 #!/bin/env python
 
-import algo
 import pygame
 import sys
 
+from algorithmes import *
 
 class iutbm:
 	'''
