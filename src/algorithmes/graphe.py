@@ -2,8 +2,15 @@ import random
 
 
 class Graphe(object):
-	def __init__(self):
+	def __init__(self, nbNoeuds, nbLiens, minPoids, maxPoids):
 		self.graphe = []
+		liste_noeuds = [Point(i) for i in xrange(nbNoeuds)]
+		for i in xrange(nbLiens):
+			noeud1 = random.choice(liste_noeuds)	
+			noeud2 = random.choice(liste_noeuds)	
+			poids = random.randint(minPoids, maxPoids)
+			lien = Lien(noeud1, noeud2, poids) 
+			self.graphe.append(lien)
 	
 	def ajout_lien(self, lien):
 		if lien in self.graphe:
@@ -41,19 +48,5 @@ class Lien(object):
 		self.lien = (sommet1, sommet2, poids)
 
 
-def generation_graphe(nbNoeuds, nbLiens, minPoids, maxPoids):
-	'''
-		Retourne un graphe
-	'''
-	liste_noeuds = [Point(i) for i in xrange(nbNoeuds)]
-	graphe = Graphe()
-	for i in xrange(nbLiens):
-		noeud1 = random.choice(liste_noeuds)	
-		noeud2 = random.choice(liste_noeuds)	
-		poids = random.randint(minPoids, maxPoids)
-		lien = Lien(noeud1, noeud2, poids) 
-		graphe.ajout_lien(lien)
-	return graphe
-
-#bleh = generation_graphe(10, 11, 1, 14)
-#bleh.affiche()
+bleh = Graphe(10, 11, 1, 14)
+bleh.affiche()
