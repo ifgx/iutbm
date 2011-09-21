@@ -50,17 +50,20 @@ class Graphe(object):
 	def plus_proche_voisin(self, sommet):
 		'''
 			retourne le lien menant au plus proche voisin
-			du sommet donne
+			non visite du sommet donne
 		'''
 		minimum = float('inf')
 		lien = Lien()
 		for i in self.graphe:
-			if i.sommet1 == sommet or i.sommet2 == sommet:
-				if i.poids < minimum:
+			if i.sommet1 == sommet:
+				if i.poids < minimum and i.sommet2.visite is False:
 					minimum = i.poids
 					lien = i
-		return lien
-
+			elif i.sommet2 == sommet:
+				if i.poids < minimum and i.sommet3.visite is False:
+					minimum = i.poids
+					lien = i
+			return lien
 		
 
 class Sommet(object):
