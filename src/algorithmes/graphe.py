@@ -3,7 +3,7 @@ import random
 
 class Graphe(object):
 	'''
-		Classe representant un graphe
+		classe representant un graphe
 	'''
 	def __init__(self, nbNoeuds, nbLiens, minPoids, maxPoids):
 		#TODO : verification des valeurs
@@ -20,7 +20,7 @@ class Graphe(object):
 	
 	def ajout_lien(self, lien):
 		'''
-			Inutile
+			inutile
 		'''
 		if lien in self.graphe:
 			#suppression du doublon
@@ -29,7 +29,7 @@ class Graphe(object):
 
 	def supprime_lien(self, lien):
 		'''
-			Inutile
+			inutile
 		'''
 		if lien in self.graphe:
 			self.graphe.pop(lien)
@@ -38,7 +38,7 @@ class Graphe(object):
 	
 	def affiche(self):
 		'''
-			Affiche sur la sortie standard le graphe (debug)
+			affiche sur la sortie standard le graphe (debug)
 		'''
 		print('debut : %s' % self.debut.nom)
 		print('fin : %s\n' % self.fin.nom)
@@ -65,7 +65,7 @@ class Graphe(object):
 
 class Sommet(object):
 	'''
-		Classe representant un sommet du graphe
+		classe representant un sommet du graphe
 	'''
 	def __init__(self, nom):
 		self.nom = nom
@@ -75,15 +75,13 @@ class Sommet(object):
 
 class Lien(object):
 	'''
-		Classe representant un lien entre deux sommets
+		classe representant un lien entre deux sommets
 	'''
-	def __init__(self, sommet1=0, sommet2=0, poids=0):
+	def __init__(self, sommet1='', sommet2='', poids=float('inf')):
 		self.sommet1 = sommet1
 		self.sommet2 = sommet2
 		self.poids = poids
 		self.visite = False
 
-bleh = Graphe(10, 11, 1, 14)
-bleh.affiche()
-print(bleh.liste_sommets[0])
-print bleh.plus_proche_voisin(bleh.liste_sommets[0]).poids
+#bleh = Graphe(10, 11, 1, 14)
+#bleh.affiche()
