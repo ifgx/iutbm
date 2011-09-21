@@ -6,6 +6,7 @@ class Graphe(object):
 		Classe representant un graphe
 	'''
 	def __init__(self, nbNoeuds, nbLiens, minPoids, maxPoids):
+		#TODO : verification des valeurs
 		self.graphe = []
 		liste_noeuds = [Sommet(i) for i in xrange(nbNoeuds)]
 		for i in xrange(nbLiens):
@@ -14,6 +15,8 @@ class Graphe(object):
 			poids = random.randint(minPoids, maxPoids)
 			lien = Lien(noeud1, noeud2, poids) 
 			self.graphe.append(lien)
+		self.debut = random.choice(liste_noeuds)
+		self.fin = random.choice(liste_noeuds)
 	
 	def ajout_lien(self, lien):
 		'''
@@ -37,6 +40,8 @@ class Graphe(object):
 		'''
 			Affiche sur la sortie standard le graphe (debug)
 		'''
+		print('debut : %s' % self.debut.nom)
+		print('fin : %s\n' % self.fin.nom)
 		for i in self.graphe:
 			print('point : %s' % i.sommet1.nom)
 			print('point : %s' % i.sommet2.nom)
@@ -50,6 +55,7 @@ class Sommet(object):
 	def __init__(self, nom):
 		self.nom = nom
 		self.visite = False
+		self.score = float('inf')
 
 
 class Lien(object):
