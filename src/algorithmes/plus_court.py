@@ -58,7 +58,7 @@ class Graph(object):
         PasencoreVu=[]
         for x in self.Lpoint:
             PasencoreVu.append(x)
-        while (len(PasencoreVu)!=0):
+        while PasencoreVu:
             noeud_1=minimum(PasencoreVu)
             for lien in noeud_1.Lien:
                 mettre_jour(noeud_1)
@@ -105,28 +105,21 @@ class Point(object):
 
     """
     def addChemin(self,new):
-        self.chemin=[]
-        for i in new.chemin:
-            self.chemin.append(i)
+        self.chemin = [i for i in new.chemin]
         self.chemin.append(new)
     
     def debut(self):
         self.valeur=0 
 
     def affiche_chemin(self):
-        for i in self.chemin:
-            print i.name+" "
+        print '\n'.join(i.name for i in self.chemin)
 
     def looknext(self):#cherche le noeud le plus proche
-        minimum=self.Lien[0]
+        minimum = self.Lien[0]
         for i in self.Lien:
-            if i.valeur<minimum.valeur and minimum.visit==False:
-                minimum=i
+            if i.valeur<minimum.valeur and not minimum.visit:
+                minimum = i
         return minimum.other(self)
-
-"""
-    Classe Lien
-"""
 
 
 class Lien(object):
@@ -159,16 +152,11 @@ class Lien(object):
 """
 def minimum(Pt):
     minimum=Pt[0]
-    c=0
     num=0
-    for i in Pt:
-        if i!=None:
-            if i.valeur>=0 and i.valeur<minimum.valeur:
-                minimum=i
-                num=c
-        else:
-            pass
-        c=c+1
+    for c,i in enumerate(Pt):
+	    if i.valeur>=0 and i.valeur<minimum.valeur:
+		minimum=i
+		num=c
     del Pt[num]
     return minimum
 
@@ -213,8 +201,3 @@ graph.Pdebut(0)
 graph.Pfin(5)
 
 graph.Dijkstra()
-
-
-
-
-
