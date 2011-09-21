@@ -8,15 +8,15 @@ class Graphe(object):
 	def __init__(self, nbNoeuds, nbLiens, minPoids, maxPoids):
 		#TODO : verification des valeurs
 		self.graphe = []
-		liste_noeuds = [Sommet(i) for i in xrange(nbNoeuds)]
+		self.liste_sommets = [Sommet(i) for i in xrange(nbNoeuds)]
 		for i in xrange(nbLiens):
-			noeud1 = random.choice(liste_noeuds)	
-			noeud2 = random.choice(liste_noeuds)	
+			sommet1 = random.choice(self.liste_sommets)	
+			sommet2 = random.choice(self.liste_sommets)	
 			poids = random.randint(minPoids, maxPoids)
-			lien = Lien(noeud1, noeud2, poids) 
+			lien = Lien(sommet1, sommet2, poids) 
 			self.graphe.append(lien)
-		self.debut = random.choice(liste_noeuds)
-		self.fin = random.choice(liste_noeuds)
+		self.debut = random.choice(self.liste_sommets)
+		self.fin = random.choice(self.liste_sommets)
 	
 	def ajout_lien(self, lien):
 		'''
@@ -46,6 +46,21 @@ class Graphe(object):
 			print('point : %s' % i.sommet1.nom)
 			print('point : %s' % i.sommet2.nom)
 			print('poids : %s\n' % i.poids)
+	
+	def plus_proche_voisin(self, sommet):
+		'''
+			retourne le lien menant au plus proche voisin
+			du sommet donne
+		'''
+		minimum = float('inf')
+		lien = Lien()
+		for i in self.graphe:
+			if i.sommet1 == sommet or i.sommet2 == sommet:
+				if i.poids < minimum:
+					minimum = i.poids
+					lien = i
+		return lien
+
 		
 
 class Sommet(object):
@@ -62,12 +77,13 @@ class Lien(object):
 	'''
 		Classe representant un lien entre deux sommets
 	'''
-	def __init__(self, sommet1, sommet2, poids):
+	def __init__(self, sommet1=0, sommet2=0, poids=0):
 		self.sommet1 = sommet1
 		self.sommet2 = sommet2
 		self.poids = poids
 		self.visite = False
 
-
-#bleh = Graphe(10, 11, 1, 14)
-#bleh.affiche()
+bleh = Graphe(10, 11, 1, 14)
+bleh.affiche()
+print(bleh.liste_sommets[0])
+print bleh.plus_proche_voisin(bleh.liste_sommets[0]).poids
