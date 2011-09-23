@@ -15,6 +15,7 @@ class Graphe(object):
 			poids = random.randint(minPoids, maxPoids)
 			lien = Lien(sommet1, sommet2, poids) 
 			self.graphe.append(lien)
+
 		self.debut = random.choice(self.liste_sommets)
 		self.fin = random.choice(self.liste_sommets)
 	
@@ -53,27 +54,32 @@ class Graphe(object):
 			non visite du sommet donne
 		'''
 		minimum = float('inf')
-		lien = Lien()
+		proche_sommet = Sommet()
 		for i in self.graphe:
 			if i.sommet1 == sommet:
 				if i.poids < minimum and i.sommet2.visite is False:
 					minimum = i.poids
-					lien = i
+					proche_sommet = i.sommet2
 			elif i.sommet2 == sommet:
-				if i.poids < minimum and i.sommet3.visite is False:
+				if i.poids < minimum and i.sommet1.visite is False:
 					minimum = i.poids
-					lien = i
-			return lien
+					proche_sommet = i.sommet1
+		return proche_sommet
 		
 
-class Sommet(object):
+class Sommet:
 	'''
 		classe representant un sommet du graphe
 	'''
-	def __init__(self, nom):
+	def __init__(self, nom=''):
 		self.nom = nom
 		self.visite = False
 		self.score = float('inf')
+	
+	def affiche(self):
+		print self.nom
+		print 'visite: %s' % self.visite
+		print 'score: %s\n' % self.score
 
 
 class Lien(object):
@@ -85,6 +91,9 @@ class Lien(object):
 		self.sommet2 = sommet2
 		self.poids = poids
 		self.visite = False
+	
+	def affiche(self):
+		print str(self.sommet1) + ':' + str(self.sommet2) + ' (' + str(self.poids) + ')' + str(self.visite) + '\n'
 
 #bleh = Graphe(10, 11, 1, 14)
 #bleh.affiche()
