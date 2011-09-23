@@ -6,7 +6,19 @@ class Graphe(object):
 		classe representant un graphe
 	'''
 	def __init__(self, nbNoeuds, nbLiens, minPoids, maxPoids):
-		#TODO : verification des valeurs
+		if nbNoeuds > nbLiens - 1:  # graphe non connexe
+			raise
+		elif minPoids < 0:  # poids negatif
+			raise
+		elif maxPoids == float('inf'):  # poids infini
+			raise
+		elif minPoids > maxPoids:  # PIGNOUF !
+			raise
+		elif nbNoeuds < 1:  # pas de sommets
+			raise
+		elif nbLiens < 1:  # pas de liens
+			raise
+
 		self.graphe = []
 		self.liste_sommets = [Sommet(i) for i in xrange(nbNoeuds)]
 		for i in xrange(nbLiens):
