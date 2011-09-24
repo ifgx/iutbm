@@ -1,6 +1,4 @@
-#!/bin/env python
-
-import pygame
+#import pygame
 
 class algo:
 	'''
