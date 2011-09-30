@@ -28,9 +28,10 @@ class Voyage(algo.algo):
 		miny = 0
 		maxy = 10
 		self.matrix = self._create_matrix(nbpoints, minx, maxx, miny, maxy)
-		for i in self.matrix:
-			print i
 
+
+	def __repr__(self):
+		return '\n'.join([str(i) for i in self.matrix])
 
 	def _create_matrix(self, nbpoints, minx, maxx, miny, maxy):
 		'''
@@ -53,7 +54,7 @@ class Voyage(algo.algo):
 			y = random.randint(miny, maxy)
 			matrix[0][cpt] = Sommet(cpt, x, y) 
 			matrix[cpt][0] = Sommet(cpt, x, y) 
-		matrix[0][0] = nbpoints
+		matrix[0][0] = nbpoints - 1
 
 		for i in xrange(nbpoints - 1):
 			for j in xrange(nbpoints - 1):
@@ -63,8 +64,9 @@ class Voyage(algo.algo):
 					x2 = matrix[j+1][0].x
 					y2 = matrix[j+1][0].y
 					distance = math.sqrt(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2))
-					matrix[i+1][j+1] = int(distance) #debug
+					matrix[i+1][j+1] = distance #debug
 
 		return matrix
+
 
 b = Voyage()
