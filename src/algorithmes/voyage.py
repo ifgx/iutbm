@@ -64,9 +64,34 @@ class Voyage(algo.algo):
 					x2 = matrix[j+1][0].x
 					y2 = matrix[j+1][0].y
 					distance = math.sqrt(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2))
-					matrix[i+1][j+1] = distance #debug
+					matrix[i+1][j+1] = distance 
+					#matrix[i+1][j+1] = int(distance) #debug
 
 		return matrix
 
+	def _solve(self, ligne=1):  # le premier point est le 1 par defaut
+		if ligne > self.matrix[0][0] or 0 > ligne:
+			raise IndexError
+		chemin = [ligne, ]
+		self.matrix[0][ligne].visite = True  # le premier point est visite
+
+		for i in xrange(self.matrix[0][0] - 1):
+			minimum = float('inf')
+			tmp = -1
+			for j in xrange(1, self.matrix[0][0]):
+				# parcourt de la ligne a la recherche du plus proche point non parcouru
+				if 0 < self.matrix[ligne][j] < minimum and self.matrix[0][j].visite is False:
+					# Si le point est plus proche que tout ce
+					# qu'on a trouve jusqu'a present
+					# et qu'il est non marque, marquons le comme le plus proche
+					minimum = self.matrix[ligne][j]
+					tmp = j
+			chemin.append(self.matrix[0][tmp])  # on ajoute le point trouve au chemin
+			self.matrix[0][tmp].visite = True  # et on le marque come parcouru
+			ligne = tmp
+		return chemin
 
 b = Voyage()
+#print b._solve()
+#print'\n'
+#print b
