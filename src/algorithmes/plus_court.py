@@ -8,55 +8,54 @@ class Graphe(object):
         La classe Graphe permet de générer un graphe connexe avec nbSommet
     """
     def __init__(self,nbSommet,Min,Max):
-        self.Matrix = [[ float('inf') for i in range(nbSommet)] for i in range(nbSommet)]
-        self.nbSommet=nbSommet
-        for i in range(nbSommet-1): 
-            poids=random.randint(Min,Max)
+        self.Matrix = [[ float('inf') for i in xrange(nbSommet)] for i in xrange(nbSommet)]
+        self.nbSommet = nbSommet
+        for i in xrange(nbSommet - 1):
+            poids=random.randint(Min, Max)
             self.Matrix[i+1][i] = poids
-        for i in range(nbSommet):
-            for j in range(i):
-                chance= random.random() *100
+        for i in xrange(nbSommet):
+            for j in xrange(i):
+                chance= random.random() * 100
                 if chance < 10:
-                    poids=random.randint(Min,Max)
+                    poids=random.randint(Min, Max)
                     self.Matrix[i][j] = poids
-        for i in range(nbSommet):
+        for i in xrange(nbSommet):
             self.Matrix[i][i] = float('inf')
-            for j in range(i):
+            for j in xrange(i):
                 self.Matrix[j][i] = self.Matrix[i][j]
-        self.LSommet = [Sommet(i) for i in range(nbSommet)]
+        self.LSommet = [Sommet(i) for i in xrange(nbSommet)]
         self.debut=random.choice(self.LSommet).indice
         self.LSommet[self.debut].score = 0
-        self.fin = (random.randint(1,nbSommet-1)+self.debut) % nbSommet
-        
+        self.fin = (random.randint(1, nbSommet-1) + self.debut) % nbSommet
+
 
     def resoudre(self):
         PasencoreVu = self.LSommet[:]
         while PasencoreVu:
-            sommet1 = min(PasencoreVu, key = visiterS) 
+            sommet1 = min(PasencoreVu, key = visiterS)
             sommet1.visiter = True
             PasencoreVu.remove(sommet1)
             self.mettre_a_jour(sommet1)
-        print("resultat : \n")
+        print('resultat : \n')
         print(self.LSommet[self.fin].score)
-        chemin=self.LSommet[self.fin].precedent
+        chemin = self.LSommet[self.fin].precedent
         while chemin != None:
             print chemin.indice
-            chemin=chemin.precedent            
-        
+            chemin = chemin.precedent
+
 
     def mettre_a_jour(self,sommet1):
-        for i in range(self.nbSommet):
+        for i in xrange(self.nbSommet):
             if self.LSommet[i].score > sommet1.score + self.Matrix[sommet1.indice][i]:
                 self.LSommet[i].score = sommet1.score + self.Matrix[sommet1.indice][i]
-                self.LSommet[i].precedent=sommet1
+                self.LSommet[i].precedent = sommet1
 
     def affiche(self):
         print('Sommet de début')
         print(self.debut)
         print('Sommet de fin')
         print(self.fin)
-        for i in self.Matrix:
-            print i
+	print(''.join([i for i in self.Matrix]))
 
 
     def PasencoreVu(self):
