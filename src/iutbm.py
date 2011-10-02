@@ -6,6 +6,8 @@ import math
 
 #import ui
 from ui import rotatingMenu as rM
+#import algorithmes
+from algorithmes import voyage
 
 class iutbm:
     '''
@@ -20,6 +22,9 @@ class iutbm:
         self.display = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
 
+        # a propos de la fenetre
+        pygame.display.set_caption('IUTBM')
+
         #initialisation du menu
         self.menu = rM.RotatingMenu(x=320, y=240, radius=220, arc=math.pi,
                 defaultAngle=math.pi/2.0)
@@ -29,28 +34,41 @@ class iutbm:
         self.menu.selectItem(0)
 
     def main(self):
+	inMenu = True
+	b = voyage.Voyage(self.display)
         while True:
             #gestion des evenements
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
                     sys.exit(0)
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        self.menu.selectItem(self.menu.selectedItemNumber + 1)
-                    elif event.key == pygame.K_RIGHT:
-                        self.menu.selectItem(self.menu.selectedItemNumber - 1)
-                    elif event.key == pygame.K_UP:
-                        if self.menu.selectedItemNumber == 0:
-                            sys.exit(0)
-                        print self.menu.selectedItemNumber
+		elif event.type == pygame.KEYDOWN:
+		    if inMenu:  # si nous sommes dans le menu
+			if event.key == pygame.K_LEFT:
+			    self.menu.selectItem(self.menu.selectedItemNumber + 1)
+			elif event.key == pygame.K_RIGHT:
+			    self.menu.selectItem(self.menu.selectedItemNumber - 1)
+			elif event.key == pygame.K_UP:  # selection de l'item du menu
+			    if self.menu.selectedItemNumber == 0:
+				sys.exit(0)
+			    else:
+				inMenu = False
+			    print self.menu.selectedItemNumber  # DEBUG
+		    elif not inMenu:  # si nous somme dans un algo
+			if event.key == pygame.K_ESCAPE:
+			    # si nous sommes dans un algo
+				inMenu = True
 
             # mis a jour du menu
-            self.menu.update()
+	    if inMenu:
+		self.menu.update()
 
             #dessin
             self.display.fill((0, 0, 0)) # fond noir
-            self.menu.draw(self.display)
+	    if inMenu:
+		self.menu.draw(self.display)
+	    else:
+		b.explain()
             pygame.display.flip()
             self.clock.tick(self.fpsLimit)
 

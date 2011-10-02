@@ -1,12 +1,12 @@
 #import pygame
 
-class algo:
+class Algo:
 	'''
 		Classe abstraite representant un
 		algorithme
 	'''
-	def __init__(self):
-		pass
+	def __init__(self, display):
+		self.display = display
 
 	def play(self):
 		'''
@@ -20,7 +20,7 @@ class algo:
 			Resolution pas-a-pas du probleme
 		'''
 		self._solve()
-	
+
 	def explain(self):
 		'''
 			Petit texte explicatif/historique au sujet
@@ -33,9 +33,9 @@ class algo:
 
 	def _play(self):
 		raise NotImplementedError
-		
+
 	def _solve(self):
 		raise NotImplementedError
 
-	def _explain(self):	
+	def _explain(self):
 		raise NotImplementedError

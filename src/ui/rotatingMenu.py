@@ -141,4 +141,3 @@ class MenuItem:
         size = self.font.size(self.text)
         self.xOffset = size[0] / 2
         self.yOffset = size[1] / 2
-
