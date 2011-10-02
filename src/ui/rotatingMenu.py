@@ -3,10 +3,6 @@ import sys
 
 import pygame
 
-displayWidth = 640
-displayHeight = 480
-fpsLimit = 90
-
 
 def sinInterpolation(start, end, steps=30):
     '''
@@ -146,44 +142,3 @@ class MenuItem:
         self.xOffset = size[0] / 2
         self.yOffset = size[1] / 2
 
-def main():
-    pygame.init()
-
-    display = pygame.display.set_mode((displayWidth, displayHeight))
-    clock = pygame.time.Clock()
-
-    menu = RotatingMenu(x=320, y=240, radius=220, arc=pi, defaultAngle=pi/2.0)
-
-    items = ['quitter', 'voyageur de commerce', 'plus court chemin', 'couplage',
-            'sac a dos', 'confiserie']
-    [menu.addItem(MenuItem(i)) for i in items]
-    menu.selectItem(0)
-
-    #boucle principale
-    while True:
-        #gestion de evenements
-        events = pygame.event.get()
-        for event in events:
-            if event.type == pygame.QUIT:
-                sys.exit(0)
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    menu.selectItem(menu.selectedItemNumber + 1)
-                elif event.key == pygame.K_RIGHT:
-                    menu.selectItem(menu.selectedItemNumber - 1)
-                elif event.key == pygame.K_UP:
-                    if menu.selectedItemNumber == 0:
-                        sys.exit(0)
-                    print menu.selectedItemNumber
-
-        #mis a jour
-        menu.update()
-
-        #dessine
-        display.fill((0,0,0))
-        menu.draw(display)
-        pygame.display.flip() #Show the updated scene
-        clock.tick(fpsLimit) #Wait a little
-
-if __name__ == "__main__":
-    main()
