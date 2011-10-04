@@ -5,77 +5,80 @@ import random
 
 class Graphe(object):
     """
-        La classe Graphe permet de générer un graphe connexe avec nbSommet
+        A class that allow you to create connexe graphe
     """
-    def __init__(self,nbSommet,Min,Max):
-        self.Matrix = [[ float('inf') for i in xrange(nbSommet)] for i in xrange(nbSommet)]
-        self.nbSommet = nbSommet
-        for i in xrange(nbSommet - 1):
-            poids=random.randint(Min, Max)
-            self.Matrix[i+1][i] = poids
-        for i in xrange(nbSommet):
+    def __init__(self,numSommet,Min,Max):
+        self.Matrix = [[ float('inf') for i in xrange(numSommet)] for i in xrange(numSommet)]
+        self.numSommet = numSommet
+        if(Min > Max):
+            exit()
+        for i in xrange(numSommet - 1):
+            weight = random.randint(Min, Max)
+            self.Matrix[i][i+1] = weight
+        for i in xrange(numSommet):
             for j in xrange(i):
-                chance= random.random() * 100
-                if chance < 10:
-                    poids=random.randint(Min, Max)
-                    self.Matrix[i][j] = poids
-        for i in xrange(nbSommet):
-            self.Matrix[i][i] = float('inf')
-            for j in xrange(i):
-                self.Matrix[j][i] = self.Matrix[i][j]
-        self.LSommet = [Sommet(i) for i in xrange(nbSommet)]
-        self.debut=random.choice(self.LSommet).indice
-        self.LSommet[self.debut].score = 0
-        self.fin = (random.randint(1, nbSommet-1) + self.debut) % nbSommet
+                if i == j:
+                    pass
+                else:
+                    if self.Matrix[j][i] == float('inf'):
+                        chance= random.random() * 100
+                        if chance < 40:
+                            weight = random.randint(Min, Max)
+                            self.Matrix[j][i] = weight                
+                    self.Matrix[i][j] = self.Matrix[j][i]
+        self.LSommet = [Sommet(i) for i in xrange(numSommet)]
+        self.start=random.choice(self.LSommet).indice
+        self.LSommet[self.start].score = 0
+        self.end = (random.randint(1, numSommet-1) + self.start) % numSommet
 
 
-    def resoudre(self):
-        PasencoreVu = self.LSommet[:]
-        while PasencoreVu:
-            sommet1 = min(PasencoreVu, key = visiterS)
-            sommet1.visiter = True
-            PasencoreVu.remove(sommet1)
-            self.mettre_a_jour(sommet1)
+    def solve(self):
+        NotChecked = self.LSommet[:]
+        while NotChecked:
+            sommet1 = min(NotChecked, key = visiterS)
+            sommet1.visited  = True
+            NotChecked.remove(sommet1)
+            self.update(sommet1)
         print('resultat : \n')
-        print(self.LSommet[self.fin].score)
-        chemin = self.LSommet[self.fin].precedent
+        print(self.LSommet[self.end].score)
+        chemin = self.LSommet[self.end].previous
         while chemin != None:
             print chemin.indice
-            chemin = chemin.precedent
+            chemin = chemin.previous
 
 
-    def mettre_a_jour(self,sommet1):
-        for i in xrange(self.nbSommet):
+    def update(self,sommet1):
+        for i in xrange(self.numSommet):
             if self.LSommet[i].score > sommet1.score + self.Matrix[sommet1.indice][i]:
                 self.LSommet[i].score = sommet1.score + self.Matrix[sommet1.indice][i]
-                self.LSommet[i].precedent = sommet1
+                self.LSommet[i].previous = sommet1
 
-    def affiche(self):
+    def show(self):
         print('Sommet de début')
-        print(self.debut)
+        print(self.start)
         print('Sommet de fin')
-        print(self.fin)
-	print(''.join([i for i in self.Matrix]))
+        print(self.end)
+        print(''.join([i for i in self.Matrix]))
+    	
 
 
-    def PasencoreVu(self):
-        for i in self.LSommet:
-            if i.visiter == False:
-                return True
-        return False
+
 
 '''
-    La classe Sommet permet de définir des sommets avec un indice, un score initialisé à 0, un boolean visiterr et une variable precedent qui contiendra la valeur du sommet précedent
+    class Sommet allow you to define sommet with an indice, a score intialeted at 0, a boolean visited et a variable telling you the last the previous Sommet
 '''
 class Sommet(object):
     def __init__(self,indice):
         self.indice = indice
         self.score = float('inf')
-        self.visiter = False
-        self.precedent = None
+        self.visited = False
+        self.previous = None
 
 def visiterS(x):
-    if x.visiter == False:
+    if x.visited == False:
         return x.score
     else:
         return float('inf')
+
+g=Graphe(10,2,9)
+g.solve()
