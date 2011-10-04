@@ -54,9 +54,9 @@ class Graphe(object):
                 self.LSommet[i].previous = sommet1
 
     def show(self):
-        print('Sommet de début')
+        print('start')
         print(self.start)
-        print('Sommet de fin')
+        print('end')
         print(self.end)
         print(''.join([i for i in self.Matrix]))
     	
