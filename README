@@ -1,1 +1,11 @@
-ATTENTION !!! ATTENTION !! Vous êtes prié d'utiliser 4 espaces et non des tabulations pour les indentations sinon vous serez pendu et lynché
+iutbm est un projet de sensibilisation à la complexité algorithmique,
+et à la compléxité.
+
+Il est fierement propulsé par python, et la librairie pygame.
+
+Les algorithmes présentés sont:
+- le voyageur de commerce
+- le plus court chemin
+- ...
+
+Ce projet utilise 4 espaces pour indenter.
