@@ -25,11 +25,11 @@ class Voyage(algo.Algo):
 	def __init__(self, display):
 		algo.Algo.__init__(self, display)
 		nbpoints = 10
-		minx = 0
-		maxx = 10
-		miny = 0
-		maxy = 10
-		self.matrix = self._create_matrix(nbpoints, minx, maxx, miny, maxy)
+		self.minx = 0.0
+		self.maxx = 10.0
+		self.miny = 0.0
+		self.maxy = 10.0
+		self.matrix = self._create_matrix(nbpoints, self.minx, self.maxx, self.miny, self.maxy)
 		self.text = 'Voyageur de commerce'
 
 	def __repr__(self):
@@ -95,6 +95,12 @@ class Voyage(algo.Algo):
 				self.matrix[0][tmp].visite = True  # et on le marque come parcouru
 				distance += minimum  # on ajoute la distance parcourue a la distance totale
 				ligne = tmp
-
 		distance += self.matrix[1][tmp]
 		return chemin, distance
+
+	def _draw(self):
+		width, height = self.display.get_size()
+		for point in self.matrix[0][1:]:
+			x = (point.x - self.minx) / (self.maxx - self.minx) * width
+			y = (point.y - self.miny) / (self.maxy - self.miny) * height
+			pygame.draw.circle(self.display, (255, 0, 0), (int(x), int(y)), 10, 0)
