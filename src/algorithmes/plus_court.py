@@ -5,21 +5,20 @@ import random
 
 class Graphe(object):
     """
-        A class that allow you to create connexe graphe
+        A class that represent a connex graph
     """
     def __init__(self,numSommet,Min,Max):
-        self.Matrix = [[ float('inf') for i in xrange(numSommet)] for i in xrange(numSommet)]
+        self.Matrix = [[float('inf') for i in xrange(numSommet)] for i in xrange(numSommet)]
         self.numSommet = numSommet
-        if(Min > Max):
-            exit()
+        if Min > Max:
+	    print('Minimum in superior to maximum !')
+            exit(1)
         for i in xrange(numSommet - 1):
             weight = random.randint(Min, Max)
             self.Matrix[i][i+1] = weight
         for i in xrange(numSommet):
             for j in xrange(i):
-                if i == j:
-                    pass
-                else:
+                if i != j:
                     if self.Matrix[j][i] == float('inf'):
                         chance= random.random() * 100
                         if chance < 40:
@@ -43,7 +42,7 @@ class Graphe(object):
         print(self.LSommet[self.end].score)
         chemin = self.LSommet[self.end].previous
         while chemin != None:
-            print chemin.indice
+            print(chemin.indice)
             chemin = chemin.previous
 
 
@@ -54,20 +53,15 @@ class Graphe(object):
                 self.LSommet[i].previous = sommet1
 
     def show(self):
-        print('start')
-        print(self.start)
-        print('end')
-        print(self.end)
-        print(''.join([i for i in self.Matrix]))
+        print('start: %s' % self.start)
+        print('end: %s' % self.end)
+        print(''.join([str(i) for i in self.Matrix]))
     	
 
-
-
-
-'''
-    class Sommet allow you to define sommet with an indice, a score intialeted at 0, a boolean visited et a variable telling you the last the previous Sommet
-'''
 class Sommet(object):
+	'''
+	    Define sommet with an indice, a score intialeted at 0, a boolean visited et a variable telling you the last the previous Sommet
+	'''
     def __init__(self,indice):
         self.indice = indice
         self.score = float('inf')
