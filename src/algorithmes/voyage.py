@@ -30,9 +30,7 @@ class Voyage(algo.Algo):
 		miny = 0
 		maxy = 10
 		self.matrix = self._create_matrix(nbpoints, minx, maxx, miny, maxy)
-		font = pygame.font.Font(None, 20)
-		self.text = font.render('POUETPOUETPOEUT', True, (255, 0, 0, 0))
-
+		self.text = 'Voyageur de commerce'
 
 	def __repr__(self):
 		return '\n'.join([str(i) for i in self.matrix])
@@ -56,8 +54,7 @@ class Voyage(algo.Algo):
 		for cpt in xrange(nbpoints):
 			x = random.randint(minx, maxx)
 			y = random.randint(miny, maxy)
-			matrix[0][cpt] = Sommet(cpt, x, y)
-			matrix[cpt][0] = Sommet(cpt, x, y)
+			matrix[0][cpt] = matrix[cpt][0] = Sommet(cpt, x, y)
 		matrix[0][0] = nbpoints - 1
 
 		for i in xrange(nbpoints - 1):
@@ -68,21 +65,24 @@ class Voyage(algo.Algo):
 					x2 = matrix[j+1][0].x
 					y2 = matrix[j+1][0].y
 					distance = math.sqrt(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2))
-					matrix[i+1][j+1] = distance
-					#matrix[i+1][j+1] = int(distance) #debug
-
+					#matrix[i+1][j+1] = distance
+					matrix[i+1][j+1] = int(distance) #debug
 		return matrix
 
 	def _solve(self, ligne=1):  # le premier point est le 1 par defaut
+		'''
+			Resolution a grand coup de plus proche voisin !
+		'''
 		if ligne > self.matrix[0][0] or 0 > ligne:
 			raise IndexError
 		chemin = [ligne, ]
 		self.matrix[0][ligne].visite = True  # le premier point est visite
+		distance = 0
 
-		for i in xrange(self.matrix[0][0] - 1):
+		tmp = -1
+		for i in xrange(1, self.matrix[0][0]):
 			minimum = float('inf')
-			tmp = -1
-			for j in xrange(1, self.matrix[0][0]):
+			for j in xrange(1, self.matrix[0][0] + 1):
 				# parcourt de la ligne a la recherche du plus proche point non parcouru
 				if 0 < self.matrix[ligne][j] < minimum and self.matrix[0][j].visite is False:
 					# Si le point est plus proche que tout ce
@@ -90,10 +90,11 @@ class Voyage(algo.Algo):
 					# et qu'il est non marque, marquons le comme le plus proche
 					minimum = self.matrix[ligne][j]
 					tmp = j
-			chemin.append(self.matrix[0][tmp])  # on ajoute le point trouve au chemin
-			self.matrix[0][tmp].visite = True  # et on le marque come parcouru
-			ligne = tmp
-		return chemin
+			if minimum != float('inf'):
+				chemin.append(self.matrix[0][tmp])  # on ajoute le point trouve au chemin
+				self.matrix[0][tmp].visite = True  # et on le marque come parcouru
+				distance += minimum  # on ajoute la distance parcourue a la distance totale
+				ligne = tmp
 
-	def _explain(self):
-		self.display.blit(self.text, (10, 10))
+		distance += self.matrix[1][tmp]
+		return chemin, distance
