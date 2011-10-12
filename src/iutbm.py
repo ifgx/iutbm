@@ -6,6 +6,7 @@ import math
 
 from ui import rotatingMenu as rM
 from algorithmes import voyage
+from algorithmes import plus_court
 
 class iutbm:
     '''
@@ -23,7 +24,7 @@ class iutbm:
 
 	# tableau des algos
 	self.drawalgo = ['QUIT', voyage.Voyage(self.display),
-		'FIXME', 'FIXME', 'FIXME', 'FIXME']
+		plus_court.Graphe(self.display), 'FIXME', 'FIXME', 'FIXME']
 
         # a propos de la fenetre
         pygame.display.set_caption('IUTBM')
