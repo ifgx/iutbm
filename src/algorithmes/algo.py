@@ -1,4 +1,4 @@
-#import pygame
+import pygame
 
 class Algo:
 	'''
@@ -7,6 +7,7 @@ class Algo:
 	'''
 	def __init__(self, display):
 		self.display = display
+		self.font = pygame.font.Font(None, 17)
 
 	def play(self):
 		'''
@@ -27,8 +28,6 @@ class Algo:
 			du probleme pose : il est affiche
 			AVANT que le jeu commence.
 		'''
-#L'ideal serait une belle zone texte, avec un bete texte intrinseque
-#a chaque algo a balancer dedans
 		self._explain()
 
 	def _play(self):

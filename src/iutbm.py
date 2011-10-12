@@ -4,9 +4,7 @@ import pygame
 import sys
 import math
 
-#import ui
 from ui import rotatingMenu as rM
-#import algorithmes
 from algorithmes import voyage
 
 class iutbm:
@@ -42,45 +40,51 @@ class iutbm:
 	inMenu = True
 	intExplain = False
         while True:
-            #gestion des evenements
-            events = pygame.event.get()
-            for event in events:
-                if event.type == pygame.QUIT:
-                    sys.exit(0)
-		elif event.type == pygame.KEYDOWN:
-		    if inMenu:  # si nous sommes dans le menu
-			if event.key == pygame.K_LEFT:
-			    self.menu.selectItem(self.menu.selectedItemNumber + 1)
-			elif event.key == pygame.K_RIGHT:
-			    self.menu.selectItem(self.menu.selectedItemNumber - 1)
-			elif event.key == pygame.K_UP:  # selection de l'item du menu
-			    if self.menu.selectedItemNumber == 0:  # Item "quit"
-				sys.exit(0)
-			    else:
-				algo = self.drawalgo[self.menu.selectedItemNumber]
-				inMenu = False
-				inAlgo = True
-		    if event.key == pygame.K_ESCAPE:
-			if inMenu:
-				sys.exit(0)
-			elif inAlgo:  # si nous sommes dans un algo
-				inMenu = True
-				inAlgo = False
-			elif inHelp:  # si nous sommes dans l'aide
-				inAlgo = True
+		pos = (0, 0)  # mouse position
+		#gestion des evenements
+		events = pygame.event.get()
+		for event in events:
+		    if event.type == pygame.QUIT:
+			sys.exit(0)
+		    elif event.type == pygame.KEYDOWN:
+			if inMenu:  # si nous sommes dans le menu
+			    if event.key == pygame.K_LEFT:
+				self.menu.selectItem(self.menu.selectedItemNumber + 1)
+			    elif event.key == pygame.K_RIGHT:
+				self.menu.selectItem(self.menu.selectedItemNumber - 1)
+			    elif event.key == pygame.K_UP or event.key == pygame.K_RETURN:  # selection de l'item du menu
+				if self.menu.selectedItemNumber == 0:  # Item "quit"
+				    sys.exit(0)
+				else:
+				    algo = self.drawalgo[self.menu.selectedItemNumber]
+				    inMenu = False
+				    inAlgo = True
+			if event.key == pygame.K_ESCAPE:
+			    if inMenu:
+				    sys.exit(0)
+			    elif inAlgo:  # si nous sommes dans un algo
+				    inMenu = True
+				    inAlgo = False
+			    elif inHelp:  # si nous sommes dans l'aide
+				    inAlgo = True
+		    elif event.type == pygame.MOUSEBUTTONDOWN:
+			    if event.button == 1:  # left click
+				    pos = event.pos
 
-            # mis a jour
-	    if inMenu:
-		self.menu.update()
+            # mise a jour
+		if inMenu:
+			self.menu.update()
+		elif pos != (0, 0):
+			algo._update(pos)  # FIXME
 
-            #dessin
-            self.display.fill((0, 0, 0)) # fond noir
-	    if inMenu:
-		self.menu.draw(self.display)
-	    elif inAlgo:
-		algo._draw()
-            pygame.display.flip()
-            self.clock.tick(self.fpsLimit)
+		#drawing
+		self.display.fill((0, 0, 0)) # fond noir
+		if inMenu:  # if we are inside a menu
+		    self.menu.draw(self.display)
+		elif inAlgo:  # if we are inside an algorithm
+		    algo._draw()
+		pygame.display.flip()  # draw on display
+		self.clock.tick(self.fpsLimit)  # limit the fps
 
 
 if __name__ == '__main__':
