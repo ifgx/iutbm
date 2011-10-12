@@ -86,28 +86,43 @@ class ModelisationCouplage:
             if(preference[0] == fourmi or preference[1] == dessert):
                 self.preferences.remove(preference)
     
+    def fourmi_satisfaite(self, fourmi):
+        """
+            Retourne si la fourmi fournie en paramètre est déjà satisfaite.
+        """
+        for f, d in self.solution:
+            if f == fourmi:
+                return True
+        return False
+    
     def resoudre(self):
-        solution = []
+        self.solution = []
         
-        print self.preferences
-        
-        for i in range(1, 1 + max(self.get_nb_occurrences())):
-            print "- Traitement des fourmis de niveau", i
-            for fourmi in self.occurrences_de_fourmi(i):
-                print "-- Traitement de la fourmi", fourmi[0]
-                for dessert in self.desserts_de_fourmi(fourmi):
-                    print "--- La", fourmi[0], "aime le", dessert[0]
-                    solution.append((fourmi, dessert))
-                    self.supprimer_preferences_de(fourmi, dessert)
-        
-        print solution
+        while len(self.preferences) != 0:
+            for i in range(1, 1 + max(self.get_nb_occurrences())):
+                # print "- Traitement des fourmis de niveau", i
+                for fourmi in self.occurrences_de_fourmi(i):
+                    # print "-- Traitement de la fourmi", fourmi[0]
+                    for dessert in self.desserts_de_fourmi(fourmi):
+                        # print "--- La", fourmi[0], "aime le", dessert[0]
+                        if not self.fourmi_satisfaite(fourmi):
+                            self.solution.append((fourmi, dessert))
+                            self.supprimer_preferences_de(fourmi, dessert)
+                        else:
+                            # print "--- Elle est déjà satisfaite"
+                            self.supprimer_preferences_de(fourmi, None)
+                # print "- Fin du tour, il reste", len(self.preferences), "couples"
+                # print "- Couples restants:", self.preferences, ", couples trouvés:", self.solution
 
 # algorithme
 listeFourmis = [("Fourmi A", "fourmi-a.png"), ("Fourmi B", "fourmi-b.png"), ("Fourmi C", "fourmi-c.png")]
 listeDesserts = [("Flan", "flan.png"), ("Banane", "banane.png"), ("Gâteau au chocolat", "gateau.png")]
 
-mod = ModelisationCouplage(listeFourmis, listeDesserts, 3)
+mod = ModelisationCouplage(listeFourmis, listeDesserts, 2)
+
+print "Préferences :", mod.preferences
 
 mod.resoudre()
 
+print "\n\nSolution :", mod.solution
 
