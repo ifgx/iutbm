@@ -83,14 +83,13 @@ class ModelisationCouplage:
              fourni en paramètre.
         """
         
-        # print "---- [spd]", len(self.preferences), "couples à traiter (", self.preferences, ")"
+        # print("---- [spd]", len(self.preferences), "couples à traiter (", self.preferences, ")")
         
         i = 0
         while i < len(self.preferences):
-            preference = self.preferences[i]
-            # print "---- [spd] couple", preference
-            if(preference[0] == fourmi or preference[1] == dessert):
-                # print "---- [spd] supprimé"
+            # print("---- [spd] couple", preference)
+            if(self.preferences[i][0] == fourmi or self.preferences[i][1] == dessert):
+                # print("---- [spd] supprimé")
                 self.preferences.pop(i)
             else:
                 i += 1
@@ -113,20 +112,20 @@ class ModelisationCouplage:
         
         while len(self.preferences) != 0:
             for i in range(1, 1 + max(self.get_nb_occurrences())):
-                # print "- Traitement des fourmis de niveau", i
+                # print("- Traitement des fourmis de niveau", i)
                 for fourmi in self.occurrences_de_fourmi(i):
-                    # print "-- Traitement de la fourmi", fourmi[0]
+                    # print("-- Traitement de la fourmi", fourmi[0])
                     for dessert in self.desserts_de_fourmi(fourmi):
-                        # print "--- La", fourmi[0], "aime le", dessert[0]
+                        # print("--- La", fourmi[0], "aime le", dessert[0])
                         if not self.fourmi_satisfaite(fourmi):
-                            # print "--- Succès! Don du dessert", dessert[0], "à la fourmi", fourmi[0]
+                            # print("--- Succès! Don du dessert", dessert[0], "à la fourmi", fourmi[0])
                             self.solution.append((fourmi, dessert))
                             self.supprimer_preferences_de(fourmi, dessert)
                         else:
-                            # print "--- Elle est déjà satisfaite"
+                            # print("--- Elle est déjà satisfaite")
                             self.supprimer_preferences_de(fourmi, None)
-                # print "- Fin du tour, il reste", len(self.preferences), "couples"
-                # print "- Couples restants:", self.preferences, ", couples trouvés:", self.solution
+                # print("- Fin du tour, il reste", len(self.preferences), "couples")
+                # print("- Couples restants:", self.preferences, ", couples trouvés:", self.solution)
 
 # algorithme
 listeFourmis = [("Fourmi A", ""), ("Fourmi B", ""), ("Fourmi C", ""), ("Fourmi D", ""), ("Fourmi E", "")]
@@ -141,4 +140,5 @@ mod.resoudre()
 
 print "\n\nSolution :"
 mod.afficher(mod.solution)
+
 
