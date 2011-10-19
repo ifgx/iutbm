@@ -10,7 +10,7 @@ from algorithmes import plus_court
 
 class iutbm:
     '''
-        Classe principale
+        main class
     '''
     def __init__(self, height, width):
 
@@ -22,14 +22,14 @@ class iutbm:
         self.display = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
 
-	# tableau des algos
+	# table of all algos
 	self.drawalgo = ['QUIT', voyage.Voyage(self.display),
 		plus_court.Graphe(self.display), 'FIXME', 'FIXME', 'FIXME']
 
-        # a propos de la fenetre
+        # caption
         pygame.display.set_caption('IUTBM')
 
-        #initialisation du menu
+        # initialisation of the menu
         self.menu = rM.RotatingMenu(x=320, y=240, radius=220, arc=math.pi,
                 defaultAngle=math.pi/2.0)
         items = ['quit', 'saleman traveller', 'plus court chemin',
@@ -39,22 +39,22 @@ class iutbm:
 
     def main(self):
 	inMenu = True
-	intExplain = False
+	inAlgo = False
         while True:
-		pos = (0, 0)  # mouse position
-		#gestion des evenements
+		pos = (0, 0)  # reset mouse position
+		# events handling
 		events = pygame.event.get()
 		for event in events:
 		    if event.type == pygame.QUIT:
 			sys.exit(0)
 		    elif event.type == pygame.KEYDOWN:
-			if inMenu:  # si nous sommes dans le menu
+			if inMenu:  # if we are in the menu
 			    if event.key == pygame.K_LEFT:
 				self.menu.selectItem(self.menu.selectedItemNumber + 1)
 			    elif event.key == pygame.K_RIGHT:
 				self.menu.selectItem(self.menu.selectedItemNumber - 1)
-			    elif event.key == pygame.K_UP or event.key == pygame.K_RETURN:  # selection de l'item du menu
-				if self.menu.selectedItemNumber == 0:  # Item "quit"
+			    elif event.key == pygame.K_UP or event.key == pygame.K_RETURN:  # selection of the current item
+				if self.menu.selectedItemNumber == 0:  # "the quit" item
 				    sys.exit(0)
 				else:
 				    algo = self.drawalgo[self.menu.selectedItemNumber]
@@ -63,23 +63,22 @@ class iutbm:
 			if event.key == pygame.K_ESCAPE:
 			    if inMenu:
 				    sys.exit(0)
-			    elif inAlgo:  # si nous sommes dans un algo
+			    elif inAlgo:  # if we are inside an algo
 				    inMenu = True
 				    inAlgo = False
-			    elif inHelp:  # si nous sommes dans l'aide
-				    inAlgo = True
 		    elif event.type == pygame.MOUSEBUTTONDOWN:
 			    if event.button == 1:  # left click
 				    pos = event.pos
 
-            # mise a jour
+            # update
 		if inMenu:
 			self.menu.update()
-		elif pos != (0, 0):
-			algo._update(pos)  # FIXME
+		elif inAlgo:
+			if pos != (0, 0):
+				algo._update(pos)
 
-		#drawing
-		self.display.fill((0, 0, 0)) # fond noir
+		# drawing's handling
+		self.display.fill((0, 0, 0)) # black background
 		if inMenu:  # if we are inside a menu
 		    self.menu.draw(self.display)
 		elif inAlgo:  # if we are inside an algorithm
