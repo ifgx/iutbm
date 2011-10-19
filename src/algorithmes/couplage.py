@@ -82,9 +82,18 @@ class ModelisationCouplage:
             Supprime tous les couples contenant la fourmi ou le dessert
              fourni en paramètre.
         """
-        for preference in self.preferences:
+        
+        # print "---- [spd]", len(self.preferences), "couples à traiter (", self.preferences, ")"
+        
+        i = 0
+        while i < len(self.preferences):
+            preference = self.preferences[i]
+            # print "---- [spd] couple", preference
             if(preference[0] == fourmi or preference[1] == dessert):
-                self.preferences.remove(preference)
+                # print "---- [spd] supprimé"
+                self.preferences.pop(i)
+            else:
+                i += 1
     
     def fourmi_satisfaite(self, fourmi):
         """
@@ -94,6 +103,10 @@ class ModelisationCouplage:
             if f == fourmi:
                 return True
         return False
+    
+    def afficher(self, liste):
+        for fourmi, dessert in liste:
+            print fourmi[0], "=>", dessert[0]
     
     def resoudre(self):
         self.solution = []
@@ -106,6 +119,7 @@ class ModelisationCouplage:
                     for dessert in self.desserts_de_fourmi(fourmi):
                         # print "--- La", fourmi[0], "aime le", dessert[0]
                         if not self.fourmi_satisfaite(fourmi):
+                            # print "--- Succès! Don du dessert", dessert[0], "à la fourmi", fourmi[0]
                             self.solution.append((fourmi, dessert))
                             self.supprimer_preferences_de(fourmi, dessert)
                         else:
@@ -115,14 +129,16 @@ class ModelisationCouplage:
                 # print "- Couples restants:", self.preferences, ", couples trouvés:", self.solution
 
 # algorithme
-listeFourmis = [("Fourmi A", "fourmi-a.png"), ("Fourmi B", "fourmi-b.png"), ("Fourmi C", "fourmi-c.png")]
-listeDesserts = [("Flan", "flan.png"), ("Banane", "banane.png"), ("Gâteau au chocolat", "gateau.png")]
+listeFourmis = [("Fourmi A", ""), ("Fourmi B", ""), ("Fourmi C", ""), ("Fourmi D", ""), ("Fourmi E", "")]
+listeDesserts = [("Flan", ""), ("Banane", ""), ("Gâteau au chocolat", ""), ("Glace à la fraise", ""), ("Glace à la vanille", "")]
 
-mod = ModelisationCouplage(listeFourmis, listeDesserts, 2)
+mod = ModelisationCouplage(listeFourmis, listeDesserts, 13)
 
-print "Préferences :", mod.preferences
+print "Préferences :"
+mod.afficher(mod.preferences)
 
 mod.resoudre()
 
-print "\n\nSolution :", mod.solution
+print "\n\nSolution :"
+mod.afficher(mod.solution)
 
