@@ -1,11 +1,9 @@
-iutbm est un projet de sensibilisation à la complexité algorithmique,
-et à la compléxité.
+iutbm is a scolar project, which aim to introduce users to algorithic complexity, and optimisation.
+This litte piece of software is proudly propulsed by python, and the nice library pygame.
 
-Il est fierement propulsé par python, et la librairie pygame.
-
-Les algorithmes présentés sont:
-- le voyageur de commerce
-- le plus court chemin
+We are currently focussing on ehe following algorithms :
+- the travelling salesman problem
+- shortest path problem
 - ...
 
-Ce projet utilise 4 espaces pour indenter.
+/!\ This project use 4 spaces for indent.
