@@ -1,9 +1,5 @@
-#!/bin/env python
-
-import logging
 import random
 import math
-import sys
 import pygame
 
 import graphe
@@ -32,17 +28,19 @@ class Voyage(algo.Algo):
 		self.maxy = 10.0
 		self.matrix = self._create_matrix(nbpoints, self.minx, self.maxx, self.miny, self.maxy)
 		self.text = 'Voyageur de commerce'
-		self.distance = 0
 		self.first_som = 1
+
+		#lenght of the path
+		self.computed_len = 0
+		self.user_len = 0
+		#path
+		self.computed_path = []
+		self.user_path = []
 
 		# draw's variables
 		self.selected = None
 		self.nbselected = 0
 		self.lines = []
-
-		# solve on start
-		#self.lenght = self._solve(self.first_som)
-		self._reset()
 
 	def __repr__(self):
 		return '\n'.join([str(i) for i in self.matrix])
@@ -89,15 +87,15 @@ class Voyage(algo.Algo):
 			#reset du graphe
 			self.matrix[0][i + 1].visite = False
 			self.matrix[i + 1][0].visite = False
+
 	def _solve(self, ligne=1):  # le premier point est le 1 par defaut
 		'''
 			Resolution a grand coup de plus proche voisin !
 		'''
-		if ligne > self.matrix[0][0] or 0 > ligne:
+		if ligne > self.matrix[0][0] or 0 > ligne: # invalid start point
 			raise IndexError
-		chemin = [ligne, ]
+		self.computed_path = [self.matrix[0][ligne], ]
 		self.matrix[0][ligne].visite = True  # le premier point est visite
-		self.distance = 0
 
 		tmp = -1
 		for i in xrange(1, self.matrix[0][0]):
@@ -111,34 +109,51 @@ class Voyage(algo.Algo):
 					minimum = self.matrix[ligne][j]
 					tmp = j
 			if minimum != float('inf'):
-				chemin.append(self.matrix[0][tmp])  # on ajoute le point trouve au chemin
+				self.computed_path.append(self.matrix[0][tmp])  # on ajoute le point trouve au chemin
 				self.matrix[0][tmp].visite = True  # et on le marque come parcouru
-				self.distance += minimum  # on ajoute la distance parcourue a la distance totale
+				self.computed_len += minimum  # on ajoute la distance parcourue a la distance totale
 				ligne = tmp
-		self.distance += self.matrix[1][tmp]
-		return chemin
+		self.computed_len += self.matrix[1][tmp]
+		#self.computed_path.append(self.matrix[0][tmp])
+		self._reset()
 
-	def _get_corres_pixel(self, pos):
+	def _get_corres_pixel(self, x, y):
 		width, height = self.display.get_size()
-		x = (pos[0] - self.minx) / (self.maxx - self.minx) * width
-		y = (pos[1] - self.miny) / (self.maxy - self.miny) * height
-		return int(x), int(y)
+		posx = (x - self.minx) / (self.maxx - self.minx) * width
+		posy = (y - self.miny) / (self.maxy - self.miny) * height
+		return int(posx), int(posy)
 
 	def _draw(self):
 		width, height = self.display.get_size()
-		for point in self.matrix[0][1:]:
-			pos = (point.x, point.y)
-			pygame.draw.circle(self.display, (255, 0, 0), self._get_corres_pixel(pos), 10, 0)
-		for line in self.lines:
-			pygame.draw.line(self.display, (255, 0, 0), line[0], line[1])
-		text = self.font.render(str(self.distance), True, (255, 0, 0))
+
+		for point in self.matrix[0][1:]: # draw points
+			pygame.draw.circle(self.display, (255, 0, 0), self._get_corres_pixel(point.x, point.y), 10, 0)
+
+		if len(self.user_path) > 0:  # if the user has selected more than 1 point
+		    for i in xrange(len(self.user_path) - 1):  # draw user's path
+			x, y = self._get_corres_pixel(self.user_path[i].x, self.user_path[i].y)
+			x1, y1 = self._get_corres_pixel(self.user_path[i+1].x, self.user_path[i+1].y)
+			pygame.draw.line(self.display, (255, 0, 0), (x,y), (x1, y1), 5)
+
+		if self.nbselected == self.matrix[0][0]:  # if all points have been selected
+		    for i in xrange(self.matrix[0][0] - 1):  # draw the computed path
+			x, y = self._get_corres_pixel(self.computed_path[i].x, self.computed_path[i].y)
+			x1, y1 = self._get_corres_pixel(self.computed_path[i+1].x, self.computed_path[i+1].y)
+			pygame.draw.line(self.display, (0, 255, 0), (x,y), (x1, y1))
+
+		#user's length
+		text = self.font.render(str(self.user_len), True, (255, 0, 0))
 		self.display.blit(text, (10, 10))
+
+		#computed lenght
+		text = self.font.render(str(self.computed_len), True, (255, 0, 0))
+		self.display.blit(text, (10, 20))
 
 	def _update(self, (x, y)):
 		# detection of a click inside a circle
 		index = 0
 		for cpt, point in enumerate(self.matrix[0][1:]):
-			real_x, real_y = self._get_corres_pixel((point.x, point.y))
+			real_x, real_y = self._get_corres_pixel(point.x, point.y)
 			if real_x - 10 < x < real_x + 10 and real_y - 10 < y <real_y + 10:
 				index = cpt + 1
 				break
@@ -149,19 +164,10 @@ class Voyage(algo.Algo):
 				self.nbselected += 1
 				self.matrix[0][index].visite = True
 				self.selected = self.matrix[0][index]
-				# compute the optimal solution
-				#self._solve(self.matrix[0][index].nom)
+				self._solve(self.matrix[0][index].nom)  # compute the optimal solution
 			elif self.matrix[0][index].visite is False:
-				self.distance += self.matrix[index][self.selected.nom]  # incrementation of the lenght
-				x1, y1 = self._get_corres_pixel((self.selected.x, self.selected.y))
-				self.lines.append(((x1, y1), (x, y)))
+				self.user_len += self.matrix[index][self.selected.nom]  # incrementation of the lenght
+				self.user_path.append(self.matrix[0][index])
 				self.nbselected += 1
 				self.matrix[0][index].visite = True
 				self.selected = self.matrix[0][index]
-
-		if self.nbselected == self.matrix[0][0]:  # if all points have been selected
-			distance = self.distance
-			self._solve(self.first_som)
-			print "distance trouveee: " + str(distance)
-			print "distance calculee: " + str(self.distance)
-			sys.exit(0)
