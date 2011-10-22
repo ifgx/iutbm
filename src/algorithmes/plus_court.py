@@ -1,5 +1,7 @@
-#!/bin/env python
-# -*- coding: utf-8 -*-
+'''
+shortest path problem
+'''
+
 import random
 import pygame
 import algo
@@ -16,15 +18,16 @@ class Graphe(algo.Algo):
         self.numSommet=7
         Min = 3
         Max = 20
-        
+        self.LSommet = []        
         self.window = window
+        
         self.center_x = window.get_width()/2
         self.center_y = window.get_height()/2
         if window.get_width() > window.get_height():
             self.rayon = window.get_height()/3
         else:
             self.rayon = window.get_width()/3
-        self.LSommet = []
+
         for i in range(self.numSommet):
             x = self.center_x + cos(2*pi/(self.numSommet-2)*i)*self.rayon
             y = self.center_y + sin(2*pi/(self.numSommet-2)*i)*self.rayon
@@ -36,19 +39,17 @@ class Graphe(algo.Algo):
         self.end.rect.center=(self.center_x*5/3,self.center_y*5/3)
         self.LSommet[self.start.indice].score = 0
 
-        # creation de la matrice d'adjacence
+        # creation of the adjacence's matrix
         self.Matrix = [[float('inf') for i in xrange(self.numSommet)] for i in xrange(self.numSommet)]
         for i in xrange(self.numSommet):
             if i < self.numSommet - 1:
-                weight = random.randint(Min, Max)
-                self.Matrix[i][i+1] = weight   
+                self.Matrix[i][i+1] = random.randint(Min, Max)
             for j in xrange(i):
                 if i != j:
                     if self.Matrix[j][i] == float('inf'):
-                        chance= random.random() * 100
+                        chance = random.random() * 100#FIXME
                         if chance <30:
-                            weight = random.randint(Min, Max)
-                            self.Matrix[j][i] = weight                
+                            self.Matrix[j][i] = random.randint(Min, Max)
                     self.Matrix[i][j] = self.Matrix[j][i]
 
         # the two next line are to make sure that there is not  a direct connenxion between the start and the end
@@ -63,31 +64,32 @@ class Graphe(algo.Algo):
         self.nextSommet(self.start)
 
     def _draw(self):
-        if self.final == False:
+        '''
+            Draw
+        '''
+        if self.final == False:  # if the game isn't over
             font = pygame.font.Font(None, 30)
-            text = font.render("Valeur actuel :"+str(self.weight), True, (0,255, 0))
+            text = font.render("Actual value :" + str(self.weight), True, (0,255, 0))
             textRect = text.get_rect()
-            textRect.top = 30
-            textRect.left = 30
+            textRect.top = textRect.left = 30
             self.window.blit(text,textRect)        
             for i in range(self.numSommet):
-                for j in range(i):
-                    if (self.Matrix[i][j]!=float('inf')):
-                        self.drawLien(i,j)
-            for i in self.LSommet :
-                i.drawItem(self.window)
-            for i in self.selected:
-                i.drawSelected(self.window)
+                [self.drawLien(i, j) for i in range(i) if (self.Matrix[i][j]!=float('inf'))]
+            [i.drawItem(self.window) for i in self.LSommet]
+            [i.drawSelected(self.window) for i in self.selected]
             pygame.draw.rect(self.window,(255,0,0),self.start.rect, 1)
             pygame.draw.rect(self.window,(0,255,0),self.end.rect, 1)
         else:
             font = pygame.font.Font(None,20)
-            text = font.render("Vous avez trouvé une valeur de "+str(self.weight)+"\nLa valeur optimale est de "+str(self.end.score),True , (0,255,0))
+            text = font.render("You found: " + str(self.weight)+"\nThe optimal one is: " + str(self.end.score),True , (0,255,0))
             textRect = text.get_rect()
-            textRect.center =(self.center_x,self.center_y)
+            textRect.center = (self.center_x, self.center_y)
             self.window.blit(text,textRect)
 
     def _solve(self):
+        '''
+            Solve the problem
+        '''
         NotChecked = self.LSommet[:]
         while NotChecked:
             sommet1 = min(NotChecked, key = visiterS)

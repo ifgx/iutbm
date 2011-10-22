@@ -1,12 +1,16 @@
+'''
+A nice and smooth rotating menu,
+stolen from http://www.pygame.org/project-Rotating+Menu-975-.html.
+original author : Francesco Mastellone (effeemme)
+'''
 from math import sin, cos, pi
 import sys
 
 import pygame
 
-
 def sinInterpolation(start, end, steps=30):
     '''
-        Calcul du placement
+        Placement stuffs
     '''
     values = []
     delta = end - start
@@ -19,16 +23,16 @@ def sinInterpolation(start, end, steps=30):
 
 class RotatingMenu:
     '''
-        Represente le menu
+        Implement the rotating menu
     '''
     def __init__(self, x, y, radius, arc=pi*2, defaultAngle=0, wrap=True):
         '''
-            x : centre du menu en x
-            y : centre du menu en y
-            radius : rayon du menu
-            arc : arc du menu
-            default Angle : angle de l'element selectionne
-            wrap : si le menu wrap
+            x : x's position of the menu's center
+            y : y's position of the menu's center
+            radius : radius of the menu
+            arc : arc of the menu
+            default Angle : angle of selected item
+            wrap : does the menu wrap ?
         '''
         self.x = x
         self.y = y
@@ -48,7 +52,7 @@ class RotatingMenu:
 
     def addItem(self, item):
         '''
-            ajoute un item au menu
+            add an item to the menu
         '''
         self.items.append(item)
         if len(self.items) == 1:
@@ -57,7 +61,7 @@ class RotatingMenu:
 
     def selectItem(self, itemNumber):
         '''
-            Gestion du wrapping
+            Wrapping stuffs
         '''
         if self.wrap == True:
             if itemNumber > self.nbitems:
@@ -81,7 +85,7 @@ class RotatingMenu:
 
     def update(self):
         '''
-            Mise a jour de coordonnees
+            Coord's update
         '''
         if self.rotationSteps:
             self.rotation = self.rotationSteps.pop(0)
@@ -93,16 +97,16 @@ class RotatingMenu:
 
     def draw(self, display):
         '''
-            Dessine le menu
+            Draw the menu
         '''
         for item in self.items:
             display.blit(item.image, (item.x-item.xOffset, item.y-item.yOffset))
 
 class MenuItem:
     '''
-        Represente un item du menu
+        Implement an item's menu
     '''
-    def __init__(self, text='bleh'):
+    def __init__(self, text='fill_me_please'):
         self.text = text
 
         self.defaultColor = (255,255,255)
@@ -120,21 +124,21 @@ class MenuItem:
 
     def select(self):
         '''
-            Couleur du texte selectionne
+            Selected text's color
         '''
         self.color = self.selectedColor
         self.redrawText()
 
     def deselect(self):
         '''
-            Couleur du texte deselectionne
+            Not selected text's color
         '''
         self.color = self.defaultColor
         self.redrawText()
 
     def redrawText(self):
         '''
-            Redessine le texte
+            Redraw the text
         '''
         self.font = pygame.font.Font(None, 20)
         self.image = self.font.render(self.text, True, self.color)
