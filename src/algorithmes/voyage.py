@@ -13,14 +13,14 @@ class Sommet:
     '''
         Implement a "point"/"summit"
     '''
-    def __init__(self, nom, x, y):
-        self.nom = nom
+    def __init__(self, name, x, y):
+        self.name = name
         self.x = x
         self.y = y
         self.visite = False
 
     def __repr__(self):
-        return str(self.nom)
+        return str(self.name)
 
 
 class Voyage(algorithmes.algo.Algo):
@@ -36,7 +36,7 @@ class Voyage(algorithmes.algo.Algo):
         self.maxy = 100.0
         self.matrix = self._create_matrix(nbpoints)
         self.text = 'Voyageur de commerce'
-        self.first_som = 1
+        self.first_som = -1  # will be set later
 
         #lenght of the path
         self.computed_len = self.user_len = 0
@@ -46,7 +46,7 @@ class Voyage(algorithmes.algo.Algo):
 
         # draw's variables
         self.selected = None
-        self.nbselected = 0
+        self.nbselected = 0  # nb of user's selected points
         self.lines = []
 
     def __repr__(self):
@@ -203,11 +203,11 @@ class Voyage(algorithmes.algo.Algo):
                 self.matrix[0][index].visite = True
                 self.selected = self.matrix[0][index]
                 # compute optimal solution
-                self._solve(self.matrix[0][index].nom)
+                self._solve(self.matrix[0][index].name)
                 self.user_path.append(self.matrix[0][index])
             elif self.matrix[0][index].visite is False:
                 # click on a non visited point
-                self.user_len += self.matrix[index][self.selected.nom]
+                self.user_len += self.matrix[index][self.selected.name]
                 self.user_path.append(self.matrix[0][index])
                 self.nbselected += 1
                 self.matrix[0][index].visite = True
