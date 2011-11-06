@@ -100,7 +100,10 @@ class Voyage(algorithmes.algo.Algo):
 
     def _solve(self, ligne=1):  # the first point is the first of the matrix
         '''
-            Resolution a grand coup de plus proche voisin !
+            Fill self.computed_len
+            Fill self.computed_path with points
+
+            Nearest neibourgh for now
         '''
         if ligne > self.matrix[0][0] or 0 > ligne:  # invalid start point
             raise IndexError
@@ -130,15 +133,6 @@ class Voyage(algorithmes.algo.Algo):
                 ligne = tmp
         self.computed_len += self.matrix[1][tmp]
         self._reset()
-
-    def _get_corres_pixel(self, x, y):
-        '''
-            Get the corresponding pixel
-        '''
-        width, height = self.display.get_size()
-        posx = (x - self.minx) / (self.maxx - self.minx) * width
-        posy = (y - self.miny) / (self.maxy - self.miny) * height
-        return int(posx), int(posy)
 
     def _draw(self):
         '''

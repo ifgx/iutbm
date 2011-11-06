@@ -8,8 +8,16 @@ class Algo:
     def __init__(self, display):
         self.display = display
         self.font = pygame.font.Font(None, 17)
+
+        #help screen
         self.text = 'generic algo'
         self.description = 'algorithm\'s description'
+
+        #repere
+        self.minx = 0.0
+        self.maxx = 100.0
+        self.miny = 0.0
+        self.maxy = 100.0
 
     def _solve(self, ):
         '''
@@ -25,6 +33,16 @@ class Algo:
         self.display.blit(text, (10, 10))
         text = self.font.render(self.description, True, (255, 0, 0))
         self.display.blit(text, (10, 30))
+
+    def _get_corres_pixel(self, x, y):
+        '''
+            Get the corresponding pixel
+            minx, maxx, miny, maxy are your repere's size
+        '''
+        width, height = self.display.get_size()
+        posx = (x - self.minx) / (self.maxx - self.minx) * width
+        posy = (y - self.miny) / (self.maxy - self.miny) * height
+        return int(posx), int(posy)
 
     def _reset(self):
         '''
