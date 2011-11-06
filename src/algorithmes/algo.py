@@ -8,6 +8,8 @@ class Algo:
     def __init__(self, display):
         self.display = display
         self.font = pygame.font.Font(None, 17)
+        self.text = 'generic algo'
+        self.description = 'algorithm\'s description'
 
     def _solve(self, ):
         '''
@@ -21,6 +23,8 @@ class Algo:
         '''
         text = self.font.render(self.text, True, (255, 0, 0))
         self.display.blit(text, (10, 10))
+        text = self.font.render(self.description, True, (255, 0, 0))
+        self.display.blit(text, (10, 30))
 
     def _reset(self):
         '''
