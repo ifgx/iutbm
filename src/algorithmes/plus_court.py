@@ -12,27 +12,29 @@ class Graphe(algo.Algo):
     def __init__(self,window):
         algo.Algo.__init__(self, window)
         self.numSommet=7
-        Min = 3
-        Max = 20
-        self.window = window
+        minimum = 3 #FIXME : maximum of what ? : need rename
+        maximum = 20 #FIXME : same as above
+
         self.center_x = self.display.get_width()/2
         self.center_y = self.display.get_height()/2
         if self.display.get_width() > self.display.get_height():
             self.rayon = self.display.get_height()/3
         else:
             self.rayon = self.display.get_width()/3
+
         self.LSommet = []
         # creation de la liste de point et de leur position
+        tmp = 2 * pi / (self.numSommet - 2)
         for i in xrange(self.numSommet):
-            x = self.center_x + cos(2*pi/(self.numSommet-2)*i)*self.rayon
-            y = self.center_y + sin(2*pi/(self.numSommet-2)*i)*self.rayon
-            self.LSommet.append(Sommet(i,i,x,y,'algorithmes/ville.jpg'))
-        self.start=self.LSommet[0]
-        self.start.rect.center=(self.center_x/3,self.center_y/3)
+            x = self.center_x + cos(tmp*i)*self.rayon
+            y = self.center_y + sin(tmp*i)*self.rayon
+            self.LSommet.append(Sommet(i, i, x, y, 'algorithmes/ville.jpg'))
+        self.start = self.LSommet[0]
+        self.start.rect.center = (self.center_x / 3, self.center_y / 3)
         self.LSommet[self.start.indice].score = 0
 
-        self.end = self.LSommet[self.numSommet-1]
-        self.end.rect.center=(self.center_x*5/3,self.center_y*5/3)
+        self.end = self.LSommet[self.numSommet - 1]
+        self.end.rect.center=(self.center_x* 5 / 3,self.center_y * 5 / 3)#FIXME
 
         # creation de la matrice d'adjacence
         self.Matrix = [[float('inf') for i in xrange(self.numSommet)] for i in xrange(self.numSommet)]
@@ -40,24 +42,25 @@ class Graphe(algo.Algo):
         # creation d'un graphe connexe aleatoire
         a = [i for i in xrange(self.numSommet - 1)]
         now = 0
-        for i in xrange(self.numSommet-1):
-            weight = random.randint(Min,Max)
+        for i in xrange(self.numSommet - 1):
+            weight = random.randint(minimum, maximum)
             if i < self.numSommet - 2:
                 a.remove(now)
-                next = random.sample(a,1)
-                self.Matrix[now][next[0]] = weight
-                self.Matrix[next[0]][now] = weight
-                now = next[0]
+                next_point = random.sample(a, 1)
+                self.Matrix[now][next_point[0]] = weight
+                self.Matrix[next_point[0]][now] = weight
+                now = next_point[0]
             else:
-                self.Matrix[now][self.numSommet-1] = weight
+                self.Matrix[now][self.numSommet - 1] = weight
                 self.Matrix[self.numSommet - 1][now] = weight
+
         for i in xrange(self.numSommet):
             for j in xrange(i):
                 if i != j:
                     if self.Matrix[j][i] == float('inf'):
-                        chance= random.random() * 100
-                        if chance <40:
-                            weight = random.randint(Min, Max)
+                        chance = random.random() * 100
+                        if chance <40:  # FIXME : Why 40 ?
+                            weight = random.randint(minimum, maximum)
                             self.Matrix[j][i] = weight
                     self.Matrix[i][j] = self.Matrix[j][i]
 
@@ -65,48 +68,43 @@ class Graphe(algo.Algo):
         self.Matrix[self.start.indice][self.end.indice]= float('inf')
         self.Matrix[self.end.indice][self.start.indice]= float('inf')
 
-        self.final = 0
-        self.weight = 0
+        self.final = self.weight = 0
         self.current = self.start
         self.next = []
         self.selected = []
         self.nextSommet(self.start)
 
-    def _draw(self):
-        if self.final == 0 or self.final == 1:
-            font = pygame.font.Font(None, 30)
-            text = font.render("Valeur actuel :"+str(self.weight), True, (0,255, 0))
+    def _draw(self): #FIXME: more comments !
+        if self.final == 0 or self.final == 1: #FIXME < 2 ?
+            text = self.font.render("User: " + str(self.weight), True, (0,255, 0)) #FIXME : print computed path too
             textRect = text.get_rect()
-            textRect.top = 30
-            textRect.left = 30
+            textRect.top = textRect.left = 30
             self.display.blit(text,textRect)
             for i in xrange(self.numSommet):
-                for j in xrange(i):
-                    if (self.Matrix[i][j]!=float('inf')):
-                        self.drawLien(i,j)
-            for i in self.LSommet :
-                self.display.blit(i.image, i.rect)
-            for i in self.selected:
-                pygame.draw.rect(self.display, (255,0,255), i.rect)
-            pygame.draw.rect(self.display,(255,0,0),self.start.rect, 1)
-            pygame.draw.rect(self.display,(0,255,0),self.end.rect, 1)
+                [self.drawLien(i, j) for j in xrange(i) if self.Matrix[i][j] != float('inf')]
+
+            [self.display.blit(i.image, i.rect) for i in self.LSommet]
+
+            [pygame.draw.rect(self.display, (255, 0, 255), i.rect) for i in self.selected]
+
+            pygame.draw.rect(self.display,(255,0,0),self.start.rect)
+            pygame.draw.rect(self.display,(0,255,0),self.end.rect)
+
         if self.final == 1:
-            font = pygame.font.Font(None,20)
             if (self.weight > self.end.score):
-                text = font.render("Vous avez trouve une valeur de "+str(self.weight)+"Il ne s'agit pas de la valeur optimale",True , (0,255,0))
+                text = self.font.render("You did not found the optimal path",True , (0,255,0))
             else:
-                text = font.render("Felicitation vous avez trouve la valeur optimale "+str(self.end.score),True , (0,255,0))
+                text = self.font.render("Congratulation : you found the optimal path wiht the lenght " + str(self.end.score),True , (0,255,0))
             textRect = text.get_rect()
-            textRect.center =(self.center_x,10)
+            textRect.center =(self.center_x, 10)
             self.display.blit(text,textRect)
-#        if self.final == 2:
 
-
-    def _help(self):
+    def _help(self): #FIXME : wtf ?
         if self.final == 2:
             self.final = 0
         else:
             self.final = 2
+
     def _solve(self):
         NotChecked = self.LSommet[:]
         while NotChecked:
@@ -116,14 +114,13 @@ class Graphe(algo.Algo):
             self.misejour(sommet1)
         self.final = 1
 
-    def _update(self,(x,y)):
+    def _update(self, (x, y)): #FIXME : more comments
         for i in self.LSommet:
-            if i.rect.collidepoint(x,y) :
+            if i.rect.collidepoint(x, y) :
                 if i == self.start:
-                    self.weight = 0
+                    self.weight = self.final = 0
                     self.selected = []
                     self.nextSommet(i)
-                    self.final = 0
                 if i in set(self.next):
                     self.weight += self.Matrix[self.current.indice][i.indice]
                     self.selected.append(i)
@@ -132,7 +129,7 @@ class Graphe(algo.Algo):
                     if i == self.end:
                         self._solve()
 
-    def coordonner(self,sommet2,sommet1):
+    def coordonner(self, sommet2, sommet1): #FIXME : wtf ?
         x = sommet2.centery- sommet1.centery
         y = sommet1.centerx - sommet2.centerx
         k = 15 / (sqrt(x*x+y*y))
@@ -144,7 +141,6 @@ class Graphe(algo.Algo):
         for i in xrange(self.numSommet):
             if self.Matrix[sommet1.indice][i]+sommet1.score < self.LSommet[i].score:
                 self.LSommet[i].score = self.Matrix[sommet1.indice][i]+sommet1.score
-
 
     def drawLien(self,i,j):
         start     = self.LSommet[i].rect
@@ -171,24 +167,17 @@ class Graphe(algo.Algo):
 
 class Sommet(object):
     '''
-        Define sommet with an indice, a score intialeted at 0, a boolean visited et a variable telling you the last the previous Sommet
+        Implement a "Sommet":
     '''
-    def __init__(self,indice,name,x,y,image):
+    def __init__(self, indice, name, x, y, image):
         self.indice = indice
         self.score = float('inf')
         self.visited = False
-        self.previous = None
+        self.previous = None  # the previous Sommet
         self.name = name
         self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
-
-    def drawItem(self):
-        self.display.blit(self.image,self.rect)
-
-    def drawSelected(self):
-        pygame.draw.rect(self.display,(255,0,255),self.rect, 1)
-
 
 def visiterS(x):
     if x.visited == False:
