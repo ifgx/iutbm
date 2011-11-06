@@ -26,7 +26,7 @@ class Sommet:
 
 class Voyage(algo.Algo):
     '''
-        Probleme du voyageur de commerce
+        Traveler saleman's problem
     '''
     def __init__(self, display):
         algo.Algo.__init__(self, display)
@@ -41,11 +41,10 @@ class Voyage(algo.Algo):
         self.first_som = 1
 
         #lenght of the path
-        self.computed_len = 0
-        self.user_len = 0
+        self.computed_len = self.user_len = 0
+
         #path
-        self.computed_path = []
-        self.user_path = []
+        self.computed_path = self.user_path = []
 
         # draw's variables
         self.selected = None
@@ -57,17 +56,16 @@ class Voyage(algo.Algo):
 
     def _create_matrix(self, nbpoints, minx, maxx, miny, maxy):
         '''
-            retourne un matrice de la forme:
+            return a matrix like :
                 T 1 2 3 4 ... nbpoints
                 1 0 d d d ...
                 2 d 0 d d
                 3 d d 0 d
                 4 d d d 0
 
-            avec:
-                T = nombre de lignes
-                d = distance entre les deux points
-                    correspondants
+            with:
+                T = number of lines
+                d = distance between two correspondings points
         '''
         #creation of the matrix
         matrix = [[0 for i in xrange(nbpoints)] for j in xrange(nbpoints)]
@@ -94,12 +92,14 @@ class Voyage(algo.Algo):
         return matrix
 
     def _reset(self):
+        '''
+            Reset the graph to a 'clean' state
+        '''
         for i in xrange(self.matrix[0][0]):
-            #reset du graphe
             self.matrix[0][i + 1].visite = False
             self.matrix[i + 1][0].visite = False
 
-    def _solve(self, ligne=1):  # le premier point est le 1 par defaut
+    def _solve(self, ligne=1):  # the first point is the first of the matrix
         '''
             Resolution a grand coup de plus proche voisin !
         '''
@@ -129,6 +129,9 @@ class Voyage(algo.Algo):
         self._reset()
 
     def _get_corres_pixel(self, x, y):
+        '''
+            Get the corresponding pixel
+        '''
         width, height = self.display.get_size()
         posx = (x - self.minx) / (self.maxx - self.minx) * width
         posy = (y - self.miny) / (self.maxy - self.miny) * height
@@ -193,5 +196,5 @@ class Voyage(algo.Algo):
                 self.nbselected += 1
                 self.matrix[0][index].visite = True
                 self.selected = self.matrix[0][index]
-            if len(self.user_path) == self.matrix[0][0]:
+            if len(self.user_path) == self.matrix[0][0]:  # if every points have been selected
                 self.user_len += self.matrix[index][self.first_som]  # add the distance between first and last point
