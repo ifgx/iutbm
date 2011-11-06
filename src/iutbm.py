@@ -41,6 +41,7 @@ class iutbm:
     def main(self):
         inMenu = True
         inAlgo = False
+        inHelp = False
         while True:
             pos = (0, 0)  # reset mouse position
             # events handling
@@ -61,13 +62,23 @@ class iutbm:
                                 algo = self.drawalgo[self.menu.selectedItemNumber]
                                 inMenu = False
                                 inAlgo = True
-                    if event.key == pygame.K_ESCAPE:
-                        # The escape key is bind to action INSIDE and OUTSIDE the menu
+
+                    elif inAlgo:
+                        if event.key == pygame.K_h:
+                            #h is the help key
+                            inHelp = True
+                            inAlgo = False
+
+                    if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
+                        # The escape and q key are bind to action INSIDE and OUTSIDE the menu
                         if inMenu:
                             sys.exit(0)
                         elif inAlgo:  # if we are inside an algo
                             inMenu = True
                             inAlgo = False
+                        elif inHelp: # if we are inside a helpscreen
+                            inAlgo = True
+                            inHelp = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:  # left click
                         pos = event.pos
@@ -83,8 +94,10 @@ class iutbm:
             self.display.fill((0, 0, 0))  # black background
             if inMenu:  # if we are inside a menu
                 self.menu.draw(self.display)
-            elif inAlgo:  # if we are inside an algorithm
+            elif inAlgo:  # else if we are inside an algorithm
                 algo._draw()
+            elif inHelp: # else if we are in a help screen
+                algo._explain()
             pygame.display.flip()  # draw on display
             self.clock.tick(self.fpsLimit)  # limit the fps
 
