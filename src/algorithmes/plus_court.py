@@ -1,5 +1,3 @@
-#!/bin/env python
-# -*- coding: utf-8 -*-
 import random
 import pygame
 import algo
@@ -17,12 +15,12 @@ class Graphe(algo.Algo):
         Min = 3
         Max = 20
         self.window = window
-        self.center_x = window.get_width()/2
-        self.center_y = window.get_height()/2
-        if window.get_width() > window.get_height():
-            self.rayon = window.get_height()/3
+        self.center_x = self.display.get_width()/2
+        self.center_y = self.display.get_height()/2
+        if self.display.get_width() > self.display.get_height():
+            self.rayon = self.display.get_height()/3
         else:
-            self.rayon = window.get_width()/3
+            self.rayon = self.display.get_width()/3
         self.LSommet = []
         # creation de la liste de point et de leur position
         for i in xrange(self.numSommet):
@@ -39,7 +37,7 @@ class Graphe(algo.Algo):
         # creation de la matrice d'adjacence
         self.Matrix = [[float('inf') for i in xrange(self.numSommet)] for i in xrange(self.numSommet)]
 
-        # creation d'un graphe connexe aléatoire
+        # creation d'un graphe connexe aleatoire
         a = [i for i in xrange(self.numSommet - 1)]
         now = 0
         for i in xrange(self.numSommet-1):
@@ -52,21 +50,21 @@ class Graphe(algo.Algo):
                 now = next[0]
             else:
                 self.Matrix[now][self.numSommet-1] = weight
-                self.Matrix[self.numSommet - 1][now] = weight 
-        for i in xrange(self.numSommet): 
+                self.Matrix[self.numSommet - 1][now] = weight
+        for i in xrange(self.numSommet):
             for j in xrange(i):
                 if i != j:
                     if self.Matrix[j][i] == float('inf'):
                         chance= random.random() * 100
                         if chance <40:
                             weight = random.randint(Min, Max)
-                            self.Matrix[j][i] = weight                
+                            self.Matrix[j][i] = weight
                     self.Matrix[i][j] = self.Matrix[j][i]
 
         # the two next line are to make sure that there is not  a direct connenxion between the start and the end
         self.Matrix[self.start.indice][self.end.indice]= float('inf')
         self.Matrix[self.end.indice][self.start.indice]= float('inf')
-        
+
         self.final = 0
         self.weight = 0
         self.current = self.start
@@ -81,28 +79,28 @@ class Graphe(algo.Algo):
             textRect = text.get_rect()
             textRect.top = 30
             textRect.left = 30
-            self.window.blit(text,textRect)        
+            self.display.blit(text,textRect)
             for i in xrange(self.numSommet):
                 for j in xrange(i):
                     if (self.Matrix[i][j]!=float('inf')):
                         self.drawLien(i,j)
             for i in self.LSommet :
-                i.drawItem(self.window)
+                self.display.blit(i.image, i.rect)
             for i in self.selected:
-                i.drawSelected(self.window)
-            pygame.draw.rect(self.window,(255,0,0),self.start.rect, 1)
-            pygame.draw.rect(self.window,(0,255,0),self.end.rect, 1)
+                pygame.draw.rect(self.display, (255,0,255), i.rect)
+            pygame.draw.rect(self.display,(255,0,0),self.start.rect, 1)
+            pygame.draw.rect(self.display,(0,255,0),self.end.rect, 1)
         if self.final == 1:
             font = pygame.font.Font(None,20)
             if (self.weight > self.end.score):
-                text = font.render("Vous avez trouvé une valeur de "+str(self.weight)+"Il ne s'agit pas de la valeur optimale",True , (0,255,0))
+                text = font.render("Vous avez trouve une valeur de "+str(self.weight)+"Il ne s'agit pas de la valeur optimale",True , (0,255,0))
             else:
-                text = font.render("Félicitation vous avez trouvé la valeur optimale "+str(self.end.score),True , (0,255,0))
+                text = font.render("Felicitation vous avez trouve la valeur optimale "+str(self.end.score),True , (0,255,0))
             textRect = text.get_rect()
             textRect.center =(self.center_x,10)
-            self.window.blit(text,textRect)
+            self.display.blit(text,textRect)
 #        if self.final == 2:
-            
+
 
     def _help(self):
         if self.final == 2:
@@ -138,8 +136,8 @@ class Graphe(algo.Algo):
         x = sommet2.centery- sommet1.centery
         y = sommet1.centerx - sommet2.centerx
         k = 15 / (sqrt(x*x+y*y))
-        x = k*x + (sommet2.centerx + sommet1.centerx ) / 2 
-        y = k*y + (sommet2.centery + sommet1.centery ) / 2 
+        x = k*x + (sommet2.centerx + sommet1.centerx ) / 2
+        y = k*y + (sommet2.centery + sommet1.centery ) / 2
         return (x,y)
 
     def misejour(self,sommet1):
@@ -155,9 +153,9 @@ class Graphe(algo.Algo):
         font = pygame.font.Font(None, 30)
         text = font.render(str(self.Matrix[i][j]), True, (0,255, 0),(0,0,100))
         textRect = text.get_rect()
-        textRect.center = position    
-        pygame.draw.line(self.window,(255,255,255),start.center,end.center,3)
-        self.window.blit(text,textRect)
+        textRect.center = position
+        pygame.draw.line(self.display,(255,255,255),start.center,end.center,3)
+        self.display.blit(text,textRect)
 
     def nextSommet(self, sommet):
         self.next = []
@@ -185,11 +183,11 @@ class Sommet(object):
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
 
-    def drawItem(self,window):
-        window.blit(self.image,self.rect)
+    def drawItem(self):
+        self.display.blit(self.image,self.rect)
 
-    def drawSelected(self,window):
-        pygame.draw.rect(window,(255,0,255),self.rect, 1)
+    def drawSelected(self):
+        pygame.draw.rect(self.display,(255,0,255),self.rect, 1)
 
 
 def visiterS(x):
