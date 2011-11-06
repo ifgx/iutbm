@@ -106,26 +106,25 @@ class Voyage(algo.Algo):
         if ligne > self.matrix[0][0] or 0 > ligne:  # invalid start point
             raise IndexError
         self.computed_path = [self.matrix[0][ligne], ]
-        self.matrix[0][ligne].visite = True  # le premier point est visite
+        self.matrix[0][ligne].visite = True  # first point is visited
 
         tmp = -1
         for i in xrange(1, self.matrix[0][0]):
             minimum = float('inf')
             for j in xrange(1, self.matrix[0][0] + 1):
-                # parcourt de la ligne a la recherche du plus proche point non parcouru
+                # travel trough the list of point, and search the nearest one
                 if 0 < self.matrix[ligne][j] < minimum and self.matrix[0][j].visite is False:
-                    # Si le point est plus proche que tout ce
-                    # qu'on a trouve jusqu'a present
-                    # et qu'il est non marque, marquons le comme le plus proche
+                    # if the point is near than everything founded
+                    # for now, and that it's not marked as visited
+                    #mark it as the nearest
                     minimum = self.matrix[ligne][j]
                     tmp = j
             if minimum != float('inf'):
-                self.computed_path.append(self.matrix[0][tmp])  # on ajoute le point trouve au chemin
-                self.matrix[0][tmp].visite = True  # et on le marque come parcouru
-                self.computed_len += minimum  # on ajoute la distance parcourue a la distance totale
+                self.computed_path.append(self.matrix[0][tmp])  # add the point to the path
+                self.matrix[0][tmp].visite = True  # mark it as visited
+                self.computed_len += minimum  # add the travelled distance to the total one
                 ligne = tmp
         self.computed_len += self.matrix[1][tmp]
-        #self.computed_path.append(self.matrix[0][tmp])
         self._reset()
 
     def _get_corres_pixel(self, x, y):
@@ -138,6 +137,9 @@ class Voyage(algo.Algo):
         return int(posx), int(posy)
 
     def _draw(self):
+        '''
+            Drawing method
+        '''
         width, height = self.display.get_size()
 
         for point in self.matrix[0][1:]:  # draw points
@@ -174,7 +176,10 @@ class Voyage(algo.Algo):
         self.display.blit(text, (10, 20))
 
     def _update(self, (x, y)):
-        # detection of a click inside a circle
+        '''
+            Update internal data
+        '''
+        # detection of a click inside a point
         index = 0
         for cpt, point in enumerate(self.matrix[0][1:]):
             real_x, real_y = self._get_corres_pixel(point.x, point.y)
@@ -182,7 +187,7 @@ class Voyage(algo.Algo):
                 index = cpt + 1
                 break
 
-        if index:  # if the click is on a circle
+        if index:  # if the click is on a point
             if self.selected is None:
                 self.first_som = index
                 self.nbselected += 1
