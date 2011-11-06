@@ -6,8 +6,7 @@ import random
 import math
 import pygame
 
-import graphe
-import algo
+import algorithmes.algo
 
 
 class Sommet:
@@ -24,19 +23,18 @@ class Sommet:
         return str(self.nom)
 
 
-class Voyage(algo.Algo):
+class Voyage(algorithmes.algo.Algo):
     '''
         Traveler saleman's problem
     '''
     def __init__(self, display):
-        algo.Algo.__init__(self, display)
+        algorithmes.algo.Algo.__init__(self, display)
         nbpoints = 10
         self.minx = 0.0
-        self.maxx = 10.0
+        self.maxx = 100.0
         self.miny = 0.0
-        self.maxy = 10.0
-        self.matrix = self._create_matrix(nbpoints, self.minx, self.maxx,
-                self.miny, self.maxy)
+        self.maxy = 100.0
+        self.matrix = self._create_matrix(nbpoints)
         self.text = 'Voyageur de commerce'
         self.first_som = 1
 
@@ -54,7 +52,7 @@ class Voyage(algo.Algo):
     def __repr__(self):
         return '\n'.join([str(i) for i in self.matrix])
 
-    def _create_matrix(self, nbpoints, minx, maxx, miny, maxy):
+    def _create_matrix(self, nbpoints):
         '''
             return a matrix like :
                 T 1 2 3 4 ... nbpoints
@@ -72,8 +70,8 @@ class Voyage(algo.Algo):
 
         #fill the first row and first col with points
         for cpt in xrange(nbpoints):
-            x = random.randint(minx, maxx)
-            y = random.randint(miny, maxy)
+            x = random.randint(self.minx, self.maxx)
+            y = random.randint(self.miny, self.maxy)
             matrix[0][cpt] = matrix[cpt][0] = Sommet(cpt, x, y)
         matrix[0][0] = nbpoints - 1
 
@@ -87,7 +85,8 @@ class Voyage(algo.Algo):
                     y1 = matrix[0][ip].y
                     x2 = matrix[jp][0].x
                     y2 = matrix[jp][0].y
-                    distance = math.sqrt(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2))
+                    distance = math.sqrt(math.pow(x2 - x1, 2)
+                            + math.pow(y2 - y1, 2))
                     matrix[ip][jp] = distance
         return matrix
 
@@ -112,17 +111,22 @@ class Voyage(algo.Algo):
         for i in xrange(1, self.matrix[0][0]):
             minimum = float('inf')
             for j in xrange(1, self.matrix[0][0] + 1):
-                # travel trough the list of point, and search the nearest one
-                if 0 < self.matrix[ligne][j] < minimum and self.matrix[0][j].visite is False:
+                # travel trough the list of point,
+                # and search the nearest one
+                if 0 < self.matrix[ligne][j] < minimum and\
+                    self.matrix[0][j].visite is False:
                     # if the point is near than everything founded
                     # for now, and that it's not marked as visited
                     #mark it as the nearest
                     minimum = self.matrix[ligne][j]
                     tmp = j
             if minimum != float('inf'):
-                self.computed_path.append(self.matrix[0][tmp])  # add the point to the path
-                self.matrix[0][tmp].visite = True  # mark it as visited
-                self.computed_len += minimum  # add the travelled distance to the total one
+                # add the point to the path
+                self.computed_path.append(self.matrix[0][tmp])
+                # mark it as visited
+                self.matrix[0][tmp].visite = True
+                # add the travelled distance to the total one
+                self.computed_len += minimum
                 ligne = tmp
         self.computed_len += self.matrix[1][tmp]
         self._reset()
@@ -140,39 +144,50 @@ class Voyage(algo.Algo):
         '''
             Drawing method
         '''
-        width, height = self.display.get_size()
-
         for point in self.matrix[0][1:]:  # draw points
-            pygame.draw.circle(self.display, (255, 0, 0), self._get_corres_pixel(point.x, point.y), 10, 0)
+            pygame.draw.circle(self.display, (255, 0, 0),
+                    self._get_corres_pixel(point.x, point.y), 10, 0)
 
-        if len(self.user_path) > 0:  # if the user has selected more than 1 point
+        if len(self.user_path) > 0:
+            # if the user has selected more than 1 point
             for i in xrange(len(self.user_path) - 1):  # draw user's path
-                x, y = self._get_corres_pixel(self.user_path[i].x, self.user_path[i].y)
-                x1, y1 = self._get_corres_pixel(self.user_path[i + 1].x, self.user_path[i + 1].y)
-                pygame.draw.line(self.display, (255, 0, 0), (x, y), (x1, y1), 5)
+                x, y = self._get_corres_pixel(self.user_path[i].x,
+                        self.user_path[i].y)
+                x1, y1 = self._get_corres_pixel(self.user_path[i + 1].x,
+                        self.user_path[i + 1].y)
+                pygame.draw.line(self.display, (255, 0, 0), (x, y),
+                        (x1, y1), 5)
 
-        if self.nbselected == self.matrix[0][0]:  # if all points have been selected
+        if self.nbselected == self.matrix[0][0]:
+            # if all points have been selected
             last = self.matrix[0][0] - 1
             for i in xrange(last):  # draw the computed path
-                x, y = self._get_corres_pixel(self.computed_path[i].x, self.computed_path[i].y)
-                x1, y1 = self._get_corres_pixel(self.computed_path[i + 1].x, self.computed_path[i + 1].y)
+                x, y = self._get_corres_pixel(self.computed_path[i].x,
+                        self.computed_path[i].y)
+                x1, y1 = self._get_corres_pixel(self.computed_path[i + 1].x,
+                        self.computed_path[i + 1].y)
                 pygame.draw.line(self.display, (0, 255, 0), (x, y), (x1, y1))
 
             #raccord the user's path first point to the last one
-            x, y = self._get_corres_pixel(self.computed_path[0].x, self.computed_path[0].y)
-            x1, y1 = self._get_corres_pixel(self.user_path[last].x, self.user_path[last].y)
+            x, y = self._get_corres_pixel(self.computed_path[0].x,
+                    self.computed_path[0].y)
+            x1, y1 = self._get_corres_pixel(self.user_path[last].x,
+                    self.user_path[last].y)
             pygame.draw.line(self.display, (255, 0, 0), (x, y), (x1, y1), 5)
 
             # raccord first compted'spath selected point to the last one
-            x1, y1 = self._get_corres_pixel(self.computed_path[last].x, self.computed_path[last].y)
+            x1, y1 = self._get_corres_pixel(self.computed_path[last].x,
+                    self.computed_path[last].y)
             pygame.draw.line(self.display, (0, 255, 0), (x, y), (x1, y1))
 
         #user's length
-        text = self.font.render('User: ' + str(self.user_len), True, (255, 0, 0))
+        text = self.font.render('User: ' +
+                str(int(self.user_len)), True, (255, 0, 0))
         self.display.blit(text, (10, 10))
 
         #computed lenght
-        text = self.font.render('Computed: ' + str(self.computed_len), True, (255, 0, 0))
+        text = self.font.render('Computed: ' +
+                str(int(self.computed_len)), True, (255, 0, 0))
         self.display.blit(text, (10, 20))
 
     def _update(self, (x, y)):
@@ -188,18 +203,22 @@ class Voyage(algo.Algo):
                 break
 
         if index:  # if the click is on a point
-            if self.selected is None:
+            if self.selected is None:  # if click is on first point
                 self.first_som = index
                 self.nbselected += 1
                 self.matrix[0][index].visite = True
                 self.selected = self.matrix[0][index]
-                self._solve(self.matrix[0][index].nom)  # compute the optimal solution
+                # compute optimal solution
+                self._solve(self.matrix[0][index].nom)
                 self.user_path.append(self.matrix[0][index])
             elif self.matrix[0][index].visite is False:
-                self.user_len += self.matrix[index][self.selected.nom]  # incrementation of the lenght
+                # click on a non visited point
+                self.user_len += self.matrix[index][self.selected.nom]
                 self.user_path.append(self.matrix[0][index])
                 self.nbselected += 1
                 self.matrix[0][index].visite = True
                 self.selected = self.matrix[0][index]
-            if len(self.user_path) == self.matrix[0][0]:  # if every points have been selected
-                self.user_len += self.matrix[index][self.first_som]  # add the distance between first and last point
+            if len(self.user_path) == self.matrix[0][0]:
+                # if every points have been selected
+                # add the distance between first and last point
+                self.user_len += self.matrix[index][self.first_som]
