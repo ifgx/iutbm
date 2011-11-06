@@ -1,4 +1,9 @@
+'''
+    File for generic stuffs
+'''
+
 import pygame
+
 
 class Algo:
     '''
@@ -60,7 +65,6 @@ class Algo:
         '''
             Update the state of the problem:
             this method is called only on mouse click.
-            (FIXME : call this method every frames ?)
             x and y represent the position of
             the mouse click.
         '''
