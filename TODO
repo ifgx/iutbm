@@ -1,2 +1,11 @@
 Voyage:
     Implement a better algorithm
+
+Plus_court_chemin:
+    Translations
+    FIXME
+    Fix weird camelcase for variables : use underscrore instead
+
+Genreal:
+    pep8 on every files
+    pylint on every files
