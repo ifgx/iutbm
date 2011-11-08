@@ -83,40 +83,33 @@ class Graphe(algo.Algo):
         self.nextSommet(self.start)
 
     def _draw(self):
-        if self.state_game == 0 or self.state_game == 1: # if we are in the state 0 or 1
-            text = self.font.render("User: " + str(self.weight) + "Path: " + str([i.indice for i in self.selected]), True, (0,255, 0) )
-            textRect = text.get_rect()
-            textRect.top = textRect.left = 30
-            self.display.blit(text,textRect)
-            for i in xrange(self.numSommet): 
-                [self.drawLien(i, j) for j in xrange(i) if self.Matrix[i][j] != float('inf')]# if the link between two point is define in the matrix then we draw the link 
+        text = self.font.render("User: " + str(self.weight) + "Path: " + str([i.indice for i in self.selected]), True, (0,255, 0) )
+        textRect = text.get_rect()
+        textRect.top = textRect.left = 30
+        self.display.blit(text,textRect)
+        for i in xrange(self.numSommet): 
+            [self.drawLien(i, j) for j in xrange(i) if self.Matrix[i][j] != float('inf')]# if the link between two point is define in the matrix then we draw the link 
 
-            [self.display.blit(i.image, i.rect) for i in self.LSommet]# then we draw the picture of the town
+        [self.display.blit(i.image, i.rect) for i in self.LSommet]# then we draw the picture of the town
 
-            [pygame.draw.rect(self.display, (255, 0, 255), i.rect,2) for i in self.selected]# then we draw the weight of the link
+        [pygame.draw.rect(self.display, (255, 0, 255), i.rect,2) for i in self.selected]# then we draw the weight of the link
 
-            pygame.draw.rect(self.display,(255,0,0),self.start.rect,2)
-            pygame.draw.rect(self.display,(0,255,0),self.end.rect,2)
+        pygame.draw.rect(self.display,(255,0,0),self.start.rect,2)
+        pygame.draw.rect(self.display,(0,255,0),self.end.rect,2)
 
         if self.state_game == 1: 
             if (self.weight > self.end.score):
                 text = self.font.render("You did not found the optimal path",True , (0,255,0))
             else:
-                text = self.font.render("Congratulation : you found the optimal path wiht the lenght " + str(self.end.score),True , (0,255,0))
+                text = self.font.render("Congratulation : you found the optimal path wiht the lenght " + str(self.end.score).replace('[',' '),True , (0,255,0))
             textRect = text.get_rect()
             textRect.center =(self.center_x, 10)
             self.display.blit(text,textRect)
 
-    def _help(self): #FIXME : wtf ?
-        if self.state_game == 2:
-            self.state_game = 0
-        else:
-            self.state_game = 2
-
     def _solve(self):
         NotChecked = self.LSommet[:]
         while NotChecked:
-            sommet1 = min(NotChecked, key =visiterS )
+            sommet1 = min(NotChecked, key = lambda x : x.visited == False and x.score or float('inf'))
             sommet1.visited  = True
             NotChecked.remove(sommet1)
             self.misejour(sommet1)
@@ -179,17 +172,10 @@ class Sommet(object):
     '''
     def __init__(self, indice, x, y, image):
         self.indice = indice
-        self.score = float('inf')
-        self.visited = False
+        self.score = float('inf') # the score of the sommet ,at the beginning the value is +infini 
+        self.visited = False # if the sommet has been visited
         self.previous = None  # the previous Sommet
         self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
-
-
-def visiterS(x): #FIXME : wtf ? Inline this !
-    if x.visited == False:
-        return x.score
-    else:
-        return float('inf')
 
