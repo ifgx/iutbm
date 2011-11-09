@@ -146,6 +146,35 @@ class Voyage(algorithmes.algo.Algo):
         textRect.center = center
         self.display.blit(text, textRect)
 
+    def _draw_finished(self):
+        ''''
+            Draw what has to be drawn when
+            every points have been selected
+        '''
+        # if all points have been selected
+        last = self.matrix[0][0] - 1
+        for i in xrange(last):  # draw the computed path
+            x, y = self._get_corres_pixel(self.computed_path[i].x,
+                    self.computed_path[i].y)
+            x1, y1 = self._get_corres_pixel(self.computed_path[i + 1].x,
+                    self.computed_path[i + 1].y)
+            pygame.draw.line(self.display, (0, 255, 0), (x, y), (x1, y1))
+
+        #raccord the user's path first point to the last one
+        x, y = self._get_corres_pixel(self.computed_path[0].x,
+                self.computed_path[0].y)
+        x1, y1 = self._get_corres_pixel(self.user_path[last].x,
+                self.user_path[last].y)
+        pygame.draw.line(self.display, (255, 0, 0), (x, y), (x1, y1), 5)
+
+        center = (x + x1) / 2, (y+ y1) / 2
+        self._draw_distance(0, center)
+
+        # raccord first compted'spath selected point to the last one
+        x1, y1 = self._get_corres_pixel(self.computed_path[last].x,
+                self.computed_path[last].y)
+        pygame.draw.line(self.display, (0, 255, 0), (x, y), (x1, y1))
+
     def _draw(self):
         '''
             Drawing method
@@ -169,29 +198,7 @@ class Voyage(algorithmes.algo.Algo):
                 self._draw_distance(i, center)
 
         if self.nbselected == self.matrix[0][0]:
-            # if all points have been selected
-            last = self.matrix[0][0] - 1
-            for i in xrange(last):  # draw the computed path
-                x, y = self._get_corres_pixel(self.computed_path[i].x,
-                        self.computed_path[i].y)
-                x1, y1 = self._get_corres_pixel(self.computed_path[i + 1].x,
-                        self.computed_path[i + 1].y)
-                pygame.draw.line(self.display, (0, 255, 0), (x, y), (x1, y1))
-
-            #raccord the user's path first point to the last one
-            x, y = self._get_corres_pixel(self.computed_path[0].x,
-                    self.computed_path[0].y)
-            x1, y1 = self._get_corres_pixel(self.user_path[last].x,
-                    self.user_path[last].y)
-            pygame.draw.line(self.display, (255, 0, 0), (x, y), (x1, y1), 5)
-
-            center = (x + x1) / 2, (y+ y1) /2
-            self._draw_distance(0, center)
-
-            # raccord first compted'spath selected point to the last one
-            x1, y1 = self._get_corres_pixel(self.computed_path[last].x,
-                    self.computed_path[last].y)
-            pygame.draw.line(self.display, (0, 255, 0), (x, y), (x1, y1))
+            self._draw_finished()
 
         #user's length
         text = self.font.render('User: ' +
