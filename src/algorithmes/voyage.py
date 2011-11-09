@@ -152,6 +152,15 @@ class Voyage(algorithmes.algo.Algo):
                 pygame.draw.line(self.display, (255, 0, 0), (x, y),
                         (x1, y1), 5)
 
+                # display the distance bewteen two points
+
+                #get the distance between 2 points
+                distance = str(int(self.matrix[self.user_path[i].name][self.user_path[i+1].name]))
+                text = self.font.render(distance, True, (0, 255, 0), (0, 0, 255))
+                textRect = text.get_rect()
+                textRect.center = (x + x1) /2, (y + y1)/2
+                self.display.blit(text, textRect)
+
         if self.nbselected == self.matrix[0][0]:
             # if all points have been selected
             last = self.matrix[0][0] - 1
@@ -168,6 +177,15 @@ class Voyage(algorithmes.algo.Algo):
             x1, y1 = self._get_corres_pixel(self.user_path[last].x,
                     self.user_path[last].y)
             pygame.draw.line(self.display, (255, 0, 0), (x, y), (x1, y1), 5)
+
+            # display the distance bewteen two points
+
+            #get the distance between 2 points
+            distance = str(int(self.matrix[self.user_path[i].name][self.user_path[i+1].name]))
+            text = self.font.render(distance, True, (0, 255, 0), (0, 0, 255))
+            textRect = text.get_rect()
+            textRect.center = (x + x1) / 2, (y + y1) / 2
+            self.display.blit(text, textRect)
 
             # raccord first compted'spath selected point to the last one
             x1, y1 = self._get_corres_pixel(self.computed_path[last].x,
