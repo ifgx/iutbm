@@ -80,15 +80,13 @@ class iutbm:
                             inAlgo = True
                             inHelp = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 1:  # left click
-                        pos = event.pos
+                    pos = event.pos
 
             # update
             if inMenu:
                 self.menu.update()
-            elif inAlgo:
-                if pos != (0, 0):
-                    algo._update(pos)
+            elif inAlgo and pos != (0, 0):
+                algo._update(pos, event.button)
 
             # drawing's handling
             self.display.fill((0, 0, 0))  # black background
