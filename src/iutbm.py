@@ -25,7 +25,8 @@ class iutbm:
 
         # table of all algos
         self.drawalgo = ['QUIT', voyage.Voyage(self.display),
-        plus_court.Graphe(self.display), 'FIXME', 'FIXME', 'FIXME']
+        plus_court.Graphe(self.display), couplage.Couplage(self.display),
+        'FIXME', 'FIXME']
 
         # caption
         pygame.display.set_caption('IUTBM')
