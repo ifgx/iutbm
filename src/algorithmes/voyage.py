@@ -140,7 +140,7 @@ class Voyage(algorithmes.algo.Algo):
             and self.matrix[i+1]
         '''
         #get the distance between 2 points
-        distance = str(int(self.matrix[self.user_path[i].name][self.user_path[i+1].name]))
+        distance = str(self.matrix[self.user_path[i].name][self.user_path[i+1].name])
         text = self.font.render(distance, True, (0, 255, 0), (0, 0, 255))
         textRect = text.get_rect()
         textRect.center = center
@@ -195,18 +195,26 @@ class Voyage(algorithmes.algo.Algo):
 
         #user's length
         text = self.font.render('User: ' +
-                str(int(self.user_len)), True, (255, 0, 0))
+                str(self.user_len), True, (255, 0, 0))
         self.display.blit(text, (10, 10))
 
         #computed lenght
         text = self.font.render('Computed: ' +
-                str(int(self.computed_len)), True, (255, 0, 0))
+                str(self.computed_len), True, (255, 0, 0))
         self.display.blit(text, (10, 20))
 
-    def _update(self, (x, y)):
+    def _update(self, (x, y), button):
         '''
             Update internal data
         '''
+        if button != 1:  # cancel the last action on right-clic
+            p1 = self.user_path[-1].name
+            p2 = self.user_path[-2].name
+            self.user_len -= self.matrix[p1][p2]
+            self.matrix[0][p1].visite = False
+            self.user_path.pop()
+            return
+
         # detection of a click inside a point
         index = 0
         for cpt, point in enumerate(self.matrix[0][1:]):
