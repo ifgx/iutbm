@@ -134,6 +134,18 @@ class Voyage(algorithmes.algo.Algo):
         self.computed_len += self.matrix[1][tmp]
         self._reset()
 
+    def _draw_distance(self, i, center):
+        '''
+            Draw the distance between self.matrix[i]
+            and self.matrix[i+1]
+        '''
+        #get the distance between 2 points
+        distance = str(int(self.matrix[self.user_path[i].name][self.user_path[i+1].name]))
+        text = self.font.render(distance, True, (0, 255, 0), (0, 0, 255))
+        textRect = text.get_rect()
+        textRect.center = center
+        self.display.blit(text, textRect)
+
     def _draw(self):
         '''
             Drawing method
@@ -152,14 +164,9 @@ class Voyage(algorithmes.algo.Algo):
                 pygame.draw.line(self.display, (255, 0, 0), (x, y),
                         (x1, y1), 5)
 
-                # display the distance bewteen two points
-
                 #get the distance between 2 points
-                distance = str(int(self.matrix[self.user_path[i].name][self.user_path[i+1].name]))
-                text = self.font.render(distance, True, (0, 255, 0), (0, 0, 255))
-                textRect = text.get_rect()
-                textRect.center = (x + x1) /2, (y + y1)/2
-                self.display.blit(text, textRect)
+                center = (x + x1) / 2, (y+ y1) /2
+                self._draw_distance(i, center)
 
         if self.nbselected == self.matrix[0][0]:
             # if all points have been selected
@@ -178,14 +185,8 @@ class Voyage(algorithmes.algo.Algo):
                     self.user_path[last].y)
             pygame.draw.line(self.display, (255, 0, 0), (x, y), (x1, y1), 5)
 
-            # display the distance bewteen two points
-
-            #get the distance between 2 points
-            distance = str(int(self.matrix[self.user_path[i].name][self.user_path[i+1].name]))
-            text = self.font.render(distance, True, (0, 255, 0), (0, 0, 255))
-            textRect = text.get_rect()
-            textRect.center = (x + x1) / 2, (y + y1) / 2
-            self.display.blit(text, textRect)
+            center = (x + x1) / 2, (y+ y1) /2
+            self._draw_distance(0, center)
 
             # raccord first compted'spath selected point to the last one
             x1, y1 = self._get_corres_pixel(self.computed_path[last].x,
