@@ -7,6 +7,7 @@ import math
 from ui import rotatingMenu as rM
 from algorithmes import voyage
 from algorithmes import plus_court
+from algorithmes import couplage
 
 
 class iutbm:
