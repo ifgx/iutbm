@@ -214,7 +214,7 @@ class Voyage(algorithmes.algo.Algo):
         '''
             Update internal data
         '''
-        if button != 1:  # cancel the last action on right-clic
+        if button != 1 and len(self.user_path) != self.matrix[0][0]:  # cancel the last action on right-clic
             p1 = self.user_path[-1].name
             p2 = self.user_path[-2].name
             self.user_len -= self.matrix[p1][p2]
