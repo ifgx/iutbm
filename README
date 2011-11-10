@@ -7,3 +7,17 @@ We are currently focussing on ehe following algorithms :
 - ...
 
 /!\ This project use 4 spaces for indent.
+
+
+CONTROLS:
+    IN MENU:
+        Left/Right arrows : Move in the menu
+        Up arrow/Enter : enter in the specified algorithm
+
+    IN ALGO:
+        Left click : selection
+        Right clic : undo
+        H : help
+
+    IN GENERAL
+        Q/Escape : step back
