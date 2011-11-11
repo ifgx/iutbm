@@ -7,7 +7,7 @@ import math
 from ui import rotatingMenu as rM
 from algorithmes import voyage
 from algorithmes import plus_court
-from algorithmes import couplage
+#from algorithmes import couplage
 
 
 class iutbm:
@@ -26,7 +26,7 @@ class iutbm:
 
         # table of all algos
         self.drawalgo = ['QUIT', voyage.Voyage(self.display),
-        plus_court.Graphe(self.display), couplage.Couplage(self.display),
+        plus_court.Graphe(self.display), 'MERCI DE TESTER AVANT DE COMMIT POUR EVITER DE PETER LE BUILD!', #couplage.ModelisationCouplage(self.display),
         'FIXME', 'FIXME']
 
         # caption
