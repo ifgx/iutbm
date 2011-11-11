@@ -16,27 +16,41 @@ class Graphe(algo.Algo):
     def __init__(self,window):
         algo.Algo.__init__(self, window)
         self.numSommet = 7
-        minimum_weight = 3 
-        maximum_weight = 20 
         self.state_game = self.weight = 0 # the state 0 correspond to the usall state of the game
         # the state 1 correspond to the end of the game
         # the state 2 correspond to the state of help
-        self.next = [] # next sommet that are avaible from the current sommet
-        self.selected = [] # the list of the sommet that are currently selected
-
+        self.next_sommet = [] # next_sommet is a list od the sommet that are avaible from the current sommet
+        self.selected = [] # list of the sommet that are currently selected
         self.center_x = self.display.get_width() / 2
         self.center_y = self.display.get_height() / 2
-        if self.display.get_width() > self.display.get_height():
-            self.rayon = self.display.get_height() / 3
-        else:
-            self.rayon = self.display.get_width() / 3
+        
 
+        self.start = None
+        self.current = None 
         self.LSommet = []
-        # creation of the list of sommet and the coordonate
+
+        self.init_LSommet()
+
+        # creation of an adjacency matrix 
+        self.Matrix = [[float('inf') for i in xrange(self.numSommet)] for i in xrange(self.numSommet)]
+
+        minimum_weight = 3 
+        maximum_weight = 20 
+        self.init_connex(minimum_weight,maximum_weight)
+        self.init_add_link(minimum_weight,maximum_weight)
+
+        self.nextSommet(self.start)
+
+    def init_LSommet(self):
+        # creation of the list of sommet and the coordonate by using a circle
+        if self.display.get_width() > self.display.get_height():
+            rayon = self.display.get_height() / 3
+        else:
+            rayon = self.display.get_width() / 3
         tmp = 2 * math.pi / (self.numSommet - 2)
         for i in xrange(self.numSommet):
-            x = self.center_x + math.cos(tmp * i) * self.rayon
-            y = self.center_y + math.sin(tmp * i) * self.rayon
+            x = self.center_x + math.cos(tmp * i) * rayon
+            y = self.center_y + math.sin(tmp * i) * rayon
             self.LSommet.append(Sommet(i, x, y, 'algorithmes/ville.jpg'))
         self.start = self.LSommet[0]
         self.current = self.start
@@ -46,9 +60,7 @@ class Graphe(algo.Algo):
         self.end = self.LSommet[self.numSommet - 1]
         self.end.rect.center=(self.center_x* 1.6,self.center_y * 1.6)
 
-        # creation of an adjacency matrix 
-        self.Matrix = [[float('inf') for i in xrange(self.numSommet)] for i in xrange(self.numSommet)]
-
+    def init_connex(self,minimum_weight, maximum_weight):
         # creation of a connex graphe
         a = [i for i in xrange(self.numSommet - 1)]
         current = 0 
@@ -64,6 +76,7 @@ class Graphe(algo.Algo):
                 self.Matrix[current][self.numSommet - 1] = weight
                 self.Matrix[self.numSommet - 1][current] = weight
 
+    def init_add_link(self,minimum_weight,maximum_weight):
         # adittion of some link 
         for i in xrange(self.numSommet):
             for j in xrange(i):
@@ -80,10 +93,8 @@ class Graphe(algo.Algo):
         self.Matrix[self.start.indice][self.end.indice]= float('inf')
         self.Matrix[self.end.indice][self.start.indice]= float('inf')
 
-        self.nextSommet(self.start)
-
     def _draw(self):
-        text = self.font.render("User: " + str(self.weight) + "Path: " + str([i.indice for i in self.selected]), True, (0,255, 0) )
+        text = self.font.render("User: " + str(self.weight) + "    Path: " + ', '.join([str(i.indice) for i in self.selected]), True, (0,255, 0) )
         textRect = text.get_rect()
         textRect.top = textRect.left = 30
         self.display.blit(text,textRect)
@@ -122,7 +133,7 @@ class Graphe(algo.Algo):
                     self.weight = self.state_game = 0
                     self.selected = []
                     self.nextSommet(i)
-                if i in set(self.next): # if the sommet is one of sommet in list of the next sommet avaible
+                if i in set(self.next_sommet): # if the sommet is one of sommet in list of the next sommet avaible
                     self.weight += self.Matrix[self.current.indice][i.indice] # then you add at the current weight the weight of the selected sommet
                     self.selected.append(i) 
                     self.nextSommet(i)
@@ -148,23 +159,20 @@ class Graphe(algo.Algo):
         end = self.LSommet[j].rect
         position = self.middle(start,end)
         font = pygame.font.Font(None, 30)
-        text = font.render(str(self.Matrix[i][j]), True, (0,255, 0),(0,0,100))
+        text = font.render(str(self.Matrix[i][j]), True, (255,0, 0),(0,0,0))
         textRect = text.get_rect()
         textRect.center = position
         pygame.draw.line(self.display,(255,255,255),start.center,end.center,3)
         self.display.blit(text,textRect)
 
     def nextSommet(self, sommet):
-        self.next = []
+        self.next_sommet = []
         self.current = sommet
         for i in self.LSommet:
             if self.Matrix[sommet.indice][i.indice] != float('inf'):
-                self.next.append(i)
+                self.next_sommet.append(i)
 
-    def show(self):
-        print('start: %s' % self.start.indice)
-        print('end: %s' % self.end)
-        print(''.join([str(i) for i in self.Matrix]))
+
 
 class Sommet(object):
     '''
