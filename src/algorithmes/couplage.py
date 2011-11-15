@@ -1,5 +1,58 @@
 #-*-coding:utf8-*-
-from random import choice
+from random import choice, randrange
+
+import pygame
+
+class Couplage:
+    def __init__(self, display):
+        self.display = display
+        
+        # Génération aléatoire des fourmis et des desserts
+        nbFourmis = randrange(3, 6)
+        nbDesserts = randrange(3, 6)
+        
+        theDir = "algorithmes/couplage-data/"
+        
+        allFourmis = [ ("Fourmi rouge", "fourmi-rouge.png"), ("Fourmi verte", "fourmi-verte.png"), ("Fourmi bleue", "fourmi-bleue.png"), ("Fourmi jaune", "fourmi-jaune.png"), ("Fourmi orange", "fourmi-orange.png") ]
+        
+        self.imgFourmis = [pygame.image.load(theDir + img).convert_alpha() for _, img in allFourmis]
+        
+        allDesserts = [ ("Mars", "mars.png"), ("Pomme", "pomme.png"), ("Flan", "flan.png"), ("Twix", "twix.png"), ("Cerise", "cerise.png") ]
+        
+        self.imgDesserts = [pygame.image.load(theDir + img).convert_alpha() for _, img in allDesserts]
+        
+        self.fourmis = [allFourmis[i] for i in range(nbFourmis)]
+        self.desserts = [allDesserts[i] for i in range(nbDesserts)]
+    
+    def _draw(self):
+        #titre = self.font.render("Bienvenue au Couplage", True, (0,255, 0) )
+        #titreRect = titre.get_rect()
+        #titreRect.top = 50
+        #titreRect.left = 50
+        #self.display.blit(text,textRect)
+        
+        for i, fourmi in enumerate(self.fourmis): 
+            self.display.blit(self.imgFourmis[i], (50, 150 * i))
+        
+        for i, dessert in enumerate(self.desserts):
+            self.display.blit(self.imgDesserts[i], (500, 150 * i))
+
+        if False:
+            [self.display.blit(i.image, i.rect) for i in self.LSommet]# then we draw the picture of the town
+
+            [pygame.draw.rect(self.display, (255, 0, 255), i.rect,2) for i in self.selected]# then we draw the weight of the link
+
+            pygame.draw.rect(self.display,(255,0,0),self.start.rect,2)
+            pygame.draw.rect(self.display,(0,255,0),self.end.rect,2)
+
+            if self.state_game == 1: 
+                if (self.weight > self.end.score):
+                    text = self.font.render("You did not found the optimal path",True , (0,255,0))
+                else:
+                    text = self.font.render("Congratulation : you found the optimal path wiht the lenght " + str(self.end.score).replace('[',' '),True , (0,255,0))
+                textRect = text.get_rect()
+                textRect.center =(self.center_x, 10)
+                self.display.blit(text,textRect)
 
 class ModelisationCouplage:
     """
@@ -127,18 +180,20 @@ class ModelisationCouplage:
                 # print("- Fin du tour, il reste", len(self.preferences), "couples")
                 # print("- Couples restants:", self.preferences, ", couples trouvés:", self.solution)
 
-# algorithme
-listeFourmis = [("Fourmi A", ""), ("Fourmi B", ""), ("Fourmi C", ""), ("Fourmi D", ""), ("Fourmi E", "")]
-listeDesserts = [("Flan", ""), ("Banane", ""), ("Gâteau au chocolat", ""), ("Glace à la fraise", ""), ("Glace à la vanille", "")]
 
-mod = ModelisationCouplage(listeFourmis, listeDesserts, 13)
+if False:
+    # algorithme
+    listeFourmis = [("Fourmi A", ""), ("Fourmi B", ""), ("Fourmi C", ""), ("Fourmi D", ""), ("Fourmi E", "")]
+    listeDesserts = [("Flan", ""), ("Banane", ""), ("Gâteau au chocolat", ""), ("Glace à la fraise", ""), ("Glace à la vanille", "")]
 
-print "Préferences :"
-mod.afficher(mod.preferences)
+    mod = ModelisationCouplage(listeFourmis, listeDesserts, 13)
 
-mod.resoudre()
+    print "Préferences :"
+    mod.afficher(mod.preferences)
 
-print "\n\nSolution :"
-mod.afficher(mod.solution)
+    mod.resoudre()
+
+    print "\n\nSolution :"
+    mod.afficher(mod.solution)
 
 
