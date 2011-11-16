@@ -24,7 +24,6 @@ class Graphe(algo.Algo):
         self.center_x = self.display.get_width() / 2
         self.center_y = self.display.get_height() / 2
         
-
         self.start = None
         self.current = None 
         self.LSommet = []
@@ -126,20 +125,31 @@ class Graphe(algo.Algo):
             self.misejour(sommet1)
         self.state_game = 1
 
-    def _update(self, (x, y)): 
-        for i in self.LSommet: # for all the sommet in the graphe
-            if i.rect.collidepoint(x, y) : # if the current position of the mouse is over the rect of the sommet
-                if i == self.start: # if this sommet is the start then we go back to the start
-                    self.weight = self.state_game = 0
-                    self.selected = []
-                    self.nextSommet(i)
-                if i in set(self.next_sommet): # if the sommet is one of sommet in list of the next sommet avaible
-                    self.weight += self.Matrix[self.current.indice][i.indice] # then you add at the current weight the weight of the selected sommet
-                    self.selected.append(i) 
-                    self.nextSommet(i)
-                    self.state_game = 0 # we are in the state 0
-                    if i == self.end: # if the sommet is the end we solve the graphe
-                        self._solve()
+    def _update(self, (x, y),button): 
+        if button == 1 and self.end not in self.selected:
+            for i in self.LSommet: # for all the sommet in the graphe
+                if i.rect.collidepoint(x, y) : # if the current position of the mouse is over the rect of the sommet
+                    if i == self.start: # if this sommet is the start then we go back to the start
+                        self.weight = self.state_game = 0
+                        self.selected = []
+                        self.nextSommet(i)
+                    if i in set(self.next_sommet): # if the sommet is one of sommet in list of the next sommet avaible
+                        self.weight += self.Matrix[self.current.indice][i.indice] # then you add at the current weight the weight of the selected sommet
+                        self.selected.append(i) 
+                        self.nextSommet(i)
+                        self.state_game = 0 # we are in the state 0
+                        if i == self.end: # if the sommet is the end we solve the graphe
+                            self._solve()
+        if button == 3:
+            if len(self.selected)<=1:
+                self.selected = []
+                self.weight = 0
+                self.nextSommet(self.start)
+            else:
+                self.weight -= self.selected[-1].score
+                self.selected.pop()
+                self.nextSommet(self.selected[-1])
+            
 
     def middle(self, sommet2, sommet1): # return a tuple what is the middle of the segement between the two sommet
         x = sommet2.centery- sommet1.centery
@@ -159,10 +169,10 @@ class Graphe(algo.Algo):
         end = self.LSommet[j].rect
         position = self.middle(start,end)
         font = pygame.font.Font(None, 30)
-        text = font.render(str(self.Matrix[i][j]), True, (255,0, 0),(0,0,0))
+        text = font.render(str(self.Matrix[i][j]), True, (255,255, 255),(0,0,0))
         textRect = text.get_rect()
         textRect.center = position
-        pygame.draw.line(self.display,(255,255,255),start.center,end.center,3)
+        pygame.draw.line(self.display,(0,0,255),start.center,end.center,3)
         self.display.blit(text,textRect)
 
     def nextSommet(self, sommet):
