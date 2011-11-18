@@ -36,6 +36,7 @@ class Voyage(algorithmes.algo.Algo):
         self.maxy = 100.0
         self.matrix = self._create_matrix(nbpoints)
         self.text = 'Voyageur de commerce'
+        self.description = 'Hello,# I\'m a test,# and I love you :3'
         self.first_som = -1  # will be set later
 
         #lenght of the path

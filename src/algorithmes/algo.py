@@ -16,7 +16,7 @@ class Algo:
 
         #help screen
         self.text = 'generic algo'
-        self.description = 'algorithm\'s description'
+        self.description = 'algorithm\'s description# for a carriage return#>o_/'
 
         #repere
         self.minx = 0.0
@@ -36,8 +36,9 @@ class Algo:
         '''
         text = self.font.render(self.text, True, (255, 0, 0))
         self.display.blit(text, (10, 10))
-        text = self.font.render(self.description, True, (255, 0, 0))
-        self.display.blit(text, (10, 30))
+        for cpt, line in enumerate(self.description.split('#')):
+            text = self.font.render(line, True, (255, 0, 0))
+            self.display.blit(text, (10, 10 * cpt + 30))
 
     def _get_corres_pixel(self, x, y):
         '''
