@@ -18,6 +18,8 @@ class Sommet:
         self.x = x
         self.y = y
         self.visite = False
+        self.pix = pygame.image.load('algorithmes/ville.jpg').convert_alpha()
+        self.rect = self.pix.get_rect()
 
     def __repr__(self):
         return str(self.name)
@@ -180,10 +182,6 @@ class Voyage(algorithmes.algo.Algo):
         '''
             Drawing method
         '''
-        for point in self.matrix[0][1:]:  # draw points
-            pygame.draw.circle(self.display, (255, 0, 0),
-                    self._get_corres_pixel(point.x, point.y), 10, 0)
-
         if len(self.user_path) > 0:
             # if the user has selected more than 1 point
             for i in xrange(len(self.user_path) - 1):  # draw user's path
@@ -197,6 +195,10 @@ class Voyage(algorithmes.algo.Algo):
                 #get the distance between 2 points
                 center = (x + x1) / 2, (y+ y1) /2
                 self._draw_distance(i, center)
+
+        for point in self.matrix[0][1:]:  # draw points
+            self.display.blit(point.pix, self._get_corres_pixel(point.x, point.y))
+
 
         if self.nbselected == self.matrix[0][0]:
             self._draw_finished()
@@ -228,7 +230,10 @@ class Voyage(algorithmes.algo.Algo):
         index = 0
         for cpt, point in enumerate(self.matrix[0][1:]):
             real_x, real_y = self._get_corres_pixel(point.x, point.y)
-            if real_x - 10 < x < real_x + 10 and real_y - 10 < y < real_y + 10:
+            print point.rect
+            print x, y
+            if real_x < x < point.rect[3] + real_x + 10 and\
+                    real_y < y < real_y + point.rect[3]:
                 index = cpt + 1
                 break
 
