@@ -18,8 +18,6 @@ class Sommet:
         self.x = x
         self.y = y
         self.visite = False
-        self.pix = pygame.image.load('algorithmes/ville.jpg').convert_alpha()
-        self.rect = self.pix.get_rect()
 
     def __repr__(self):
         return str(self.name)
@@ -51,6 +49,8 @@ class Voyage(algorithmes.algo.Algo):
         self.selected = None
         self.nbselected = 0  # nb of user's selected points
         self.lines = []
+        self.pix = pygame.image.load('algorithmes/ville.jpg').convert_alpha()
+        self.rect = self.pix.get_rect()
 
     def __repr__(self):
         return '\n'.join([str(i) for i in self.matrix])
@@ -72,9 +72,13 @@ class Voyage(algorithmes.algo.Algo):
         matrix = [[0 for i in xrange(nbpoints)] for j in xrange(nbpoints)]
 
         #fill the first row and first col with points
+        minx = self.minx * 0.9
+        maxx = self.maxx * 0.9
+        miny = self.miny * 0.9
+        maxy = self.maxy * 0.9
         for cpt in xrange(nbpoints):
-            x = random.randint(self.minx, self.maxx)
-            y = random.randint(self.miny, self.maxy)
+            x = random.randint(minx, maxx)
+            y = random.randint(miny, maxy)
             matrix[0][cpt] = matrix[cpt][0] = Sommet(cpt, x, y)
         matrix[0][0] = nbpoints - 1
 
@@ -197,7 +201,7 @@ class Voyage(algorithmes.algo.Algo):
                 self._draw_distance(i, center)
 
         for point in self.matrix[0][1:]:  # draw points
-            self.display.blit(point.pix, self._get_corres_pixel(point.x, point.y))
+            self.display.blit(self.pix, self._get_corres_pixel(point.x, point.y))
 
 
         if self.nbselected == self.matrix[0][0]:
@@ -230,10 +234,8 @@ class Voyage(algorithmes.algo.Algo):
         index = 0
         for cpt, point in enumerate(self.matrix[0][1:]):
             real_x, real_y = self._get_corres_pixel(point.x, point.y)
-            print point.rect
-            print x, y
-            if real_x < x < point.rect[3] + real_x + 10 and\
-                    real_y < y < real_y + point.rect[3]:
+            if real_x < x < self.rect[3] + real_x + 10 and\
+                    real_y < y < real_y + self.rect[3]:
                 index = cpt + 1
                 break
 
