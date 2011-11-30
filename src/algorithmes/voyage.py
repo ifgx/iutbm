@@ -37,8 +37,9 @@ class Voyage(algorithmes.algo.Algo):
         self.maxy = 100.0
         self.matrix = self._create_matrix(nbpoints)
         self.text = 'Travelling saleman problem'
-        self.description = 'Given a list of cities and their pairwise distances,#\
-the task is to find a shortest possible tour that visits each city exactly once.#\
+        self.description = 'Given a list of cities and their\
+pairwise distances,# the task is to find a shortest possible\
+tour that visits each city exactly once.#\
 It is a special case of the Traveling purchaser problem.#'
         self.first_som = -1  # will be set later
 
@@ -122,7 +123,7 @@ It is a special case of the Traveling purchaser problem.#'
         self.matrix[0][ligne].visite = True  # first point is visited
 
         tmp = -1
-        for i in xrange(1, self.matrix[0][0]):
+        for _ in xrange(1, self.matrix[0][0]):
             minimum = float('inf')
             for j in xrange(1, self.matrix[0][0] + 1):
                 # travel trough the list of point,
@@ -151,7 +152,7 @@ It is a special case of the Traveling purchaser problem.#'
             and self.matrix[i+1]
         '''
         #get the distance between 2 points
-        distance = str(self.matrix[self.user_path[i].name][self.user_path[i+1].name])
+        distance = str(self.matrix[self.user_path[i].name][self.user_path[i + 1].name])
         text = self.font.render(distance, True, (0, 255, 0), (0, 0, 255))
         textRect = text.get_rect()
         textRect.center = center
@@ -169,7 +170,8 @@ It is a special case of the Traveling purchaser problem.#'
                     self.computed_path[i].y)
             x1, y1 = self._get_corres_pixel(self.computed_path[i + 1].x,
                     self.computed_path[i + 1].y)
-            pygame.draw.line(self.display, theme.correction_color, (x + self.hack_x, y + self.hack_y),
+            pygame.draw.line(self.display, theme.correction_color,
+                    (x + self.hack_x, y + self.hack_y),
                     (x1 + self.hack_x, y1 + self.hack_y))
 
         #raccord the user's path first point to the last one
@@ -177,7 +179,8 @@ It is a special case of the Traveling purchaser problem.#'
                 self.computed_path[0].y)
         x1, y1 = self._get_corres_pixel(self.user_path[last].x,
                 self.user_path[last].y)
-        pygame.draw.line(self.display, theme.road_color, (x + self.hack_x, y + self.hack_y),
+        pygame.draw.line(self.display, theme.road_color,
+                (x + self.hack_x, y + self.hack_y),
                 (x1 + self.hack_x, y1 + self.hack_y), 5)
 
         center = (x + x1) / 2, (y + y1) / 2
@@ -201,11 +204,12 @@ It is a special case of the Traveling purchaser problem.#'
                         self.user_path[i].y)
                 x1, y1 = self._get_corres_pixel(self.user_path[i + 1].x,
                         self.user_path[i + 1].y)
-                pygame.draw.line(self.display, theme.road_color, (x + self.hack_x,
-                    y + self.hack_y), (x1 + self.hack_x, y1 + self.hack_y), 5)
+                pygame.draw.line(self.display, theme.road_color,
+                        (x + self.hack_x, y + self.hack_y),
+                        (x1 + self.hack_x, y1 + self.hack_y), 5)
 
                 #get the distance between 2 points
-                center = (x + x1) / 2 , (y + y1) / 2
+                center = (x + x1) / 2, (y + y1) / 2
                 self._draw_distance(i, center)
 
             if self.nbselected == self.matrix[0][0]:
@@ -214,7 +218,6 @@ It is a special case of the Traveling purchaser problem.#'
         for point in self.matrix[0][1:]:  # draw points
             pix = pygame.image.load(random.choice(theme.cities))
             self.display.blit(pix, self._get_corres_pixel(point.x, point.y))
-
 
         #user's length
         text = self.font.render('User: ' +
