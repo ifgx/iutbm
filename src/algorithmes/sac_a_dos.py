@@ -1,6 +1,6 @@
 #!/bin/env python
 # -*- coding: utf-8 -*-
-
+import random
 
 class Object(object):
     '''
@@ -42,7 +42,7 @@ class Case(object):
     def show(self):
         print('value: %s' % self.value)
         print('weight: %s' % self.weight)
-        print('Object: ' + ''.join([str(i.name) for i in self.content])
+        print('Object: ' + ''.join([str(i.name) for i in self.content]))
 
 
 class Bag(object):
@@ -86,3 +86,11 @@ class Bag(object):
         print('object: ' + ''.join([i.name for i in self.Lobject]))
         print('weight of the bag: %s' % self.weight)
         self.tab[self.numObj][self.weight].show()  
+
+L = []
+for i in xrange(5):
+    weight = random.randint(1,10)
+    value = random.randint(1,10)
+    L.append(Object(str(i),weight,value))    
+    
+bag = Bag(L,15)
