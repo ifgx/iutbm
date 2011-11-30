@@ -4,7 +4,8 @@ import pygame
 import sys
 import math
 
-from ui import rotatingMenu as rM
+import ui.theme as theme
+import ui.rotatingMenu as rM
 from algorithmes import voyage
 from algorithmes import plus_court
 from algorithmes import couplage
@@ -21,7 +22,7 @@ class iutbm:
         self.height = width
         self.fpsLimit = 90
 
-        self.display = pygame.display.set_mode((self.width, self.height))
+        self.display = pygame.display.set_mode((self.width, self.height))#, pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
 
         # table of all algos
@@ -31,6 +32,10 @@ class iutbm:
 
         # caption
         pygame.display.set_caption('IUTBM')
+
+        #theme
+        bg = pygame.image.load(theme.main_background)
+        self.bg = pygame.transform.scale(bg, (self.width, self.height))#, None)
 
         # initialisation of the menu
         self.menu = rM.RotatingMenu(x=320, y=240, radius=220, arc=math.pi,
@@ -91,10 +96,11 @@ class iutbm:
                 algo._update(pos, event.button)
 
             # drawing's handling
-            self.display.fill((0, 0, 0))  # black background
-            if inMenu:  # if we are inside a menu
+            if inMenu:  # if we are inside the main menu
+                self.display.blit(self.bg, (0, 0))  # main menu's background
                 self.menu.draw(self.display)
             elif inAlgo:  # else if we are inside an algorithm
+                self.display.fill((1, 0, 0))  #temp fix : please use a backgrounf for your algo !
                 algo._draw()
             elif inHelp: # else if we are in a help screen
                 algo._explain()
