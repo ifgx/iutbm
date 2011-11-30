@@ -52,7 +52,7 @@ It is a special case of the Traveling purchaser problem.#'
         self.selected = None
         self.nbselected = 0  # nb of user's selected points
         self.lines = []
-        rect = pygame.image.load('ui/pix/ville1.jpg').convert_alpha().get_rect()
+        rect = pygame.image.load(theme.cities[0]).get_rect()
         self.hack_x = rect[2] / 2
         self.hack_y = rect[3] / 2
 
@@ -212,9 +212,8 @@ It is a special case of the Traveling purchaser problem.#'
                 self._draw_finished()
 
         for point in self.matrix[0][1:]:  # draw points
-            self.display.blit(
-                    pygame.image.load(random.choice(theme.cities)).convert_alpha(),
-                    self._get_corres_pixel(point.x, point.y))
+            pix = pygame.image.load(random.choice(theme.cities))
+            self.display.blit(pix, self._get_corres_pixel(point.x, point.y))
 
 
         #user's length
