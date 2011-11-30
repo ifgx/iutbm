@@ -7,6 +7,7 @@ import math
 import pygame
 
 import algorithmes.algo
+import ui.theme as theme
 
 
 class Sommet:
@@ -38,7 +39,7 @@ class Voyage(algorithmes.algo.Algo):
         self.text = 'Travelling saleman problem'
         self.description = 'Given a list of cities and their pairwise distances,#\
 the task is to find a shortest possible tour that visits each city exactly once.#\
-It is a special case of the Traveling purchaser problem.##bite'
+It is a special case of the Traveling purchaser problem.#'
         self.first_som = -1  # will be set later
 
         #lenght of the path
@@ -51,8 +52,7 @@ It is a special case of the Traveling purchaser problem.##bite'
         self.selected = None
         self.nbselected = 0  # nb of user's selected points
         self.lines = []
-        self.pix = pygame.image.load('algorithmes/ville.jpg').convert_alpha()
-        rect = self.pix.get_rect()
+        rect = pygame.image.load('ui/pix/ville1.jpg').convert_alpha().get_rect()
         self.hack_x = rect[2] / 2
         self.hack_y = rect[3] / 2
 
@@ -169,7 +169,7 @@ It is a special case of the Traveling purchaser problem.##bite'
                     self.computed_path[i].y)
             x1, y1 = self._get_corres_pixel(self.computed_path[i + 1].x,
                     self.computed_path[i + 1].y)
-            pygame.draw.line(self.display, (0, 255, 0), (x + self.hack_x, y + self.hack_y),
+            pygame.draw.line(self.display, theme.correction_color, (x + self.hack_x, y + self.hack_y),
                     (x1 + self.hack_x, y1 + self.hack_y))
 
         #raccord the user's path first point to the last one
@@ -177,7 +177,7 @@ It is a special case of the Traveling purchaser problem.##bite'
                 self.computed_path[0].y)
         x1, y1 = self._get_corres_pixel(self.user_path[last].x,
                 self.user_path[last].y)
-        pygame.draw.line(self.display, (255, 0, 0), (x + self.hack_x, y + self.hack_y),
+        pygame.draw.line(self.display, theme.road_color, (x + self.hack_x, y + self.hack_y),
                 (x1 + self.hack_x, y1 + self.hack_y), 5)
 
         center = (x + x1) / 2, (y + y1) / 2
@@ -186,7 +186,8 @@ It is a special case of the Traveling purchaser problem.##bite'
         # raccord first compted'spath selected point to the last one
         x1, y1 = self._get_corres_pixel(self.computed_path[last].x,
                 self.computed_path[last].y)
-        pygame.draw.line(self.display, (0, 255, 0), (x + self.hack_x, y + self.hack_y),
+        pygame.draw.line(self.display, theme.correction_color,
+                (x + self.hack_x, y + self.hack_y),
                 (x1 + self.hack_x, y1 + self.hack_y))
 
     def _draw(self):
@@ -200,18 +201,21 @@ It is a special case of the Traveling purchaser problem.##bite'
                         self.user_path[i].y)
                 x1, y1 = self._get_corres_pixel(self.user_path[i + 1].x,
                         self.user_path[i + 1].y)
-                pygame.draw.line(self.display, (255, 0, 0), (x + self.hack_x,
+                pygame.draw.line(self.display, theme.road_color, (x + self.hack_x,
                     y + self.hack_y), (x1 + self.hack_x, y1 + self.hack_y), 5)
 
                 #get the distance between 2 points
-                center = (x + x1) / 2 , (y+ y1) / 2
+                center = (x + x1) / 2 , (y + y1) / 2
                 self._draw_distance(i, center)
 
             if self.nbselected == self.matrix[0][0]:
                 self._draw_finished()
 
         for point in self.matrix[0][1:]:  # draw points
-            self.display.blit(self.pix, self._get_corres_pixel(point.x, point.y))
+            self.display.blit(
+                    pygame.image.load(random.choice(theme.cities)).convert_alpha(),
+                    self._get_corres_pixel(point.x, point.y))
+
 
         #user's length
         text = self.font.render('User: ' +
@@ -220,7 +224,7 @@ It is a special case of the Traveling purchaser problem.##bite'
 
         #computed lenght
         text = self.font.render('Computed: ' +
-                str(self.computed_len), True, (255, 0, 0))
+                str(self.computed_len), True, theme.correction_color)
         self.display.blit(text, (10, 20))
 
     def _update(self, (x, y), button):
