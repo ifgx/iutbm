@@ -35,8 +35,10 @@ class Voyage(algorithmes.algo.Algo):
         self.miny = 0.0
         self.maxy = 100.0
         self.matrix = self._create_matrix(nbpoints)
-        self.text = 'Voyageur de commerce'
-        self.description = 'Hello,# I\'m a test,# and I love you :3'
+        self.text = 'Travelling saleman problem'
+        self.description = 'Given a list of cities and their pairwise distances,#\
+the task is to find a shortest possible tour that visits each city exactly once.#\
+It is a special case of the Traveling purchaser problem.##bite'
         self.first_som = -1  # will be set later
 
         #lenght of the path
@@ -175,15 +177,17 @@ class Voyage(algorithmes.algo.Algo):
                 self.computed_path[0].y)
         x1, y1 = self._get_corres_pixel(self.user_path[last].x,
                 self.user_path[last].y)
-        pygame.draw.line(self.display, (255, 0, 0), (x, y), (x1, y1), 5)
+        pygame.draw.line(self.display, (255, 0, 0), (x + self.hack_x, y + self.hack_y),
+                (x1 + self.hack_x, y1 + self.hack_y), 5)
 
-        center = (x + x1) / 2, (y+ y1) / 2
+        center = (x + x1) / 2, (y + y1) / 2
         self._draw_distance(0, center)
 
         # raccord first compted'spath selected point to the last one
         x1, y1 = self._get_corres_pixel(self.computed_path[last].x,
                 self.computed_path[last].y)
-        pygame.draw.line(self.display, (0, 255, 0), (x, y), (x1, y1))
+        pygame.draw.line(self.display, (0, 255, 0), (x + self.hack_x, y + self.hack_y),
+                (x1 + self.hack_x, y1 + self.hack_y))
 
     def _draw(self):
         '''
@@ -203,11 +207,11 @@ class Voyage(algorithmes.algo.Algo):
                 center = (x + x1) / 2 , (y+ y1) / 2
                 self._draw_distance(i, center)
 
+            if self.nbselected == self.matrix[0][0]:
+                self._draw_finished()
+
         for point in self.matrix[0][1:]:  # draw points
             self.display.blit(self.pix, self._get_corres_pixel(point.x, point.y))
-
-        if self.nbselected == self.matrix[0][0]:
-            self._draw_finished()
 
         #user's length
         text = self.font.render('User: ' +
@@ -230,6 +234,7 @@ class Voyage(algorithmes.algo.Algo):
             self.user_len -= self.matrix[p1][p2]
             self.matrix[0][p1].visite = False
             self.user_path.pop()
+            self.nbselected -= 1
             return
 
         # detection of a click inside a point
