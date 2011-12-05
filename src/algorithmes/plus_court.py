@@ -7,6 +7,7 @@ import pygame
 import algo
 
 import math
+import ui.theme as theme
 
 
 class Graphe(algo.Algo):
@@ -49,7 +50,7 @@ class Graphe(algo.Algo):
         for i in xrange(self.numSommet):
             x = 50 + math.cos(tmp * i) * rayon
             y = 50 + math.sin(tmp * i) * rayon
-            self.LSommet.append(Sommet(i, x, y, 'ui/pix/ville1.jpg'))
+            self.LSommet.append(Sommet(i, x, y, theme.cities[0]))
         self.start = self.LSommet[0]
         self.current = self.start
         self.LSommet[self.start.indice].score = 0
@@ -100,8 +101,11 @@ class Graphe(algo.Algo):
         textRect.top = textRect.left = 30
         self.display.blit(text,textRect)
         for i in xrange(self.numSommet): 
-            [self.drawLien(i, j) for j in xrange(i) if self.Matrix[i][j] != float('inf')]# if the link between two point is define in the matrix then we draw the link 
-
+            [self.drawLien(i, j,theme.road_color) for j in xrange(i) if self.Matrix[i][j] != float('inf')]# if the link between two point is define in the matrix then we draw the link 
+        tmp = 0
+        for i in xrange(len(self.selected)):
+            self.drawLien(tmp, self.selected[i].indice,theme.correction_color)
+            tmp = self.selected[i].indice   
         [self.display.blit(i.image, i.rect) for i in self.LSommet]# then we draw the picture of the town
         [pygame.draw.rect(self.display, (255, 0, 255), i.rect,2) for i in self.selected]# then we draw the weight of the link
         pygame.draw.rect(self.display,(255,0,0),self.start.rect,2)
@@ -161,7 +165,7 @@ class Graphe(algo.Algo):
             if self.Matrix[sommet1.indice][i]+sommet1.score < self.LSommet[i].score:
                 self.LSommet[i].score = self.Matrix[sommet1.indice][i]+sommet1.score
 
-    def drawLien(self,i,j):
+    def drawLien(self,i,j,color):
         start     = self.LSommet[i].rect
         end = self.LSommet[j].rect
         position = (start.centerx+end.centerx)/2,(start.centery+end.centery)/2
@@ -169,7 +173,7 @@ class Graphe(algo.Algo):
         text = font.render(str(self.Matrix[i][j]), True, (255,255, 255),(0,0,0))
         textRect = text.get_rect()
         textRect.center = position
-        pygame.draw.line(self.display,(0,0,255),start.center,end.center,3)
+        pygame.draw.line(self.display,color,start.center,end.center,3)
         self.display.blit(text,textRect)
 
     def nextSommet(self, sommet):
