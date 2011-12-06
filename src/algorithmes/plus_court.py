@@ -15,8 +15,8 @@ class Graphe(algo.Algo):
         A class that represent a connex graph
     '''
     def __init__(self,window):
-        self.text = "shortest path problem"
-        self.description = "You need to find the shortest path between the red town and the green town"
+        self.text = 'shortest path problem'
+        self.description = 'You need to find the shortest path between the red town and the green town. # '
         algo.Algo.__init__(self, window)
         self.numSommet = 7 # the number of Sommet in the game
         self.state_game = self.weight = 0 # the state 0 correspond to the usall state of the game
@@ -96,7 +96,7 @@ class Graphe(algo.Algo):
 
 
     def _draw(self):
-        text = self.font.render("User: " + str(self.weight) + "    Path: " + ', '.join([str(i.indice) for i in self.selected]), True, (0,255, 0) )
+        text = self.font.render("User: " + str(self.weight) + " km " + "    Path: " + ', '.join([str(i.indice) for i in self.selected]), True, (0,255, 0) )
         textRect = text.get_rect()
         textRect.top = textRect.left = 30
         self.display.blit(text,textRect)
@@ -113,9 +113,9 @@ class Graphe(algo.Algo):
 
         if self.state_game == 1: 
             if (self.weight > self.end.score):
-                text = self.font.render("You did not found the optimal path",True , (0,255,0))
+                text = self.font.render("You did not found the shortest path",True , (0,255,0))
             else:
-                text = self.font.render("Congratulation : you found the optimal path wiht the lenght " + str(self.end.score).replace('[',' '),True , (0,255,0))
+                text = self.font.render("Congratulation : you've found the shortest path : " + str(self.end.score).replace('[',' ') + " km",True , (0,255,0))
             textRect = text.get_rect()
             textRect.center =(self.display.get_width()/2, 10)
             self.display.blit(text,textRect)
