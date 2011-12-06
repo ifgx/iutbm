@@ -100,6 +100,7 @@ class RotatingMenu:
             Draw the menu
         '''
         for item in self.items:
+            display.blit(item.shadow, ((item.x - item.xOffset) + 1, (item.y - item.yOffset) + 1))
             display.blit(item.image, (item.x-item.xOffset, item.y-item.yOffset))
 
 class MenuItem:
@@ -118,6 +119,7 @@ class MenuItem:
 
         self.font = pygame.font.Font(None, 20)
         self.image = self.font.render(self.text, True, self.color)
+        self.shadow = self.font.render(self.text, True, (0, 0, 0))
         size = self.font.size(self.text)
         self.xOffset = size[0] / 2
         self.yOffset = size[1] / 2
@@ -142,6 +144,7 @@ class MenuItem:
         '''
         self.font = pygame.font.Font(None, 20)
         self.image = self.font.render(self.text, True, self.color)
+        self.shadow = self.font.render(self.text, True, (0, 0, 0))
         size = self.font.size(self.text)
         self.xOffset = size[0] / 2
         self.yOffset = size[1] / 2
