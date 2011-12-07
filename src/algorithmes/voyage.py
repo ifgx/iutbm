@@ -197,6 +197,12 @@ It is a special case of the Traveling purchaser problem.#'
         '''
             Drawing method
         '''
+        desc = self.font.render("Clic on a city to select it, let clic to undo", True, (255, 255, 255) )
+        descRect = desc.get_rect()
+        descRect.top = 16
+        descRect.centerx = self.display.get_rect().width / 2
+        self.display.blit(desc, descRect)
+
         if len(self.user_path) > 0:
             # if the user has selected more than 1 point
             for i in xrange(len(self.user_path) - 1):  # draw user's path
@@ -220,14 +226,15 @@ It is a special case of the Traveling purchaser problem.#'
             self.display.blit(pix, self._get_corres_pixel(point.x, point.y))
 
         #user's length
+        width, height = self.display.get_size()
         text = self.font.render('User: ' +
                 str(self.user_len), True, (255, 0, 0))
-        self.display.blit(text, (10, 10))
+        self.display.blit(text, (width * 0.6, height - 25))
 
         #computed lenght
         text = self.font.render('Computed: ' +
                 str(self.computed_len), True, theme.correction_color)
-        self.display.blit(text, (10, 20))
+        self.display.blit(text, (width * 0.3, height - 25))
 
     def _update(self, (x, y), button):
         '''
