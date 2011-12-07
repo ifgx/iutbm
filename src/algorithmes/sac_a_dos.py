@@ -28,6 +28,7 @@ class Object(object):
         self.weight = weight
         self.value = value
         self.rapport = self.value / self.weight
+        self.pictpath = pictpath
 
 
 class Case(object):
