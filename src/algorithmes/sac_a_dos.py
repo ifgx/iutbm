@@ -17,6 +17,57 @@ class Sac_A_Dos(object):
         
     def _explain(self):
         print "_explain called"
+        
+class Container(object):
+    '''
+        The class Container makes a GUI Imagery container
+    '''
+    
+    def __init__(self,(xorg,yorg),(width,height),rows,cols,empty=False):
+        self.position = (xorg, yorg)
+        self.size = (width, height)
+        self.rows = rows
+        self.cols = cols
+        self.objList = []
+        if not empty: initObjList()
+        
+    def initObjList(self):
+        for i in range(self.cols * self.rows):
+            self.objList = OBJECT_LIST[i]
+        
+    def getClickedItemIndex(self,(mousex,mousey)):
+        #Checking if mouse is accurate :
+        x,y = self.position
+        width, height = self.size
+        
+        if mousex < 0 or mousex > width or mousey < 0 or mousey > height :
+            raise OutOfBoundException
+        
+        #Throwing back "array coordinates"
+        col = (mousex - width / self.cols) % self.cols
+        row = (mousey - height / self.rows) % self.rows
+        return (col,row)
+        
+    def getItem(self,index):
+        return self.objList[index]
+        
+    def setItem(self,index,name,pic,weight,value):
+        self.objList[index] = Object(name, weight, value, pic)
+        
+    def setItemObject(self,obj,index):
+        self.objList[index] = obj
+        
+    def clearItem(self,index):
+        self.objList[index] = None
+        
+    def swapTo(self,container,index):
+        tmp = container.getItem(index)
+        container.setItemObject(self.getItem(index), index)
+        self.setItemObject(tmp, index)
+        
+    def _draw(self):
+        return "FIXME"
+
 
 class Object(object):
     '''
