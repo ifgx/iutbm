@@ -2,12 +2,28 @@
 # -*- coding: utf-8 -*-
 import random
 
+class Sac_A_Dos(object):
+    '''
+        The class Sac_A_Dos manages all the GUI
+    '''
+    def __init__(self, display):
+        print "sac_a_dos :: init complete"
+           
+    def _draw(self):
+        print "_draw called"
+        
+    def _update(self,pos, btn):
+        print "_update called"
+        
+    def _explain(self):
+        print "_explain called"
+
 class Object(object):
     '''
         The class Object allow you to create object with a name, a value, and a weight
     '''
 
-    def __init__(self, name, weight, value):
+    def __init__(self, name, weight, value, pictpath):
         self.name = name
         self.weight = weight
         self.value = value
