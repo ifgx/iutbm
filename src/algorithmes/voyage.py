@@ -19,6 +19,7 @@ class Sommet:
         self.x = x
         self.y = y
         self.visite = False
+        self.pix = pygame.image.load(random.choice(theme.pizzas))
 
     def __repr__(self):
         return str(self.name)
@@ -53,7 +54,7 @@ It is a special case of the Traveling purchaser problem.#'
         self.selected = None
         self.nbselected = 0  # nb of user's selected points
         self.lines = []
-        rect = pygame.image.load(theme.cities[0]).get_rect()
+        rect = pygame.image.load(theme.pizzas[0]).get_rect()
         self.hack_x = rect[2] / 2
         self.hack_y = rect[3] / 2
 
@@ -222,19 +223,18 @@ It is a special case of the Traveling purchaser problem.#'
                 self._draw_finished()
 
         for point in self.matrix[0][1:]:  # draw points
-            pix = pygame.image.load(random.choice(theme.cities))
-            self.display.blit(pix, self._get_corres_pixel(point.x, point.y))
+            self.display.blit(point.pix, self._get_corres_pixel(point.x, point.y))
 
         #user's length
         width, height = self.display.get_size()
         text = self.font.render('User: ' +
                 str(self.user_len), True, (255, 0, 0))
-        self.display.blit(text, (width * 0.6, height - 25))
+        self.display.blit(text, (width * 0.6, height - 30))
 
         #computed lenght
         text = self.font.render('Computed: ' +
                 str(self.computed_len), True, theme.correction_color)
-        self.display.blit(text, (width * 0.3, height - 25))
+        self.display.blit(text, (width * 0.3, height - 30))
 
     def _update(self, (x, y), button):
         '''
