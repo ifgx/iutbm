@@ -48,11 +48,9 @@ class Algo:
             Get the corresponding pixel
             minx, maxx, miny, maxy are your repere's size
         '''
-        x = float(x)
-        y = float(y)
         width, height = self.display.get_size()
-        posx = (x - self.minx) / (self.maxx - self.minx) * width
-        posy = (y - self.miny) / (self.maxy - self.miny) * height
+        posx = (float(x) - self.minx) / (self.maxx - self.minx) * width
+        posy = (float(y) - self.miny) / (self.maxy - self.miny) * height
         return int(posx), int(posy)
 
     def _reset(self):
