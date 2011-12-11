@@ -32,10 +32,10 @@ class Voyage(algorithmes.algo.Algo):
     def __init__(self, display):
         algorithmes.algo.Algo.__init__(self, display)
         nbpoints = 10
-        self.minx = 0.0
-        self.maxx = 100.0
-        self.miny = 0.0
-        self.maxy = 100.0
+        self.minx = 0
+        self.maxx = 100
+        self.miny = 0
+        self.maxy = 100
         self.matrix = self._create_matrix(nbpoints)
         self.text = 'Travelling saleman problem'
         self.description = 'Given a list of cities and their\
@@ -78,10 +78,10 @@ It is a special case of the Traveling purchaser problem.#'
         matrix = [[0 for i in xrange(nbpoints)] for j in xrange(nbpoints)]
 
         #fill the first row and first col with points
-        minx = self.minx * 0.9
-        maxx = self.maxx * 0.9
-        miny = self.miny * 0.9
-        maxy = self.maxy * 0.9
+        minx = int(self.minx * 0.9)
+        maxx = int(self.maxx * 0.9)
+        miny = int(self.miny * 0.9)
+        maxy = int(self.maxy * 0.9)
         for cpt in xrange(nbpoints):
             x = random.randint(minx, maxx)
             y = random.randint(miny, maxy)
@@ -98,8 +98,8 @@ It is a special case of the Traveling purchaser problem.#'
                     y1 = matrix[0][ip].y
                     x2 = matrix[jp][0].x
                     y2 = matrix[jp][0].y
-                    distance = math.sqrt(math.pow(x2 - x1, 2)
-                            + math.pow(y2 - y1, 2))
+                    distance = int(math.sqrt(math.pow(x2 - x1, 2)
+                            + math.pow(y2 - y1, 2)))
                     matrix[ip][jp] = distance
         return matrix
 
@@ -124,8 +124,9 @@ It is a special case of the Traveling purchaser problem.#'
         self.matrix[0][ligne].visite = True  # first point is visited
 
         tmp = -1
+        max_distance = int(math.sqrt(pow(self.maxx - self.minx, 2) + pow(self.maxy - self.miny, 2)))
         for _ in xrange(1, self.matrix[0][0]):
-            minimum = float('inf')
+            minimum = max_distance#float('inf')
             for j in xrange(1, self.matrix[0][0] + 1):
                 # travel trough the list of point,
                 # and search the nearest one
@@ -136,7 +137,7 @@ It is a special case of the Traveling purchaser problem.#'
                     #mark it as the nearest
                     minimum = self.matrix[ligne][j]
                     tmp = j
-            if minimum != float('inf'):
+            if minimum != max_distance:#float('inf'):
                 # add the point to the path
                 self.computed_path.append(self.matrix[0][tmp])
                 # mark it as visited
