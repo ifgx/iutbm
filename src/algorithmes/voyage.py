@@ -154,7 +154,7 @@ It is a special case of the Traveling purchaser problem.#'
         '''
         #get the distance between 2 points
         distance = str(self.matrix[self.user_path[i].name][self.user_path[i + 1].name])
-        text = self.font.render(distance, True, (0, 255, 0), (0, 0, 255))
+        text = self.font.render(distance, True, theme.secondary_text_color, theme.primary_text_color)
         textRect = text.get_rect()
         textRect.center = center
         self.display.blit(text, textRect)
@@ -198,7 +198,7 @@ It is a special case of the Traveling purchaser problem.#'
         '''
             Drawing method
         '''
-        desc = self.font.render("Clic on a city to select it, let clic to undo", True, (255, 255, 255) )
+        desc = self.font.render("Clic on a pizza part to select it, left clic to undo", True, theme.primary_text_color)
         descRect = desc.get_rect()
         descRect.top = 16
         descRect.centerx = self.display.get_rect().width / 2
@@ -228,12 +228,12 @@ It is a special case of the Traveling purchaser problem.#'
         #user's length
         width, height = self.display.get_size()
         text = self.font.render('User: ' +
-                str(self.user_len), True, (255, 0, 0))
+                str(self.user_len), True, theme.secondary_text_color)
         self.display.blit(text, (width * 0.6, height - 30))
 
         #computed lenght
         text = self.font.render('Computed: ' +
-                str(self.computed_len), True, theme.correction_color)
+                str(self.computed_len), True, theme.secondary_text_color)
         self.display.blit(text, (width * 0.3, height - 30))
 
     def _update(self, (x, y), button):
