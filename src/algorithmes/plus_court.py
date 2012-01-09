@@ -50,7 +50,7 @@ class Graphe(algo.Algo):
         for i in xrange(self.numSommet):
             x = 50 + math.cos(tmp * i) * rayon
             y = 50 + math.sin(tmp * i) * rayon
-            self.LSommet.append(Sommet(i, x, y, theme.cities[0]))
+            self.LSommet.append(Sommet(i, x, y,random.choice(theme.cities)))
         self.start = self.LSommet[0]
         self.current = self.start
         self.LSommet[self.start.indice].score = 0
