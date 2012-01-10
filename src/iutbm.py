@@ -50,6 +50,7 @@ class iutbm:
         inAlgo = False
         inHelp = False
         while True:
+            button = None
             pos = (0, 0)  # reset mouse position
             # events handling
             events = pygame.event.get()
@@ -88,12 +89,13 @@ class iutbm:
                             inHelp = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     pos = event.pos
+                    button = event.button
 
             # update
             if inMenu:
                 self.menu.update()
             elif inAlgo and pos != (0, 0):
-                algo._update(pos, event.button)
+                algo._update(pos, button)
 
             # drawing's handling
             if inMenu:  # if we are inside the main menu
