@@ -1,0 +1,73 @@
+Le projet s'articulera autour d'une application interactive.
+  L'utilisateur aura à sa disposition trois sous-menus, chacun comportant
+  plusieurs jeux basés sur des algorithmes de plus en plus difficiles.
+  Ces jeux seront classés selon leur niveau de difficulté -- d'un point de
+  vue algorithmique~:
+
+Les jeux se dérouleront par étapes.
+\begin{enumerate}
+    \item Un texte explicatif du problème posé
+    \item Le joueur essaye de trouver la solution optimale par lui-même
+    \item le programme compare la solution calculée à celle du joueur
+\end{enumerate}
+
+\section{Portabilité et accessibilités}
+    Le programme devra être portable sur les principales plateformes
+    grand public (\emph{Windows}, \emph{GNU/Linux}, et \emph{Mac OSX}).
+    Il devra également être accessible, le public cible étant
+    l'utilisateur lambda.
+
+\section{Menu principal}
+    Le menu principal doit permettre d'acceder rapidement
+    aux algorithmes developpés, en étant le plus simple possible.
+
+\section{Algorithmes en temps polynomiaux}
+    \subsection{Le plus court chemin}
+        Le but du jeu du plus court chemin est d'aider un personnage à se
+        rendre d'un point a à un point b en empruntant le chemin le plus
+        court possible.
+
+        l'utilisateur pourra cliquer sur les différentes villes, tour à tour,
+        pour déplacer le personnage. un compteur kilométrique indiquera la
+        distance parcourue.
+
+        le joueur peut effectuer un clic droit pour annuler son dernier
+        mouvement.
+
+        le jeu continue tant que le joueur n'a pas trouvé le chemin
+        le plus court. il peut aussi cliquer sur \og solution\fg, qui
+        affichera le chemin segment par segment.
+
+        Les niveaux sont générés aléatoirement.
+
+    \subsection{Le couplage}
+        Le but du jeu est de partager un certain nombre d'objets avec plusieurs
+        personnes. Chaque personne doit dresser une liste de ses objets préférés,
+        et l'on doit distribuer de manière équitable les objets en essayant de
+        satisfaire le plus grand nombre.
+
+        L'utilisateur pourra choisir différents niveaux; le nombre d'objets
+        changera en fonction du niveau de difficulté.
+
+\section{Algorithmes pseudo-polynomiaux}
+    \subsection{Le problème du sac à dos}
+        Ce problème consiste à emporter des objets de valeurs différentes. Il s'agit
+        d'optimiser la valeur des objets que l'on peut prendre en veillant à ne pas
+        dépasser la capacité du sac à dos.
+
+        On pourra modéliser ce problème par un tableau contenant les objets et leur
+        valeur en vis-à-vis. L'utilisateur fera glisser les objets du tableau vers
+        le sac à dos. Un indicateur permettra de visualiser le poids actuel total
+        des objets dans le sac, le poids maximal que peut supporter le sac, et le
+        poids restant (différence entre ces deux résultats).
+
+        On pourra scénariser ce jeu avec, par exemple, une histoire où un personnage
+        doit quitter son château assiégé en emportant un maximum d'objets de valeur.
+
+\section{Algorithmes en temps exponentiels}
+     \subsection{Le problème du voyageur de commerce}
+            Un voyageur de commerce se situe dans une certaine ville A. Il doit passer
+            par toutes les villes de la carte pour revenir à son point de départ. Le but
+            est de déterminer le plus court chemin entre toutes les villes. On pourra
+            reprendre le concept du premier jeu, en modifiant les distances entre les
+            villes.

@@ -1,0 +1,130 @@
+\documentclass[a4paper]{report}
+% BASE PACKAGES
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{graphicx}\graphicspath{{images/}}
+\usepackage{calc}
+\usepackage[T1]{fontenc}
+\usepackage[top=2.5cm, bottom=2cm, left=2.5cm, right=2cm]{geometry}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage{subfig}
+\usepackage[absolute]{textpos}
+% PYTHON CODE INCLUSION
+\usepackage{listings}
+% HACK FOR SUMMARY != TOC
+\usepackage[tight]{shorttoc}
+% LOCAL PACKAGES
+\usepackage{phdthesis}
+\usepackage{packages/simpleglossary}
+\usepackage{packages/bigcenter}
+% HYPERREF
+\usepackage{hyperref}
+%____________________________________________________________________________
+%% FOR LaTeX FONTS, REFER TO: http://www.tug.dk/FontCatalogue/
+% SERIF FONT SELECTION
+%\usepackage{tgpagella}               % <3<3
+%\usepackage[light,condensed]{iwona}  % OK
+%\usepackage{palatino}                % <3<3
+%\usepackage{lmodern}                 % <3
+% SANS-SERIF FONT SELECTION
+%\usepackage{times}
+%\usepackage[condensed,math]{kurier}  % <3<3
+%\usepackage{tgadventor}
+%\renewcommand*\familydefault{\sfdefault}
+% MONOSPACED FONT SELECTION
+%\usepackage{courier}
+%\usepackage{tgcursor}
+%\usepackage{inconsolata}
+%____________________________________________________________________________
+% SOME TWEAKS
+\setlength{\parskip}{8pt}
+\setlength{\headheight}{15pt}
+\definecolor{grey}{rgb}{0.95,0.95,0.95}
+\hypersetup{
+  unicode=true,
+  colorlinks=true,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black,
+  pdfauthor={TODO},
+  pdftitle={Sensibilisation à la complexité et à la recherche opérationnelle},
+  pdfcreator={pdftex},
+  pdfsubject={Sensibilisation à la complexité et à la recherche opérationnelle},
+  pdfkeywords={iutbm, complexité, algorithmique, graphes},
+}
+\lstset{tabsize=2,
+        frame=single,
+        numbers=left,
+        numberstyle=\footnotesize,
+        basicstyle=\ttfamily,
+        backgroundcolor=\color{grey},
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        tabsize=2,
+        }
+
+\newlength{\imgwidth}
+
+\newcommand\scalegraphics[1]{%
+    \settowidth{\imgwidth}{\includegraphics{#1}}%
+    \setlength{\imgwidth}{\minof{\imgwidth}{\textwidth}}%
+    \includegraphics[width=\imgwidth]{#1}%
+}
+
+%____________________________________________________________________________
+% TEMP FRONT PAGE
+\title{IUT Belfort-Montbeliard - projet tuteuré \\2011\\ \bigskip Sensibilisation à la complexité et à la recherche opérationnelle }
+\author{FIXME}
+\date{\today}
+
+%____________________________________________________________________________
+% MAIN MATTER
+\begin{document}
+% BEGIN HACK
+\maketitle
+
+\large
+
+\setcounter{page}{2}
+% END HACK
+\chapter*{Remerciements}
+\input{chapters/remerciements.tex}
+
+% hackish, but works
+\setlength{\parskip}{0pt}
+\shorttableofcontents{Sommaire}{0}
+\setlength{\parskip}{8pt}
+
+\chapter*{Remarques}
+\input{chapters/remarques.tex}
+
+\chapter*{Introduction}
+\input{chapters/introduction.tex}
+
+\chapter{Cahier des charges}
+\input{chapters/cahier.tex}
+
+\chapter{Réalisation}
+\input{chapters/realisation.tex}
+
+\chapter*{Conclusion}
+\addcontentsline{toc}{chapter}{\numberline{}Conclusion}
+\input{chapters/conclusion.tex}
+
+\clearpage
+
+% hackish, but works
+\setlength{\parskip}{0pt}
+\tableofcontents
+\addcontentsline{toc}{chapter}{\numberline{}Table des matières}
+\setlength{\parskip}{8pt}
+
+\clearpage
+\addcontentsline{toc}{chapter}{\numberline{}Table des figures}
+\listoffigures
+\clearpage
+
+\end{document}

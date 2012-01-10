@@ -1,0 +1,16 @@
+\newcommand{\glossaryitembox}[1]{%
+  \parbox[b]{\labelwidth}{%
+    \setlength{\fboxsep}{3pt}%
+    \setlength{\fboxrule}{.4pt}%
+    \shadowbox{\sffamily#1}\\\hfill\mbox{}}}
+
+\newenvironment{simpleglossary}{\begin{list}{}{%
+      \setlength{\labelwidth}{.5\textwidth}%
+      \setlength{\labelsep}{-.8\labelwidth}%
+      \setlength{\itemindent}{\parindent}%
+      \setlength{\leftmargin}{25pt}%
+      \setlength{\rightmargin}{0pt}%
+      \setlength{\itemsep}{.8\baselineskip}%
+      \renewcommand{\makelabel}[1]{\glossaryitembox{##1}}}}
+  {\end{list}}
+
