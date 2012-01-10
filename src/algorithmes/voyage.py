@@ -124,9 +124,10 @@ It is a special case of the Traveling purchaser problem.#'
         self.matrix[0][ligne].visite = True  # first point is visited
 
         tmp = -1
-        max_distance = int(math.sqrt(pow(self.maxx - self.minx, 2) + pow(self.maxy - self.miny, 2)))
+        max_distance = int(math.sqrt(pow(self.maxx - self.minx, 2)\
+                + pow(self.maxy - self.miny, 2)))
         for _ in xrange(1, self.matrix[0][0]):
-            minimum = max_distance#float('inf')
+            minimum = max_distance
             for j in xrange(1, self.matrix[0][0] + 1):
                 # travel trough the list of point,
                 # and search the nearest one
@@ -134,10 +135,10 @@ It is a special case of the Traveling purchaser problem.#'
                     self.matrix[0][j].visite is False:
                     # if the point is near than everything founded
                     # for now, and that it's not marked as visited
-                    #mark it as the nearest
+                    # mark it as the nearest
                     minimum = self.matrix[ligne][j]
                     tmp = j
-            if minimum != max_distance:#float('inf'):
+            if minimum != max_distance:
                 # add the point to the path
                 self.computed_path.append(self.matrix[0][tmp])
                 # mark it as visited
@@ -155,7 +156,8 @@ It is a special case of the Traveling purchaser problem.#'
         '''
         #get the distance between 2 points
         distance = str(self.matrix[self.user_path[i].name][self.user_path[i + 1].name])
-        text = self.font.render(distance, True, theme.secondary_text_color, theme.primary_text_color)
+        text = self.font.render(distance, True,\
+                theme.secondary_text_color, theme.primary_text_color)
         textRect = text.get_rect()
         textRect.center = center
         self.display.blit(text, textRect)
@@ -199,7 +201,8 @@ It is a special case of the Traveling purchaser problem.#'
         '''
             Drawing method
         '''
-        desc = self.font.render("Clic on a pizza part to select it, left clic to undo", True, theme.primary_text_color)
+        title = 'Clic on a pizza to select it, left clic to undo'
+        desc = self.font.render(title, True, theme.primary_text_color)
         descRect = desc.get_rect()
         descRect.top = 16
         descRect.centerx = self.display.get_rect().width / 2
