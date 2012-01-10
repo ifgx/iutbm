@@ -1,11 +1,84 @@
 \section{Langage}
     Le programme est entièrement codé en Python,
-    et utilise la bibliothème \emph{pygame}.
+    et utilise la bibliothèque \emph{pygame}.
+    \subsection{Python}
+        Le \emph{Python} est un langage de programmation de haut niveau\footnote{Qui fait
+        abstraction des détails de la machine sur laquelle il s'exécute} interprété
+        \footnote{Au contraire des langages compilés, le python est évalué
+        lignes par lignes par un \emph{interpréteur}, au lieu d'être exécuté directement
+        par la machine}. Il fonctionne sur la plupart des plateformes informatiques.
+    \subsection{pygame}
+        pygame est une bibliothèque écrite en \emph{Python} initialement prévue pour
+        le développement de jeux vidéo. Elle permet de programmer la partie multimédia
+        (graphismes, sons, entrées des périphériques (clavier, couris, joystick,...),
+        système de fenêtrage, ...) rapidement et facilement).
 
 \section{Outils}
+    Tout les outils utilisés, sans exception sont disponibles sous
+    licence libre.
+    \subsection{git}
+        \emph{git} fût utilisé en gestionnaire de version,
+        afin de simplifier le travail collaboratif.
+        Il est également un excellent indicateur de la répartition
+        de la charge de travail.
+    \subsection{pep8, pylint}
+        \emph{pep8}, et \emph{pylint} sont tout les deux
+        des outils d'analyse statique de code \emph{Python}
+        \subsubsection{pep8}
+            \emph{pep8} se charge de vérifier si le code qui lui
+            est fourni en entrée respecte bien les convention de codage
+            python de la norme \emph{pep8} (le logiciel est homonyme).
+        \subsubsection{pytlint} pylint est quant à lui un outil d'analyse
+            statique pur et dur. Il vérifie grossièrement la sémantique du code,
+            ainsi que sa présentation, et son respect des bonnes pratiques.
+            Par exemple, si les classes\footnote{TODO} possèdent bien
+            des commentaires les décrivant, ou encore si les modules
+            \footnote{Un module est une \emph{brique} logicielle permettant
+            de s'appuyer sur l'existant, et donc de ne pas réinventer la roue}
+            importés sont bien utilisés, si les variables ont des noms corrects, ...
+        \subsubsection{vim}
+            Ce projet fût également l'occasion pour certain de découvrir \emph{vim},
+            un puissant éditeur de texte modal.
 
-\section{menu principal}
+\section{Menu principal}
     Le menu principal est un menu circulaire,
     permettant de choisir les algorithmes, et de
     quitter le programme.
+
+\section{Algorithmes}
+    \subsection{Voyageur de commerce}
+        \paragraph{Moteur}
+            Au démarrage du jeu, le programme génère un nuage
+            de points (entièrement paramétrable en interne)
+            répartis aléatoirement dans la fenêtre, et les affiche.
+        \paragraph{Interface}
+            L'utilisateur sélectionne les points par simple clic,
+            et peut annuler ses actions par clic droit.
+            A chaque point sélectionné, le programme
+            affiche en temps réel la distance totale entre
+            les points reliés.
+            Lorsqu'un point a été sélectionné, le programme
+            affiche la distance minimum calculée au-dessus de
+            la distance actuelle parcourue par l'utilisateur.
+            Lorsque tout les points ont étés reliés entre eux,
+            le programme raccorde automatiquement le premier
+            et le dernier point entre eux.
+        \paragraph{Résolution}
+            Lors de la sélectionne du premier point,
+            le programme calcule à l'aide de l'algorithme
+            du plus proche voisin optimisé par permutation
+            le chemin le plus court.
+            Une fois que l'utilisateur a relié tout les points
+            entre eux, le programme affiche la solution calculée
+            en surimpression de celle trouvée par l'utilisateur.
+
+            L'algorithme du plus proche voisin consiste à avancer
+            de proche en proche, en prenant à chaque itération le plus
+            proche voisin du point actuel.
+            La permutation permet d'optimiser un peu le résultat trouvé
+            par l'algorithme du plus proche voisin.
+            Il consiste en une permutation de deux points sur le chemin trouvé.
+            Si la permutation réduit la longueur du chemin total,
+            elle est conservé, sinon, on essaye une autre permutation,
+            et ce, jusqu'à ce que tout les points aient été permutés.
 
