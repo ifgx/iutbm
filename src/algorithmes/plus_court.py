@@ -15,9 +15,9 @@ class Graphe(algo.Algo):
         A class that represent a connex graph
     '''
     def __init__(self,window):
+        algo.Algo.__init__(self, window)
         self.text = 'shortest path problem'
         self.description = 'You need to find the shortest path between the red town and the green town. # '
-        algo.Algo.__init__(self, window)
         self.numSommet = 7 # the number of Sommet in the game
         self.state_game = self.weight = 0 # the state 0 correspond to the usall state of the game
         # the state 1 correspond to the end of the game
@@ -34,8 +34,8 @@ class Graphe(algo.Algo):
         # creation of an adjacency matrix 
         self.Matrix = [[float('inf') for i in xrange(self.numSommet)] for i in xrange(self.numSommet)]
 
-        minimum_weight = 3 
-        maximum_weight = 20 
+        minimum_weight = 20 
+        maximum_weight = 90 
         self.init_connex(minimum_weight,maximum_weight)
         self.init_add_link(minimum_weight,maximum_weight)
 
@@ -54,12 +54,12 @@ class Graphe(algo.Algo):
         self.start = self.LSommet[0]
         self.current = self.start
         self.LSommet[self.start.indice].score = 0
-        self.start.x = 10
-        self.start.y = 10
+        self.start.x = 15
+        self.start.y = 15
 
         self.end = self.LSommet[- 1]
-        self.end.x = 90
-        self.end.y = 90
+        self.end.x = 85
+        self.end.y = 85
 
     def init_connex(self,minimum_weight, maximum_weight):
         # creation of a connex graphe
@@ -96,18 +96,33 @@ class Graphe(algo.Algo):
 
 
     def _draw(self):
-        text = self.font.render("User: " + str(self.weight) + " km " + "    Path: " + ', '.join([str(i.indice) for i in self.selected]), True, (0,255, 0) )
+        titre = self.font.render("Help the pizza deliveryman to deliver pizzas to his customers", True, (0, 255, 0) )
+        titreRect = titre.get_rect()
+        titreRect.top = 48
+        titreRect.centerx = self.display.get_rect().width / 2
+        self.display.blit(titre, titreRect)
+        
+        text = self.font.render("User: " + str(self.weight) + " km " , True, (0,255, 0) )
         textRect = text.get_rect()
         textRect.top = textRect.left = 30
         self.display.blit(text,textRect)
+
+
         for i in xrange(self.numSommet): 
             [self.drawLien(i, j,theme.road_color) for j in xrange(i) if self.Matrix[i][j] != float('inf')]# if the link between two point is define in the matrix then we draw the link 
+
+
         tmp = 0
         for i in xrange(len(self.selected)):
             self.drawLien(tmp, self.selected[i].indice,theme.correction_color)
             tmp = self.selected[i].indice   
-        [self.display.blit(i.image, i.rect) for i in self.LSommet]# then we draw the picture of the town
-        [pygame.draw.rect(self.display, (255, 0, 255), i.rect,2) for i in self.selected]# then we draw the weight of the link
+
+        # then we draw the picture of the town
+        [self.display.blit(i.image, i.rect) for i in self.LSommet]
+
+        # then we draw the weight of the link
+        [pygame.draw.rect(self.display, (255, 0, 255), i.rect,2) for i in self.selected]
+
         pygame.draw.rect(self.display,(255,0,0),self.start.rect,2)
         pygame.draw.rect(self.display,(0,255,0),self.end.rect,2)
 
