@@ -12,7 +12,7 @@ class Couplage(algo.Algo):
         nbFourmis = randrange(3, 6)
         nbDesserts = randrange(3, 6)
         
-        print "Sélection de", nbFourmis, "fourmis et", nbDesserts, "desserts."
+        # print "Sélection de", nbFourmis, "fourmis et", nbDesserts, "desserts."
         
         theDir = "ui/pix/couplage/"
         
@@ -44,6 +44,7 @@ class Couplage(algo.Algo):
         self.erreur = ""
         
         self.model = ModelisationCouplage(self.fourmis, self.desserts, 5)
+        self.model.resoudre()
     
     def _update(self, (x, y),button):
         # reset error
@@ -61,21 +62,21 @@ class Couplage(algo.Algo):
                         if self.fourmiSelectionnee != (-1, None):
                             fourmi = self.fourmiSelectionnee[1]
                             dessertSelectionne = True
-                            print "Cliqué sur le dessert", i, "(", dessert[0], ")"
+                            # print "Cliqué sur le dessert", i, "(", dessert[0], ")"
                             # check if the fourmi or dessert is not already involved
                             if not self.model.fourmi_dans(fourmi, self.model.proposition):
                                 if not self.model.dessert_dans(dessert, self.model.proposition):
-                                    print "Validé la combinaison (", fourmi[0], ",", dessert[0], ")"
+                                    # print "Validé la combinaison (", fourmi[0], ",", dessert[0], ")"
                                     self.model.proposition.append((fourmi, dessert))
                                 else:
-                                    print "Le dessert", dessert[0], "est déjà attribué"
+                                    # print "Le dessert", dessert[0], "est déjà attribué"
                                     self.erreur = "The pizza " + dessert[0] + " is already assigned"
                             else:
-                                print "La fourmi", fourmi[0], "est déjà attribuée"
+                                # print "La fourmi", fourmi[0], "est déjà attribuée"
                                 self.erreur = "The customer " + fourmi[0] + " has already a pizza"
                             
                         else:
-                            self.erreur = "Please select a client first."
+                            self.erreur = "Please select a customer first."
             if not dessertSelectionne:
                 # deselect the fourmi
                 self.fourmiSelectionnee = (-1, None)
@@ -85,7 +86,7 @@ class Couplage(algo.Algo):
                 if x >= 128 and x <= 128 + 32: # x coordinate is good
                     y_coord = 192 + (64 * i)
                     if y >= y_coord and y <= y_coord + 32: # y coordinate is good
-                        print "Cliqué sur la fourmi", i, "(", fourmi[0], ")"
+                        # print "Cliqué sur la fourmi", i, "(", fourmi[0], ")"
                         self.fourmiSelectionnee = (i, fourmi)
         elif button == 3:
             if len(self.model.proposition) != 0:
@@ -93,7 +94,6 @@ class Couplage(algo.Algo):
         
     
     def _draw(self):
-        
         titre = self.font.render("Help the pizza deliveryman to deliver pizzas to his customers", True, (0, 255, 0) )
         titreRect = titre.get_rect()
         titreRect.top = 48
@@ -118,6 +118,12 @@ class Couplage(algo.Algo):
             dessertI = self.desserts.index(couple[1])
             pygame.draw.line(self.display, (255, 0, 0), (128 + 16, 192 + (64 * fourmiI) + 16), (128 + 384 + 16, 192 + (64 * dessertI) + 16), 3)
         
+        if len(self.model.proposition) == len(self.model.solution):
+            for couple in self.model.solution:
+                fourmiI = self.fourmis.index(couple[0])
+                dessertI = self.desserts.index(couple[1])
+                pygame.draw.line(self.display, (0, 255, 255), (128 + 16, 192 + (64 * fourmiI) + 16), (128 + 384 + 16, 192 + (64 * dessertI) + 16), 3)
+
         for i, fourmi in enumerate(self.fourmis):
             nom = self.font.render(fourmi[0], True, (255, 255, 255))
             nomRect = nom.get_rect()
@@ -273,6 +279,7 @@ class ModelisationCouplage:
     
     def resoudre(self):
         self.solution = []
+        sav_preferences = list(self.preferences)
         
         while len(self.preferences) != 0:
             for i in range(1, 1 + max(self.get_nb_occurrences())):
@@ -290,6 +297,8 @@ class ModelisationCouplage:
                             self.supprimer_preferences_de(fourmi, None)
                 # print("- Fin du tour, il reste", len(self.preferences), "couples")
                 # print("- Couples restants:", self.preferences, ", couples trouvés:", self.solution)
+        
+        self.preferences = sav_preferences
 
 
 if False:
