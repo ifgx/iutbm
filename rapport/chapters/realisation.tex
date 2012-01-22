@@ -82,6 +82,37 @@
             elle est conservé, sinon, on essaye une autre permutation,
             et ce, jusqu'à ce que tout les points aient été permutés.
         
+	\subsection{Couplage}
+		\paragraph{Contexte}
+			Le but du jeu est de répartir un certain nombre de pizzas à un certain nombre de
+			 clients. Chaque client dresse une liste de ses pizzas préférées; il faut alors,
+			 en suivant ces directives, déterminer quelle est la meilleure façon de répartir
+			 les pizzas entre les différents clients.
+
+			Au terme de la résolution, il est possible qu'un ou plusieurs clients n'aient pas
+			 de pizza, ou au contraire qu'une pizza ne soit distribuée à personne. Le but est
+			 alors de satisfaire un maximum de clients.
+		\paragraph{Moteur}
+			Au démarrage du jeu, l'application génère une liste aléatoire de clients et une
+			 liste aléatoire de pizzas. Ensuite, elle génère une liste aléatoire de couples
+			 (client, pizza) représentant la liste des préférences de chaque client.
+		\paragraph{Interface}
+			L'utilisateur est présenté avec une liste de clients à gauche, et une liste
+			 de pizzas à droite. En cliquant sur un client, la liste des pizzas préférées
+			 du client s'affiche en bas de l'écran.
+
+			L'utilisateur \emph{sélectionne} un client en cliquant dessus. Une fois un client
+			 sélectionné, il clique sur la pizza qu'il souhaite attribuer à ce client. Si la
+			 pizza est déjà attribuée à quelqu'un ou si le client a déjà une pizza, un message
+			 d'erreur s'affiche; sinon, la pizza est associée au client: un trait rouge
+			 s'affiche entre les deux.
+
+			L'utilisateur a la possibilité d'annuler ses choix en cliquant avec le bouton
+			 droit de la souris (ce qui annule la dernière action).
+		\paragraph{Résolution}
+			Si l'utilisateur n'a pas trouvé la solution optimale, la solution s'affiche
+			 en surimpression sur le choix du joueur.
+
     \subsection{Sac à Dos}
         \paragraph{Contexte}
             Dans ce mini-jeu, le but du joueur est d'aider un pizzaiolo à
