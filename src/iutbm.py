@@ -9,6 +9,7 @@ import ui.rotatingMenu as rM
 from algorithmes import voyage
 from algorithmes import plus_court
 from algorithmes import couplage
+from algorithmes import sac_a_dos
 
 
 class iutbm:
@@ -28,7 +29,7 @@ class iutbm:
         # table of all algos
         self.drawalgo = ['QUIT', voyage.Voyage(self.display),
         plus_court.Graphe(self.display), couplage.Couplage(self.display),
-        'FIXME', 'FIXME']
+        sac_a_dos.Sac_A_Dos(self.display), 'FIXME']
 
         # caption
         pygame.display.set_caption('IUTBM')
