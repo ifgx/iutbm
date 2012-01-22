@@ -81,4 +81,29 @@
             Si la permutation réduit la longueur du chemin total,
             elle est conservé, sinon, on essaye une autre permutation,
             et ce, jusqu'à ce que tout les points aient été permutés.
-
+        
+    \subsection{Sac à Dos}
+        \paragraph{Contexte}
+            Dans ce mini-jeu, le but du joueur est d'aider un pizzaiolo à
+            sélectionner des ingrédients à transporter à un concours de pizza.
+            Il ne peut pas prendre tout ce qu'il souhaite et doit faire des
+            choix entre qualité et quantité : de bons ingrédients lui donnera
+            plus de points par le jury, cependant la pizza présenté a un poids
+            limité au gramme près.
+        \paragraph{Moteur}
+            Au démarrage de l'application, une liste d'ingrédients est créée.
+            Pour respecter une certaine logique, on ne peux pas générer des
+            chiffre aléatoirement. (Il semblerait assez illogique qu'une
+            garniture au fromage pèse plusieurs centaines de grammes par
+            exemple.)
+        \paragraph{Interface}
+            L'interface se présente en 2 colonnes. La première, à gauche,
+            contient les objets disponible pour la pizza. La seconde, à droite,
+            montre le contenu actuel de la pizza que le joueur à choisi.
+            Un clic sur une icone d'un ingrédients permet de l'échanger entre
+            les deux colonnes.
+            Lorsque l'utilisateur a terminé, il clique sur le bouton de
+            validation pour savoir si il a trouvé la solution correcte.
+        \paragraph{Résolution}
+            La résolution du problème s'effectue en utilisant un algorithme
+            détaillé par notre professeur.
