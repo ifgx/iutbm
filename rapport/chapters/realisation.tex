@@ -116,6 +116,22 @@ une certaine cohérence qui aide à la compréhension.
 			L'utilisateur a la possibilité d'annuler ses choix en cliquant avec le bouton
 			 droit de la souris (ce qui annule la dernière action).
 		\paragraph{Résolution}
+			Chaque clients à une certaine liste de préférences concernant les pizzas.
+			Nous pouvons symboliser ces préférences par les arrêtes d'un graphique où
+			 les noeuds sont représentatif des clients et des pizzas.
+			Pour satisfaire le maximum de clients, il est nécessaire de traiter d'abord
+			 ceux qui ont le moins de pizzas dans leur liste de préférences, et donc, 
+			 d'arrêtes sortant des noeuds clients, car on vise le nombre maximum de clients
+			 satisfaits.
+			Ensuite, on traite ceux qui ont le moins de liens, les uns après les autres,
+			 suivant les desserts disponibles.
+			Dans la représentation graphique, nous admettons qu'il y ait un noeud Source,
+			 lié a tous les clients par des arrêtes de capacité 1, pour interdire le 
+			 choix d'un client déjà satisfait.
+			Ensuite, il y a un noeud Puit, similaire au noeud Source mais liés aux 
+			 desserts.
+			Lorsque l'on ne peut plus atteindre le noeud Puit a partir du noeud Source,
+			 le jeu est terminé
 			Si l'utilisateur n'a pas trouvé la solution optimale, la solution s'affiche
 			 en surimpression sur le choix du joueur.
 
