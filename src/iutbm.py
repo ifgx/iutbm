@@ -91,6 +91,13 @@ class iutbm:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     pos = event.pos
                     button = event.button
+                    if inMenu and button == 1:
+                        item = self.menu.getCollisionItem(pos)
+                        if item != -1:
+                            self.menu.selectItem(item)
+                            algo = self.drawalgo[item]
+                            inMenu = False
+                            inAlgo = True
 
             # update
             if inMenu:
