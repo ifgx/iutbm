@@ -13,13 +13,21 @@ class Sac_A_Dos(algo.Algo):
         algo.Algo.__init__(self, display)
         picRoot = "ui/pix/couplage/"
 
-        self.ingredients = [
-            Object("Obj1",1,2,picRoot + "client-blanc.png"),
-            Object("Obj2",2,3,picRoot + "client-bleu.png"),
-            Object("Obj3",4,5,picRoot + "client-orange.png"),
-            Object("Obj4",6,7,picRoot + "client-vert.png"),
-            Object("Obj5",7,8,picRoot + "client-violet.png")
+        self.allIngredients = [
+            Object("Chorizo",1,2,picRoot + "client-blanc.png"),
+            Object("Herbs",2,3,picRoot + "client-bleu.png"),
+            Object("Olive oil",4,5,picRoot + "client-orange.png"),
+            Object("Garlic",6,7,picRoot + "client-vert.png"),
+            Object("Onion",7,8,picRoot + "client-violet.png"),
+            Object("Cheese",7,8,picRoot + "client-violet.png"),
+            Object("Mushrooms",7,8,picRoot + "client-violet.png"),
+            Object("Minced Meat",7,8,picRoot + "client-violet.png"),
+            Object("Cream",7,8,picRoot + "client-violet.png"),
+            Object("Salmon",7,8,picRoot + "client-violet.png"),
+            Object("Peppers",7,8,picRoot + "client-violet.png"),
+            Object("Seafood",7,8,picRoot + "client-violet.png")
         ]
+        self.ingredients = random.sample(self.allIngredients, 5)
 
     def _update(self, (x, y),button):
         for i in self.ingredients:
@@ -47,7 +55,10 @@ class Sac_A_Dos(algo.Algo):
             else:
                 ingx = 200
 
-            i.draw(self.display,self.font,ingx,c*64+200)
+            i.draw(self.display,self.font,ingx,c*64+128)
+
+    def _explain(self):
+        
 
 class Object(object):
     '''
