@@ -29,7 +29,7 @@ class iutbm:
         # table of all algos
         self.drawalgo = ['QUIT', voyage.Voyage(self.display),
         plus_court.Graphe(self.display), couplage.Couplage(self.display),
-        sac_a_dos.Sac_A_Dos(self.display), 'FIXME']
+        sac_a_dos.Sac_A_Dos(self.display)]
 
         # caption
         pygame.display.set_caption('IUTBM')
@@ -42,7 +42,7 @@ class iutbm:
         self.menu = rM.RotatingMenu(x=320, y=240, radius=220, arc=math.pi,
                 defaultAngle = math.pi / 2.0)
         items = ['quit', 'saleman traveller', 'plus court chemin',
-                'couplage', 'sac a dos', 'confiserie']
+                'couplage', 'sac a dos']
         [self.menu.addItem(rM.MenuItem(i)) for i in items]
         self.menu.selectItem(0)
 
