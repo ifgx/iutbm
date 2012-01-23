@@ -94,6 +94,12 @@ class RotatingMenu:
                 i.x = self.x + cos(rot) * self.radius
                 i.y = self.y + sin(rot) * self.radius
 
+    def getCollisionItem(self,(x,y)):
+        for j, i in enumerate(self.items):
+            if i.get_rect().collidepoint(x,y):
+                return j
+
+        return -1
 
     def draw(self, display):
         '''
@@ -120,9 +126,9 @@ class MenuItem:
         self.font = pygame.font.Font(None, 20)
         self.image = self.font.render(self.text, True, self.color)
         self.shadow = self.font.render(self.text, True, (0, 0, 0))
-        size = self.font.size(self.text)
-        self.xOffset = size[0] / 2
-        self.yOffset = size[1] / 2
+        self.size = self.font.size(self.text)
+        self.xOffset = self.size[0] / 2
+        self.yOffset = self.size[1] / 2
 
     def select(self):
         '''
@@ -145,6 +151,9 @@ class MenuItem:
         self.font = pygame.font.Font(None, 20)
         self.image = self.font.render(self.text, True, self.color)
         self.shadow = self.font.render(self.text, True, (0, 0, 0))
-        size = self.font.size(self.text)
-        self.xOffset = size[0] / 2
-        self.yOffset = size[1] / 2
+        self.size = self.font.size(self.text)
+        self.xOffset = self.size[0] / 2
+        self.yOffset = self.size[1] / 2
+
+    def get_rect(self):
+        return pygame.Rect(self.x - self.size[0] / 2,self.y - self.size[1] / 2,self.size[0],self.size[1])
