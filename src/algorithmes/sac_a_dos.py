@@ -58,7 +58,7 @@ class Sac_A_Dos(algo.Algo):
             i.draw(self.display,self.font,ingx,c*64+128)
 
     def _explain(self):
-        
+        return None
 
 class Object(object):
     '''
