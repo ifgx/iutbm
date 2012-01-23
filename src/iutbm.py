@@ -41,8 +41,8 @@ class iutbm:
         # initialisation of the menu
         self.menu = rM.RotatingMenu(x=320, y=240, radius=220, arc=math.pi,
                 defaultAngle = math.pi / 2.0)
-        items = ['quit', 'saleman traveller', 'plus court chemin',
-                'couplage', 'sac a dos']
+        items = ['Exit', 'Saleman traveller', 'Shortest path',
+                'Coupling', 'Backpack']
         [self.menu.addItem(rM.MenuItem(i)) for i in items]
         self.menu.selectItem(0)
 
