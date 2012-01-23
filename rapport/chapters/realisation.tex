@@ -1,39 +1,26 @@
 \section{Algorithmes}
     \subsection{Voyageur de commerce}
         \paragraph{Moteur}
-            Au démarrage du jeu, le programme génère un nuage
-            de points (entièrement paramétrable en interne)
-            répartis aléatoirement dans la fenêtre, et les affiche.
+            TODO
         \paragraph{Interface}
             L'utilisateur sélectionne les points par simple clic,
             et peut annuler ses actions par clic droit.
             A chaque point sélectionné, le programme
-            affiche en temps réel la distance totale entre
-            les points reliés.
-            Lorsqu'un point a été sélectionné, le programme
-            affiche la distance minimum calculée au-dessus de
+            affiche la distance totale entre les points reliés.
+            Dès lors qu'un point a été sélectionné, le programme
+            affiche la distance minimum calculée, au-dessus de
             la distance actuelle parcourue par l'utilisateur.
             Lorsque tout les points ont étés reliés entre eux,
             le programme raccorde automatiquement le premier
-            et le dernier point entre eux.
+            et le dernier point, afin de former une boucle.
         \paragraph{Résolution}
-            Lors de la sélectionne du premier point,
+            Lors de la sélection du premier point,
             le programme calcule à l'aide de l'algorithme
-            du plus proche voisin optimisé par permutation
-            le chemin le plus court.
+            du \emph{plus proche voisin} le chemin le plus court.
             Une fois que l'utilisateur a relié tout les points
             entre eux, le programme affiche la solution calculée
             en surimpression de celle trouvée par l'utilisateur.
 
-            L'algorithme du plus proche voisin consiste à avancer
-            de proche en proche, en prenant à chaque itération le plus
-            proche voisin du point actuel.
-            La permutation permet d'optimiser un peu le résultat trouvé
-            par l'algorithme du plus proche voisin.
-            Il consiste en une permutation de deux points sur le chemin trouvé.
-            Si la permutation réduit la longueur du chemin total,
-            elle est conservé, sinon, on essaye une autre permutation,
-            et ce, jusqu'à ce que tout les points aient été permutés.
 
 	\subsection{Couplage}
 		\paragraph{Contexte}
@@ -84,6 +71,18 @@
 
     \subsection{Sac à Dos}
         \paragraph{Contexte}
+
+
+        On pourra modéliser ce problème par un tableau contenant les objets et leur
+        valeur en vis-à-vis. L'utilisateur fera glisser les objets du tableau vers
+        le sac à dos. Un indicateur permettra de visualiser le poids actuel total
+        des objets dans le sac, le poids maximal que peut supporter le sac, et le
+        poids restant (différence entre ces deux résultats).
+
+        On pourra scénariste ce jeu avec, par exemple, une histoire où un personnage
+        doit quitter son château assiégé en emportant un maximum d'objets de valeur.
+
+
             Dans ce mini-jeu, le but du joueur est d'aider un pizzaiolo à
             sélectionner des ingrédients à transporter à un concours de pizza.
             Il ne peut pas prendre tout ce qu'il souhaite et doit faire des
@@ -108,6 +107,19 @@
             La résolution du problème s'effectue en utilisant un algorithme
             détaillé par notre professeur.
 \subsection{Problème du plus court chemin}
+
+
+        L'utilisateur pourra cliquer sur les différentes villes, tour à tour,
+        pour déplacer le personnage. Un compteur kilométrique indiquera la
+        distance parcourue.
+
+        Le joueur peut effectuer un clic droit pour annuler son dernier
+        mouvement.
+
+        Le jeu continue tant que le joueur n'a pas trouvé le chemin
+        le plus court. Il peut aussi cliquer sur \og solution\fg, qui
+        affichera le chemin segment par segment.
+
         \paragraph{Contexte}
             Le but du jeu est de livrer une pizza en effectuant le moins de kilomètres possible.
         \paragraph{Moteur}
