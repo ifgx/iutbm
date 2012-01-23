@@ -1,18 +1,103 @@
 #!/bin/env python
 # -*- coding: utf-8 -*-
 import random
+import pygame
+import algo
+
+class Sac_A_Dos(algo.Algo):
+    '''
+        The class Sac_A_Dos manages the whole game
+    '''
+
+    def __init__(self, display):
+        algo.Algo.__init__(self, display)
+        picRoot = "ui/pix/couplage/"
+
+        self.ingredients = [
+            Object("Obj1",1,2,picRoot + "client-blanc.png"),
+            Object("Obj2",2,3,picRoot + "client-bleu.png"),
+            Object("Obj3",4,5,picRoot + "client-orange.png"),
+            Object("Obj4",6,7,picRoot + "client-vert.png"),
+            Object("Obj5",7,8,picRoot + "client-violet.png")
+        ]
+
+    def _update(self, (x, y),button):
+        for i in self.ingredients:
+            if button == 1 and i.collidewith(x,y):
+                i.swapInBag()
+
+    def _draw(self):
+        #Legend 1
+        titre = self.font.render("Help the pizzaiolo choosing the best ingredients for the pizza contest", True, (255, 255, 255) )
+        titreRect = titre.get_rect()
+        titreRect.top = 48
+        titreRect.centerx = self.display.get_rect().width / 2
+        self.display.blit(titre, titreRect)
+
+        #Legend 2
+        titre = self.font.render("Red number shows weight, green number shows the value.", True, (255, 255, 255) )
+        titreRect = titre.get_rect()
+        titreRect.top = 64
+        titreRect.centerx = self.display.get_rect().width / 2
+        self.display.blit(titre, titreRect)
+
+        for c,i in enumerate(self.ingredients):
+            if i.inBag:
+                ingx = 600
+            else:
+                ingx = 200
+
+            i.draw(self.display,self.font,ingx,c*64+200)
 
 class Object(object):
     '''
         The class Object allow you to create object with a name, a value, and a weight
     '''
 
-    def __init__(self, name, weight, value):
+    def __init__(self, name, weight, value, pict):
         self.name = name
         self.weight = weight
         self.value = value
         self.rapport = self.value / self.weight
+        self.pict = pygame.image.load(pict)
+        self.inBag = False
+        self.posx = None
+        self.posy = None
 
+    def draw(self,display,font,x,y):
+        #Affichage image
+        self.posx = x
+        self.posy = y
+        display.blit(self.pict, (x,y))
+
+        #Affichage sous-titre
+        objn = font.render(self.name, True, (255, 255, 255) )
+        objnRect = objn.get_rect()
+        objnRect.top = y + self.pict.get_rect().bottom
+        objnRect.centerx = x + self.pict.get_rect().right / 2
+        display.blit(objn, objnRect)
+
+        #Affichage poids
+        objn = font.render(str(self.weight), True, (255, 0, 0) )
+        objnRect = objn.get_rect()
+        objnRect.top = y + self.pict.get_rect().bottom / 4
+        objnRect.centerx = x + self.pict.get_rect().right + 5
+        display.blit(objn, objnRect)
+
+        #Affichage valeur
+        objn = font.render(str(self.weight), True, (0, 255, 0) )
+        objnRect = objn.get_rect()
+        objnRect.top = y + (self.pict.get_rect().bottom / 4) * 3
+        objnRect.centerx = x + self.pict.get_rect().right + 5
+        display.blit(objn, objnRect)
+
+    def swapInBag(self):
+        self.inBag = not self.inBag
+
+    def collidewith(self,x,y):
+        imgrect = self.pict.get_rect()
+        return self.posx < x < self.posx + imgrect.right \
+            and self.posy < y < self.posy + imgrect.bottom
 
 class Case(object):
     '''
@@ -87,10 +172,10 @@ class Bag(object):
         print('weight of the bag: %s' % self.weight)
         self.tab[self.numObj][self.weight].show()  
 
-L = []
-for i in xrange(5):
-    weight = random.randint(1,10)
-    value = random.randint(1,10)
-    L.append(Object(str(i),weight,value))    
+#L = []
+#for i in xrange(5):
+#    weight = random.randint(1,10)
+#    value = random.randint(1,10)
+#    L.append(Object(str(i),weight,value))    
     
-bag = Bag(L,15)
+#bag = Bag(L,15)

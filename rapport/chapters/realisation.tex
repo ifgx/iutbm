@@ -31,14 +31,20 @@
         \subsubsection{pytlint} pylint est quant à lui un outil d'analyse
             statique pur et dur. Il vérifie grossièrement la sémantique du code,
             ainsi que sa présentation, et son respect des bonnes pratiques.
-            Par exemple, si les classes\footnote{TODO} possèdent bien
-            des commentaires les décrivant, ou encore si les modules
+            Par exemple, si les classes\footnote{Objet logiciel representant une entité}
+            possèdent bien des commentaires les décrivant, ou encore si les modules
             \footnote{Un module est une \emph{brique} logicielle permettant
             de s'appuyer sur l'existant, et donc de ne pas réinventer la roue}
             importés sont bien utilisés, si les variables ont des noms corrects, ...
         \subsubsection{vim}
             Ce projet fût également l'occasion pour certain de découvrir \emph{vim},
             un puissant éditeur de texte modal.
+
+\section{Choix du thème}
+Le programme adopte un thème unifié autour du monde de la pizza. Dans tous les mini-jeux, on pourra
+ainsi retrouver soit une livraison de pizza, soit une distribution de pizza. Cette unification permet à
+l'utilisateur de mieux se retrouver au sein des différents mini-jeux. De plus, elle procure aux mini-jeux
+une certaine cohérence qui aide à la compréhension.
 
 \section{Menu principal}
     Le menu principal est un menu circulaire,
@@ -81,4 +87,101 @@
             Si la permutation réduit la longueur du chemin total,
             elle est conservé, sinon, on essaye une autre permutation,
             et ce, jusqu'à ce que tout les points aient été permutés.
+
+	\subsection{Couplage}
+		\paragraph{Contexte}
+			Le but du jeu est de répartir un certain nombre de pizzas à un certain nombre de
+			 clients. Chaque client dresse une liste de ses pizzas préférées; il faut alors,
+			 en suivant ces directives, déterminer quelle est la meilleure façon de répartir
+			 les pizzas entre les différents clients.
+
+			Au terme de la résolution, il est possible qu'un ou plusieurs clients n'aient pas
+			 de pizza, ou au contraire qu'une pizza ne soit distribuée à personne. Le but est
+			 alors de satisfaire un maximum de clients.
+		\paragraph{Moteur}
+			Au démarrage du jeu, l'application génère une liste aléatoire de clients et une
+			 liste aléatoire de pizzas. Ensuite, elle génère une liste aléatoire de couples
+			 (client, pizza) représentant la liste des préférences de chaque client.
+		\paragraph{Interface}
+			L'utilisateur est présenté avec une liste de clients à gauche, et une liste
+			 de pizzas à droite. En cliquant sur un client, la liste des pizzas préférées
+			 du client s'affiche en bas de l'écran.
+
+			L'utilisateur \emph{sélectionne} un client en cliquant dessus. Une fois un client
+			 sélectionné, il clique sur la pizza qu'il souhaite attribuer à ce client. Si la
+			 pizza est déjà attribuée à quelqu'un ou si le client a déjà une pizza, un message
+			 d'erreur s'affiche; sinon, la pizza est associée au client: un trait rouge
+			 s'affiche entre les deux.
+
+			L'utilisateur a la possibilité d'annuler ses choix en cliquant avec le bouton
+			 droit de la souris (ce qui annule la dernière action).
+		\paragraph{Résolution}
+			Chaque clients à une certaine liste de préférences concernant les pizzas.
+			Nous pouvons symboliser ces préférences par les arrêtes d'un graphique où
+			 les noeuds sont représentatif des clients et des pizzas.
+			Pour satisfaire le maximum de clients, il est nécessaire de traiter d'abord
+			 ceux qui ont le moins de pizzas dans leur liste de préférences, et donc, 
+			 d'arrêtes sortant des noeuds clients, car on vise le nombre maximum de clients
+			 satisfaits.
+			Ensuite, on traite ceux qui ont le moins de liens, les uns après les autres,
+			 suivant les desserts disponibles.
+			Dans la représentation graphique, nous admettons qu'il y ait un noeud Source,
+			 lié a tous les clients par des arrêtes de capacité 1, pour interdire le 
+			 choix d'un client déjà satisfait.
+			Ensuite, il y a un noeud Puit, similaire au noeud Source mais liés aux 
+			 desserts.
+			Lorsque l'on ne peut plus atteindre le noeud Puit a partir du noeud Source,
+			 le jeu est terminé
+			Si l'utilisateur n'a pas trouvé la solution optimale, la solution s'affiche
+			 en surimpression sur le choix du joueur.
+
+    \subsection{Sac à Dos}
+        \paragraph{Contexte}
+            Dans ce mini-jeu, le but du joueur est d'aider un pizzaiolo à
+            sélectionner des ingrédients à transporter à un concours de pizza.
+            Il ne peut pas prendre tout ce qu'il souhaite et doit faire des
+            choix entre qualité et quantité : de bons ingrédients lui donnera
+            plus de points par le jury, cependant la pizza présenté a un poids
+            limité au gramme près.
+        \paragraph{Moteur}
+            Au démarrage de l'application, une liste d'ingrédients est créée.
+            Pour respecter une certaine logique, on ne peux pas générer des
+            chiffre aléatoirement. (Il semblerait assez illogique qu'une
+            garniture au fromage pèse plusieurs centaines de grammes par
+            exemple.)
+        \paragraph{Interface}
+            L'interface se présente en 2 colonnes. La première, à gauche,
+            contient les objets disponible pour la pizza. La seconde, à droite,
+            montre le contenu actuel de la pizza que le joueur à choisi.
+            Un clic sur une icone d'un ingrédients permet de l'échanger entre
+            les deux colonnes.
+            Lorsque l'utilisateur a terminé, il clique sur le bouton de
+            validation pour savoir si il a trouvé la solution correcte.
+        \paragraph{Résolution}
+            La résolution du problème s'effectue en utilisant un algorithme
+            détaillé par notre professeur.
+\subsection{Problème du plus court chemin}
+
+        \paragraph{Contexte}
+            Le but du jeu est de livrer une pizza en effectuant le moins de kilomètre possible. 
+
+        \paragraph{Moteur}
+            Au démarrage du jeu, le programme génère un graphe 
+            représentant des villes. Ces villes sont reliées par des arcs pondérés.
+            Le poids des arcs corresponds à la distance entre chaque villes.
+		Il affiche les villes et les liaisons.
+
+        \paragraph{Interface}
+            L'utilisateur sélectionne les villes par simple clic,
+            et peut annuler ses actions par clic droit.
+            Pour revenir au début il suffit de cliqué sur la ville de départ.
+            A chaque ville sélectionné, le programme
+            affiche en temps réel la distance totale parcouru. 
+
+            
+
+        \paragraph{Résolution}
+            Lorsque la ville de début et la ville finale sont reliée, 
+            on appel la méthode de résolution par l'algorithme de Dijkstra.
+            Le programme affiche ensuite si le joueur à trouver la solution optimale.
 
