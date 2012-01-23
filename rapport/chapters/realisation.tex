@@ -1,56 +1,3 @@
-\section{Langage}
-    Le programme est entièrement codé en Python,
-    et utilise la bibliothèque \emph{pygame}.
-    \subsection{Python}
-        Le \emph{Python} est un langage de programmation de haut niveau\footnote{Qui fait
-        abstraction des détails de la machine sur laquelle il s'exécute} interprété
-        \footnote{Au contraire des langages compilés, le python est évalué
-        lignes par lignes par un \emph{interpréteur}, au lieu d'être exécuté directement
-        par la machine}. Il fonctionne sur la plupart des plateformes informatiques.
-    \subsection{pygame}
-        pygame est une bibliothèque écrite en \emph{Python} initialement prévue pour
-        le développement de jeux vidéo. Elle permet de programmer la partie multimédia
-        (graphismes, sons, entrées des périphériques (clavier, couris, joystick,...),
-        système de fenêtrage, ...) rapidement et facilement).
-
-\section{Outils}
-    Tout les outils utilisés, sans exception sont disponibles sous
-    licence libre.
-    \subsection{git}
-        \emph{git} fût utilisé en gestionnaire de version,
-        afin de simplifier le travail collaboratif.
-        Il est également un excellent indicateur de la répartition
-        de la charge de travail.
-    \subsection{pep8, pylint}
-        \emph{pep8}, et \emph{pylint} sont tout les deux
-        des outils d'analyse statique de code \emph{Python}
-        \subsubsection{pep8}
-            \emph{pep8} se charge de vérifier si le code qui lui
-            est fourni en entrée respecte bien les convention de codage
-            python de la norme \emph{pep8} (le logiciel est homonyme).
-        \subsubsection{pytlint} pylint est quant à lui un outil d'analyse
-            statique pur et dur. Il vérifie grossièrement la sémantique du code,
-            ainsi que sa présentation, et son respect des bonnes pratiques.
-            Par exemple, si les classes\footnote{Objet logiciel representant une entité}
-            possèdent bien des commentaires les décrivant, ou encore si les modules
-            \footnote{Un module est une \emph{brique} logicielle permettant
-            de s'appuyer sur l'existant, et donc de ne pas réinventer la roue}
-            importés sont bien utilisés, si les variables ont des noms corrects, ...
-        \subsubsection{vim}
-            Ce projet fût également l'occasion pour certain de découvrir \emph{vim},
-            un puissant éditeur de texte modal.
-
-\section{Choix du thème}
-Le programme adopte un thème unifié autour du monde de la pizza. Dans tous les mini-jeux, on pourra
-ainsi retrouver soit une livraison de pizza, soit une distribution de pizza. Cette unification permet à
-l'utilisateur de mieux se retrouver au sein des différents mini-jeux. De plus, elle procure aux mini-jeux
-une certaine cohérence qui aide à la compréhension.
-
-\section{Menu principal}
-    Le menu principal est un menu circulaire,
-    permettant de choisir les algorithmes, et de
-    quitter le programme.
-
 \section{Algorithmes}
     \subsection{Voyageur de commerce}
         \paragraph{Moteur}
@@ -120,15 +67,15 @@ une certaine cohérence qui aide à la compréhension.
 			Nous pouvons symboliser ces préférences par les arrêtes d'un graphique où
 			 les noeuds sont représentatif des clients et des pizzas.
 			Pour satisfaire le maximum de clients, il est nécessaire de traiter d'abord
-			 ceux qui ont le moins de pizzas dans leur liste de préférences, et donc, 
+			 ceux qui ont le moins de pizzas dans leur liste de préférences, et donc,
 			 d'arrêtes sortant des noeuds clients, car on vise le nombre maximum de clients
 			 satisfaits.
 			Ensuite, on traite ceux qui ont le moins de liens, les uns après les autres,
 			 suivant les desserts disponibles.
 			Dans la représentation graphique, nous admettons qu'il y ait un noeud Source,
-			 lié a tous les clients par des arrêtes de capacité 1, pour interdire le 
+			 lié a tous les clients par des arrêtes de capacité 1, pour interdire le
 			 choix d'un client déjà satisfait.
-			Ensuite, il y a un noeud Puit, similaire au noeud Source mais liés aux 
+			Ensuite, il y a un noeud Puit, similaire au noeud Source mais liés aux
 			 desserts.
 			Lorsque l'on ne peut plus atteindre le noeud Puit a partir du noeud Source,
 			 le jeu est terminé
@@ -163,10 +110,10 @@ une certaine cohérence qui aide à la compréhension.
 \subsection{Problème du plus court chemin}
 
         \paragraph{Contexte}
-            Le but du jeu est de livrer une pizza en effectuant le moins de kilomètre possible. 
+            Le but du jeu est de livrer une pizza en effectuant le moins de kilomètre possible.
 
         \paragraph{Moteur}
-            Au démarrage du jeu, le programme génère un graphe 
+            Au démarrage du jeu, le programme génère un graphe
             représentant des villes. Ces villes sont reliées par des arcs pondérés.
             Le poids des arcs corresponds à la distance entre chaque villes.
 		Il affiche les villes et les liaisons.
@@ -176,12 +123,12 @@ une certaine cohérence qui aide à la compréhension.
             et peut annuler ses actions par clic droit.
             Pour revenir au début il suffit de cliqué sur la ville de départ.
             A chaque ville sélectionné, le programme
-            affiche en temps réel la distance totale parcouru. 
+            affiche en temps réel la distance totale parcouru.
 
-            
+
 
         \paragraph{Résolution}
-            Lorsque la ville de début et la ville finale sont reliée, 
+            Lorsque la ville de début et la ville finale sont reliée,
             on appel la méthode de résolution par l'algorithme de Dijkstra.
             Le programme affiche ensuite si le joueur à trouver la solution optimale.
 

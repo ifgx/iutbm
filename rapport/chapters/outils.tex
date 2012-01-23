@@ -1,0 +1,52 @@
+\section{Langage}
+    Le programme est entièrement codé en Python,
+    et utilise la bibliothèque \emph{pygame}.
+    \subsection{Python}
+        Le \emph{Python} est un langage de programmation de haut niveau\footnote{Qui fait
+        abstraction des détails de la machine sur laquelle il s'exécute} interprété
+        \footnote{Au contraire des langages compilés, le python est évalué
+        lignes par lignes par un \emph{interpréteur}, au lieu d'être exécuté directement
+        par la machine}. Il fonctionne sur la plupart des plateformes informatiques.
+    \subsection{pygame}
+        pygame est une bibliothèque écrite en \emph{Python} initialement prévue pour
+        le développement de jeux vidéo. Elle permet de programmer la partie multimédia
+        (graphismes, sons, entrées des périphériques (clavier, couris, joystick,...),
+        système de fenêtrage, ...) rapidement et facilement).
+
+\section{Outils}
+    Tout les outils utilisés, sans exception sont disponibles sous
+    licence libre.
+    \subsection{git}
+        \emph{git} fût utilisé en gestionnaire de version,
+        afin de simplifier le travail collaboratif.
+        Il est également un excellent indicateur de la répartition
+        de la charge de travail.
+    \subsection{pep8, pylint}
+        \emph{pep8}, et \emph{pylint} sont tout les deux
+        des outils d'analyse statique de code \emph{Python}
+        \subsubsection{pep8}
+            \emph{pep8} se charge de vérifier si le code qui lui
+            est fourni en entrée respecte bien les convention de codage
+            python de la norme \emph{pep8} (le logiciel est homonyme).
+        \subsubsection{pytlint} pylint est quant à lui un outil d'analyse
+            statique pur et dur. Il vérifie grossièrement la sémantique du code,
+            ainsi que sa présentation, et son respect des bonnes pratiques.
+            Par exemple, si les classes\footnote{Objet logiciel representant une entité}
+            possèdent bien des commentaires les décrivant, ou encore si les modules
+            \footnote{Un module est une \emph{brique} logicielle permettant
+            de s'appuyer sur l'existant, et donc de ne pas réinventer la roue}
+            importés sont bien utilisés, si les variables ont des noms corrects, ...
+        \subsubsection{vim}
+            Ce projet fût également l'occasion pour certain de découvrir \emph{vim},
+            un puissant éditeur de texte modal.
+
+\section{Choix du thème}
+Le programme adopte un thème unifié autour du monde de la pizza. Dans tous les mini-jeux, on pourra
+ainsi retrouver soit une livraison de pizza, soit une distribution de pizza. Cette unification permet à
+l'utilisateur de mieux se retrouver au sein des différents mini-jeux. De plus, elle procure aux mini-jeux
+une certaine cohérence qui aide à la compréhension.
+
+\section{Menu principal}
+    Le menu principal est un menu circulaire,
+    permettant de choisir les algorithmes, et de
+    quitter le programme.
