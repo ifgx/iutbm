@@ -28,11 +28,23 @@ class Sac_A_Dos(algo.Algo):
             Object("Seafood",7,8,picRoot + "client-violet.png")
         ]
         self.ingredients = random.sample(self.allIngredients, 5)
+        
+        self.bag = Bag(self.ingredients , 20)
+        
+        self.weight = 0
+        self.value = 0
 
     def _update(self, (x, y),button):
         for i in self.ingredients:
             if button == 1 and i.collidewith(x,y):
+                if(i.inBag):
+                    self.weight -= i.weight
+                    self.value -= i.value
+                else:
+                    self.weight += i.weight
+                    self.value += i.value
                 i.swapInBag()
+                
 
     def _draw(self):
         #Legend 1
@@ -49,6 +61,13 @@ class Sac_A_Dos(algo.Algo):
         titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
 
+        #Legend 3
+        titre = self.font.render("Weight : "+str(self.weight) +" Value : "+str(self.value), True, (255, 255, 255) )
+        titreRect = titre.get_rect()
+        titreRect.top = 86
+        titreRect.centerx = self.display.get_rect().width / 2
+        self.display.blit(titre, titreRect)
+        
         for c,i in enumerate(self.ingredients):
             if i.inBag:
                 ingx = 600
