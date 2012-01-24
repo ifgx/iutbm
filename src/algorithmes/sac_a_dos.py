@@ -29,7 +29,9 @@ class Sac_A_Dos(algo.Algo):
         ]
         self.ingredients = random.sample(self.allIngredients, 5)
         
-        self.bag = Bag(self.ingredients , 20)
+        self.max_weight = 20
+
+        self.bag = Bag(self.ingredients , self.max_weight)
         
         self.weight = 0
         self.value = 0
@@ -40,10 +42,12 @@ class Sac_A_Dos(algo.Algo):
                 if(i.inBag):
                     self.weight -= i.weight
                     self.value -= i.value
+                    i.swapInBag()
                 else:
-                    self.weight += i.weight
-                    self.value += i.value
-                i.swapInBag()
+                    if self.weight + i.weight <= self.max_weight :
+                        self.weight += i.weight
+                        self.value += i.value
+                        i.swapInBag()
                 
 
     def _draw(self):
@@ -62,7 +66,7 @@ class Sac_A_Dos(algo.Algo):
         self.display.blit(titre, titreRect)
 
         #Legend 3
-        titre = self.font.render("Weight : "+str(self.weight) +" Value : "+str(self.value), True, (255, 255, 255) )
+        titre = self.font.render("Max weight : "+str(self.max_weight)+"  Weight : "+str(self.weight) +" Value : "+str(self.value), True, (255, 255, 255) )
         titreRect = titre.get_rect()
         titreRect.top = 86
         titreRect.centerx = self.display.get_rect().width / 2
