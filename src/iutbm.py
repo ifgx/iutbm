@@ -69,6 +69,7 @@ class iutbm:
                                 sys.exit(0)
                             else:
                                 algo = self.drawalgo[self.menu.selectedItemNumber]
+                                algo.__init__(self.display)  # reset the algo
                                 inMenu = False
                                 inAlgo = True
 
