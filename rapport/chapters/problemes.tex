@@ -1,0 +1,59 @@
+\section{Algorithmes en temps polynomiaux}
+    \subsection{Le plus court chemin}
+        \subsubsection{Description}
+        Le problème du \emph{plus court chemin} consiste à trouver
+        le plus court trajet permettant de relier deux points donnés.
+        \subsubsection{Applications pratiques}
+            L'application la plus évidente de ce problème sont les systèmes de type
+            GPS.
+        \subsubsection{Algorithme}
+
+    \subsection{Le couplage}
+        \subsubsection{Description}
+            Le problème du couplage est un problème de répartition \emph{au mieux}.
+            En effet, il s'agit de répartir un certain nombre d'objets
+            entre plusieurs personnes, chacun ayant une liste d'objets
+            préférés, en contentant un maximum de personnes.
+        \subsubsection{Applications pratiques}
+            TODO
+        \subsubsection{Algorithme}
+            TODO
+
+
+
+\section{Algorithmes pseudo-polynomiaux}
+    \subsection{Le problème du sac à dos}
+        \subsubsection{Description}
+            Le \emph{problème du sac à dos} consiste à sélectionner
+            des \emph{objets} auxquelles sont associés un couple (valeur, poids).
+            Le but étant d'amasser un maximum de valeur, tout en ne dépassant
+            pas une limite de poids fixée.
+        \subsubsection{Applications pratiques}
+            TODO
+        \subsubsection{Algorithme}
+
+
+
+\section{Algorithmes en temps exponentiels}
+     \subsection{Le problème du voyageur de commerce}
+        \subsubsection{Description}
+                Le problème de voyageur de commerce consiste à trouver le plus
+                court chemin reliant tous les points d'un graphe pondéré.
+                Ce problème n'est (à ce jour) pas solvable en un temps
+                polynomial de manière exacte, c'est pourquoi une \emph{heuristique}
+                est utilisée ici.
+        \subsubsection{Applications pratiques}
+            Toutes les entreprises devant effectuer des tournées sont concernées
+            par ce type de problèmes, comme par exemple \emph{EDF},
+            la \emph{Poste}, ou encore les entreprises de transport routier.
+        \subsubsection{Algorithme}
+            L'algorithme implémenté est algorithme de type \emph{plus proche voisin} :
+            Il consiste à avancer
+            de proche en proche, en prenant à chaque itération le plus
+            proche voisin du point actuel.
+
+            %\begin{algorithmic}
+            %    $max_distance = sqrt((max_x - min_x)^2 + (max_y - min_y)^2)$
+            %    \FOR{$i = 0 \to nbpts$}
+            %    \STATE $minimum\gets max_distance$
+            %\end{algorithmic}
