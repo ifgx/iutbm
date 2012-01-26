@@ -69,6 +69,7 @@ class iutbm:
                                 sys.exit(0)
                             else:
                                 algo = self.drawalgo[self.menu.selectedItemNumber]
+                                algo.__init__(self.display)  # reset the algo
                                 inMenu = False
                                 inAlgo = True
 
@@ -102,7 +103,8 @@ class iutbm:
             # update
             if inMenu:
                 self.menu.update()
-            elif inAlgo and pos != (0, 0):
+            elif inAlgo and pos != (0, 0)\
+                    and button != None:
                 algo._update(pos, button)
 
             # drawing's handling

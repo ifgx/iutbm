@@ -1,7 +1,7 @@
 '''
-A nice and smooth rotating menu,
-stolen from http://www.pygame.org/project-Rotating+Menu-975-.html.
-original author : Francesco Mastellone (effeemme)
+    A nice and smooth rotating menu,
+    stolen from http://www.pygame.org/project-Rotating+Menu-975-.html.
+    original author : Francesco Mastellone (effeemme)
 '''
 from math import sin, cos, pi
 import sys
@@ -12,7 +12,6 @@ def sinInterpolation(start, end, steps=30):
     '''
         Placement stuffs
     '''
-    values = []
     delta = end - start
     coef = pi / float(steps) / 2
 

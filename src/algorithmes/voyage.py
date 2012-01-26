@@ -16,13 +16,10 @@ class Sommet:
     '''
     def __init__(self, name, x, y):
         self.name = name
-        self.x = x
-        self.y = y
+        self.x = int(x)
+        self.y = int(y)
         self.visite = False
         self.pix = pygame.image.load(random.choice(theme.pizzas))
-
-    def __repr__(self):
-        return str(self.name)
 
 
 class Voyage(algorithmes.algo.Algo):
@@ -228,6 +225,10 @@ It is a special case of the Traveling purchaser problem.#'
 
         for point in self.matrix[0][1:]:  # draw points
             self.display.blit(point.pix, self._get_corres_pixel(point.x, point.y))
+
+        # hello, I'm a dirty hack !
+        if self.computed_path == self.user_path:
+            self.user_len = self.computed_len
 
         #user's length
         width, height = self.display.get_size()

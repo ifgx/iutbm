@@ -1,8 +1,12 @@
 \section{Algorithmes}
     \subsection{Voyageur de commerce}
-        \paragraph{Moteur}
-            TODO
-        \paragraph{Interface}
+        \subsubsection{Génération des données}
+            La génération des données se fait en deux temps :
+            \begin{enumerate}
+                \item Génération de points à des coordonnées aléatoires
+                \item Génération de la matrice des distances
+            \end{enumerate}
+        \subsubsection{Interface}
             L'utilisateur sélectionne les points par simple clic,
             et peut annuler ses actions par clic droit.
             A chaque point sélectionné, le programme
@@ -13,66 +17,55 @@
             Lorsque tout les points ont étés reliés entre eux,
             le programme raccorde automatiquement le premier
             et le dernier point, afin de former une boucle.
-        \paragraph{Résolution}
+        \subsubsection{Résolution}
             Lors de la sélection du premier point,
             le programme calcule à l'aide de l'algorithme
             du \emph{plus proche voisin} le chemin le plus court.
             Une fois que l'utilisateur a relié tout les points
             entre eux, le programme affiche la solution calculée
-            en surimpression de celle trouvée par l'utilisateur.
+            en surimpression de celle proposée par l'utilisateur.
 
 
 	\subsection{Couplage}
 		\paragraph{Contexte}
-			Le but du jeu est de répartir un certain nombre de pizzas à un certain nombre de
-			 clients. Chaque client dresse une liste de ses pizzas préférées; il faut alors,
-			 en suivant ces directives, déterminer quelle est la meilleure façon de répartir
-			 les pizzas entre les différents clients.
-
-			Au terme de la résolution, il est possible qu'un ou plusieurs clients n'aient pas
-			 de pizza, ou au contraire qu'une pizza ne soit distribuée à personne. Le but est
-			 alors de satisfaire un maximum de clients.
+			Le probleme de couplage est modélisé par un jeu de choix.
+			Il y a plusieurs clients, avec leurs préférences qui ont
+			 le choix entre plusieurs pizzas, et le joueur doit 
+			 satisfaire un maximum de clients.
 		\paragraph{Moteur}
-			Au démarrage du jeu, l'application génère une liste aléatoire de clients et une
-			 liste aléatoire de pizzas. Ensuite, elle génère une liste aléatoire de couples
-			 (client, pizza) représentant la liste des préférences de chaque client.
+			Au demarrage de l'application, le nombre de pizzas et 
+			 de clients est généré aléatoirement, dans un intervalle 
+			 assez bas, par soucis de complexité.
+			Les préférences de chaque client sont aussi générés aléatoirement,
+			 mais dans l'optique qu'un client ait au minimum une préférences.
 		\paragraph{Interface}
-			L'utilisateur est présenté avec une liste de clients à gauche, et une liste
-			 de pizzas à droite. En cliquant sur un client, la liste des pizzas préférées
-			 du client s'affiche en bas de l'écran.
+		    L'écran est divisé en trois colonnes :
+		    \begin{item}
+		        \item[à gauche] les préférences de chancun des clients
+		        \item[au centre] les clients
+		        \item[à droite] les pizzas disponibles
+		    \end{item}
 
-			L'utilisateur \emph{sélectionne} un client en cliquant dessus. Une fois un client
-			 sélectionné, il clique sur la pizza qu'il souhaite attribuer à ce client. Si la
-			 pizza est déjà attribuée à quelqu'un ou si le client a déjà une pizza, un message
-			 d'erreur s'affiche; sinon, la pizza est associée au client: un trait rouge
-			 s'affiche entre les deux.
-
-			L'utilisateur a la possibilité d'annuler ses choix en cliquant avec le bouton
-			 droit de la souris (ce qui annule la dernière action).
+		L'utilisateur \emph{sélectionne} un client en cliquant dessus.
+		    Une fois un client sélectionné, il est possible
+		    d'associer une pizza à ce client, en cliquant dessus.
+		    Si la pizza est déjà attribuée, ou si le client a déjà
+		    une pizza qui lui est affectée, un message d'erreur s'affiche.
+		    Si ni le client n'a de pizza, ni la pizza de client, l'association
+		    se fait, et est représentée par un trait.
+		L'utilisateur a la possibilité d'annuler ses choix en cliquant avec le bouton
+		    droit de la souris (ce qui annule la dernière action).
 		\paragraph{Résolution}
-			Chaque clients à une certaine liste de préférences concernant les pizzas.
-			Nous pouvons symboliser ces préférences par les arrêtes d'un graphique où
-			 les noeuds sont représentatif des clients et des pizzas.
-			Pour satisfaire le maximum de clients, il est nécessaire de traiter d'abord
-			 ceux qui ont le moins de pizzas dans leur liste de préférences, et donc,
-			 d'arrêtes sortant des noeuds clients, car on vise le nombre maximum de clients
-			 satisfaits.
-			Ensuite, on traite ceux qui ont le moins de liens, les uns après les autres,
-			 suivant les desserts disponibles.
-			Dans la représentation graphique, nous admettons qu'il y ait un noeud Source,
-			 lié a tous les clients par des arrêtes de capacité 1, pour interdire le
-			 choix d'un client déjà satisfait.
-			Ensuite, il y a un noeud Puit, similaire au noeud Source mais liés aux
-			 desserts.
-			Lorsque l'on ne peut plus atteindre le noeud Puit a partir du noeud Source,
-			 le jeu est terminé
-			Si l'utilisateur n'a pas trouvé la solution optimale, la solution s'affiche
+			L'algorithme permet d'avoir la solution comportant un maximum de clients
+			 satisfait et de verifier si la solution proposée par le joueur correspond
+			 a la meilleure solution possible.
+ 			Si l'utilisateur n'a pas trouvé la solution optimale, la solution s'affiche
 			 en surimpression sur le choix du joueur.
+
+
 
     \subsection{Sac à Dos}
         \paragraph{Contexte}
-
-
         On pourra modéliser ce problème par un tableau contenant les objets et leur
         valeur en vis-à-vis. L'utilisateur fera glisser les objets du tableau vers
         le sac à dos. Un indicateur permettra de visualiser le poids actuel total
@@ -106,9 +99,9 @@
         \paragraph{Résolution}
             La résolution du problème s'effectue en utilisant un algorithme
             détaillé par notre professeur.
+
+
 \subsection{Problème du plus court chemin}
-
-
         L'utilisateur pourra cliquer sur les différentes villes, tour à tour,
         pour déplacer le personnage. Un compteur kilométrique indiquera la
         distance parcourue.

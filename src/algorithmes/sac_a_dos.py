@@ -11,28 +11,44 @@ class Sac_A_Dos(algo.Algo):
 
     def __init__(self, display):
         algo.Algo.__init__(self, display)
-        picRoot = "ui/pix/couplage/"
+        picRoot = "ui/pix/bagpack/"
 
         self.allIngredients = [
-            Object("Chorizo",1,2,picRoot + "client-blanc.png"),
-            Object("Herbs",2,3,picRoot + "client-bleu.png"),
-            Object("Olive oil",4,5,picRoot + "client-orange.png"),
-            Object("Garlic",6,7,picRoot + "client-vert.png"),
-            Object("Onion",7,8,picRoot + "client-violet.png"),
-            Object("Cheese",7,8,picRoot + "client-violet.png"),
-            Object("Mushrooms",7,8,picRoot + "client-violet.png"),
-            Object("Minced Meat",7,8,picRoot + "client-violet.png"),
-            Object("Cream",7,8,picRoot + "client-violet.png"),
-            Object("Salmon",7,8,picRoot + "client-violet.png"),
-            Object("Peppers",7,8,picRoot + "client-violet.png"),
-            Object("Seafood",7,8,picRoot + "client-violet.png")
+            Object("Tomatoes",1,2,picRoot + "tomate.png"),
+            Object("Pumpkin",2,3,picRoot + "courgette.png"),
+            Object("Bread",4,5,picRoot + "pain.png"),
+            Object("Radish",6,7,picRoot + "radis.png"),
+            Object("Onion",7,8,picRoot + "oignon.png"),
+            Object("Potatoes",7,8,picRoot + "pommeterre.png"),
+            Object("Mushrooms",7,8,picRoot + "champignon.png"),
+            Object("Alapinios",7,8,picRoot + "piment.png"),
+            Object("Carotte",7,8,picRoot + "carotte.png"),
+            Object("Avocado",7,8,picRoot + "avocat.png"),
+            Object("Peppers",7,8,picRoot + "poivrons.png"),
+            Object("Cauliflower",7,8,picRoot + "brocoli.png")
         ]
         self.ingredients = random.sample(self.allIngredients, 5)
+        
+        self.max_weight = 20
+
+        self.bag = Bag(self.ingredients , self.max_weight)
+        
+        self.weight = 0
+        self.value = 0
 
     def _update(self, (x, y),button):
         for i in self.ingredients:
             if button == 1 and i.collidewith(x,y):
-                i.swapInBag()
+                if(i.inBag):
+                    self.weight -= i.weight
+                    self.value -= i.value
+                    i.swapInBag()
+                else:
+                    if self.weight + i.weight <= self.max_weight :
+                        self.weight += i.weight
+                        self.value += i.value
+                        i.swapInBag()
+                
 
     def _draw(self):
         #Legend 1
@@ -49,6 +65,13 @@ class Sac_A_Dos(algo.Algo):
         titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
 
+        #Legend 3
+        titre = self.font.render("Max weight : "+str(self.max_weight)+"  Weight : "+str(self.weight) +" Value : "+str(self.value), True, (255, 255, 255) )
+        titreRect = titre.get_rect()
+        titreRect.top = 86
+        titreRect.centerx = self.display.get_rect().width / 2
+        self.display.blit(titre, titreRect)
+        
         for c,i in enumerate(self.ingredients):
             if i.inBag:
                 ingx = 600
