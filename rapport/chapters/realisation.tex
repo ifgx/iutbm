@@ -130,7 +130,21 @@
 
         \paragraph{Résolution}
             Lorsque la ville de début et la ville finale sont reliées,
-            on appelle la méthode de résolution par l'algorithme de \emph{Dijkstra}
-            \footnote{TODO}.
+            on appelle la méthode de résolution par l'algorithme de \emph{Dijkstra}.
+
             Le programme affiche ensuite si le joueur à trouvé la solution optimale.
+
+		\paragraph{Algorithme de Dijkstra} ~
+
+			\begin{lstlisting}
+liste_sommets = [+oo pour i dans sommets]
+S(liste_sommets[0]) = 0
+tant que taille(liste_sommets) != 0; faire
+    element_courant = min(liste_sommets)
+    pour chaque element_voisin dans liste_sommets; faire
+        mettre_a_jour(element_voisin)
+    fin pour
+    supprimer element_courant de liste_sommets
+fin tant que
+			\end{lstlisting}
 
