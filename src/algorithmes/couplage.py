@@ -300,20 +300,3 @@ class ModelisationCouplage:
         
         self.preferences = sav_preferences
 
-
-if False:
-    # algorithme
-    listeFourmis = [("Fourmi A", ""), ("Fourmi B", ""), ("Fourmi C", ""), ("Fourmi D", ""), ("Fourmi E", "")]
-    listeDesserts = [("Flan", ""), ("Banane", ""), ("Gâteau au chocolat", ""), ("Glace à la fraise", ""), ("Glace à la vanille", "")]
-
-    mod = ModelisationCouplage(listeFourmis, listeDesserts, 13)
-
-    print "Préferences :"
-    mod.afficher(mod.preferences)
-
-    mod.resoudre()
-
-    print "\n\nSolution :"
-    mod.afficher(mod.solution)
-
-
