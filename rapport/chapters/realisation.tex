@@ -97,8 +97,19 @@
             Lorsque l'utilisateur a terminé, il clique sur le bouton de
             validation pour savoir si il a trouvé la solution correcte.
         \paragraph{Résolution}
-            La résolution du problème s'effectue en utilisant un algorithme
-            détaillé par notre professeur.
+            La résolution du problème s'effectue grâce à un calcule de la solution optimale 
+            par programmation dynamique. Notons $V(k,y)$ la valeur optimale au problème du sac à dos  
+            réduit au $k$ premier objet avec un sac de poids maximale de $y$. 
+            $y_{k}$ le poids de l'objet k et $v_{k}$ la valeur de l'objet $k$.
+
+            Si $ y - y_{k} >= 0 $
+                $V(k,y) = max{ V(k-1,y)  ,v_{k} + V(k-1,y-y_{k}}$
+            Sinon
+                $V(k,y) = V(k-1,y)$
+
+            On notera aussi que si il n'y a pas d'objet on a : $V(0,y) = 0$
+            De plus si le poids est nul on a: $V(k,0) = 0$
+
 
 
 \subsection{Problème du plus court chemin}
