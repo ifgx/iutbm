@@ -5,9 +5,14 @@
         le plus court trajet permettant de relier deux points donnés.
         \subsubsection{Applications pratiques}
             L'application la plus évidente de ce problème sont les systèmes de type
-            GPS.
+            GPS. On l'utilise notamment pour permettre un routage internet très efficace 
+            des informations en cherchant le parcours le plus efficace.
         \subsubsection{Algorithme}
-
+			L'algorithme implémenté est l'algorithme de \emph{Dijkstra}: 
+			Il s'agit de construire progressivement, à partir des données initiales, 
+			un sous-graphe dans lequel sont classés les différents sommets par 
+			ordre croissant de leur distance minimale au sommet de départ. 
+			
     \subsection{Le couplage}
         \subsubsection{Description}
             Le problème du couplage est un problème de répartition \emph{au mieux}.
@@ -20,7 +25,9 @@
             ou la \emph{Redoute}, qui doivent
             repartir au mieux leurs marchandises.
         \subsubsection{Algorithme}
-            TODO
+            On utilisera un algorithme de progrmmation dynamique. Il consiste à créer 
+            un tableau que l'on remplira au fur et à mesure selon les cases du niveaux 
+            précédents. 
 
 
 
