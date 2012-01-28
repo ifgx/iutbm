@@ -60,6 +60,8 @@ class Graphe(algo.Algo):
         self.end = self.LSommet[- 1]
         self.end.x = 85
         self.end.y = 85
+        
+        self.pizzaiolo = pygame.image.load('ui/pix/pizzaiolo.png').convert_alpha()
 
     def init_connex(self,minimum_weight, maximum_weight):
         # creation of a connex graphe
@@ -125,6 +127,8 @@ class Graphe(algo.Algo):
 
         pygame.draw.rect(self.display,(255,0,0),self.start.rect,2)
         pygame.draw.rect(self.display,(0,255,0),self.end.rect,2)
+
+        self.display.blit(self.pizzaiolo,self.current.rect)
 
         if self.state_game == 1: 
             if (self.weight > self.end.score):
