@@ -135,7 +135,7 @@
             Le programme affiche ensuite si le joueur à trouvé la solution optimale.
 
 		\paragraph{Algorithme de Dijkstra} ~
-
+			L'algorithme de \emph{Dijkstra} :
 			\begin{lstlisting}
 liste_sommets = [+oo pour i dans sommets]
 S(liste_sommets[0]) = 0
@@ -146,5 +146,19 @@ tant que taille(liste_sommets) != 0; faire
     fin pour
     supprimer element_courant de liste_sommets
 fin tant que
+			\end{lstlisting}
+			Pour mettre à jour un sommet i:
+				Pour chaque autre sommet j qui est reliée à ce sommet i on vérifie si
+				la valeurs de j est supérieur à la valeurs de i plus la valeurs l'arc entre i et j
+				
+			\begin{lstlisting}
+mettre_a_jour(sommet):
+pour chaque sommet_choisit dans graphe; faire
+	si sommet_choisit.visiter == faux; faire
+		si sommet_choisit.valeur > sommet.valeur + poids de l'arrêt entre les deux sommet
+			sommet_choisit.valeur = sommet.valeur + poids de l'arrêt entre les deux sommet
+		fin si
+	fin si
+fin pour
 			\end{lstlisting}
 

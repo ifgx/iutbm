@@ -181,8 +181,9 @@ class Graphe(algo.Algo):
 
     def misejour(self,sommet1):
         for i in xrange(self.numSommet):
-            if self.Matrix[sommet1.indice][i]+sommet1.score < self.LSommet[i].score:
-                self.LSommet[i].score = self.Matrix[sommet1.indice][i]+sommet1.score
+            if self.LSommet[i].visited == False:
+                if self.Matrix[sommet1.indice][i]+sommet1.score < self.LSommet[i].score:
+                    self.LSommet[i].score = self.Matrix[sommet1.indice][i]+sommet1.score
 
     def drawLien(self,i,j,color):
         start     = self.LSommet[i].rect
