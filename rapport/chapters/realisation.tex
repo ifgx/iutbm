@@ -62,6 +62,45 @@
  			Si l'utilisateur n'a pas trouvé la solution optimale, la solution s'affiche
 			 en surimpression sur le choix du joueur.
 
+		\paragraph{Algorithme de résolution}
+			Tout d'abord, chaque sommet représentant les personnes est lié a un sommet
+			 Source, par des arrêtes de capacité 1, ce qui permet une unique satisfaction
+			 des personnes.
+			De même pour les objets, ce qui permet l'unique utilisation d'un objet.
+			Ensuite, une liste des éléments nécessaire a l'algorithme :
+		        \begin{enumerate}
+		        	\item lp : liste des sommets concernant les personnes
+		        	\item lo : liste des sommets concernant les objets
+				\item la : liste des couples de sommets correspondant aux arrêtes, et donc aux préférences
+				\item nboccurence(i) : fonction qui retourne les sommet dont le degré sortant est de i
+				\item associera(s2) : retourne les sommets associé a s2
+				\item capacite(s) : retourne vrai si l'on peut atteindre s a partir du sommet Source
+				\item maxoccur() : retourne le degré sortant maximum du graphe
+				\item supprimercouple : supprimer un couple d'une liste de couples
+            		\end{enumerate}
+
+			\emph{L'algorithme :}
+
+			\begin{lstlisting}
+			solution = []
+			tant que taille(la) != 0 faire
+				pour i allant de 1 a maxoccur() + 1 faire
+					pour pers dans nboccurence(i) faire
+						pour obj dans associera(pers) faire
+							si capacite(pers) alors
+								solution = [pers,obj] 
+								la.supprimercouple([pers,obj])
+							sinon
+								la.supprimercouple([pers,none])
+							fsi
+						fpour
+					fpour
+				fpour
+			ftantque
+			\end{lstlisting}
+
+				
+
 
 
     \subsection{Sac à Dos}
