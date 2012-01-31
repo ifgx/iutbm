@@ -24,17 +24,42 @@
             Une fois que l'utilisateur a relié tout les points
             entre eux, le programme affiche la solution calculée
             en surimpression de celle proposée par l'utilisateur.
+        \subsubsection{Algorithme}
+        \begin{lstlisting}
+computed_path = [self.matrix[0][ligne]]
+self.matrix[0][ligne].visite = vrai
+tmp = -1
+max_distance = sqrt((max_x - min_x)^2 + (max_y - min_y)^2)
+pour i de 1 a matrix[0][0] + 1
+    minimum = max_distance
+    pour j de 1 a matrix[0][0] + 1
+        si 0 < matrix[ligne][j] < minimum
+            si matrix[ligne][j].visite = faux
+                minimum = matrix[ligne][j]
+                tmp = j
+            finsi
+        finsi
+    finpour
+    si minimum != max_distance
+        computed_path = computed_path + matrix[0][tmp]
+        matrix[0][tmp].visite = vrai
+        computed_len = computed_len + minimum
+        ligne = tmp
+    finsi
+finpour
+comuted_len = computed_len + matrix[1][tmp]
+        \end{lstlisting}
 
 
 	\subsection{Couplage}
 		\paragraph{Contexte}
 			Le probleme de couplage est modélisé par un jeu de choix.
 			Il y a plusieurs clients, avec leurs préférences qui ont
-			 le choix entre plusieurs pizzas, et le joueur doit 
+			 le choix entre plusieurs pizzas, et le joueur doit
 			 satisfaire un maximum de clients.
 		\paragraph{Moteur}
-			Au demarrage de l'application, le nombre de pizzas et 
-			 de clients est généré aléatoirement, dans un intervalle 
+			Au demarrage de l'application, le nombre de pizzas et
+			 de clients est généré aléatoirement, dans un intervalle
 			 assez bas, par soucis de complexité.
 			Les préférences de chaque client sont aussi générés aléatoirement,
 			 mais dans l'optique qu'un client ait au minimum une préférences.
@@ -88,7 +113,7 @@
 					pour pers dans nboccurence(i) faire
 						pour obj dans associera(pers) faire
 							si capacite(pers) alors
-								solution = [pers,obj] 
+								solution = [pers,obj]
 								la.supprimercouple([pers,obj])
 							sinon
 								la.supprimercouple([pers,none])
@@ -99,7 +124,7 @@
 			ftantque
 			\end{lstlisting}
 
-				
+
 
 
 
@@ -136,9 +161,9 @@
             Lorsque l'utilisateur a terminé, il clique sur le bouton de
             validation pour savoir si il a trouvé la solution correcte.
         \paragraph{Résolution}
-            La résolution du problème s'effectue grâce à un calcule de la solution optimale 
-            par programmation dynamique. Notons $V(k,y)$ la valeur optimale au problème du sac à dos  
-            réduit au $k$ premier objet avec un sac de poids maximale de $y$. 
+            La résolution du problème s'effectue grâce à un calcule de la solution optimale
+            par programmation dynamique. Notons $V(k,y)$ la valeur optimale au problème du sac à dos
+            réduit au $k$ premier objet avec un sac de poids maximale de $y$.
             $y_{k}$ le poids de l'objet k et $v_{k}$ la valeur de l'objet $k$.
 
             Si $ y - y_{k} >= 0 $
@@ -200,13 +225,13 @@ fin tant que
 			Pour mettre à jour un sommet i:
 				Pour chaque autre sommet j qui est reliée à ce sommet i on vérifie si
 				la valeurs de j est supérieur à la valeurs de i plus la valeurs l'arc entre i et j
-				
+
 			\begin{lstlisting}
 mettre_a_jour(sommet):
 pour chaque sommet_choisit dans graphe; faire
 	si sommet_choisit.visiter == faux; faire
-		si sommet_choisit.valeur > sommet.valeur + poids de l'arrêt entre les deux sommet
-			sommet_choisit.valeur = sommet.valeur + poids de l'arrêt entre les deux sommet
+		si sommet_choisit.valeur > sommet.valeur + distance entre les deux sommets
+			sommet_choisit.valeur = sommet.valeur +distance entre les deux sommets
 		fin si
 	fin si
 fin pour
