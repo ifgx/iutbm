@@ -143,7 +143,7 @@ It is a special case of the Traveling purchaser problem.#'
                 # add the travelled distance to the total one
                 self.computed_len += minimum
                 ligne = tmp
-        self.computed_len += self.matrix[1][tmp]
+        self.computed_len += self.matrix[1][ligne]
         self._reset()
 
     def _draw_distance(self, i, center):
