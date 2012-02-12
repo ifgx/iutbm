@@ -167,8 +167,11 @@ comuted_len = computed_len + matrix[1][tmp]
             $y_{k}$ le poids de l'objet k et $v_{k}$ la valeur de l'objet $k$.
 
             Si $ y - y_{k} >= 0 $
-                $V(k,y) = max{ V(k-1,y)  ,v_{k} + V(k-1,y-y_{k}}$
+
+                $V(k,y) = max\{ V(k-1,y)  ,v_{k} + V(k-1,y-y_{k}) \}$
+
             Sinon
+
                 $V(k,y) = V(k-1,y)$
 
             On notera aussi que si il n'y a pas d'objet on a : $V(0,y) = 0$
@@ -177,19 +180,11 @@ comuted_len = computed_len + matrix[1][tmp]
 
 
 \subsection{Problème du plus court chemin}
-        L'utilisateur pourra cliquer sur les différentes villes, tour à tour,
-        pour déplacer le personnage. Un compteur kilométrique indiquera la
-        distance parcourue.
-
-        Le joueur peut effectuer un clic droit pour annuler son dernier
-        mouvement.
-
-        Le jeu continue tant que le joueur n'a pas trouvé le chemin
-        le plus court. Il peut aussi cliquer sur \og solution\fg, qui
-        affichera le chemin segment par segment.
 
         \paragraph{Contexte}
             Le but du jeu est de livrer une pizza en effectuant le moins de kilomètres possible.
+
+
         \paragraph{Moteur}
             Au démarrage du jeu, le programme génère un graphe
             représentant des villes. Ces villes sont reliées par des arcs pondérés.
@@ -197,11 +192,21 @@ comuted_len = computed_len + matrix[1][tmp]
             Il affiche les villes et les liaisons.
 
         \paragraph{Interface}
-            L'utilisateur sélectionne les villes par simple clic,
-            et peut annuler ses actions par clic droit.
-            Pour revenir au début il suffit de cliquer sur la ville de départ.
-            A chaque ville sélectionnée, le programme
-            affiche en temps réel la distance totale parcourue.
+
+        L'utilisateur pourra cliquer sur les différentes villes, tour à tour,
+        pour déplacer le personnage. Un compteur kilométrique indiquera la
+        distance parcourue en temps réel.
+
+        Le joueur peut effectuer un clic droit pour annuler son dernier
+        mouvement.
+
+        Pour revenir au début il suffit de cliquer sur la ville de départ.
+
+        Le jeu continue tant que le joueur n'a pas trouvé le chemin
+        le plus court. Il peut aussi cliquer sur \og solution\fg, qui
+        affichera le chemin segment par segment.
+
+          
 
         \paragraph{Résolution}
             Lorsque la ville de début et la ville finale sont reliées,
@@ -210,19 +215,22 @@ comuted_len = computed_len + matrix[1][tmp]
             Le programme affiche ensuite si le joueur à trouvé la solution optimale.
 
 		\paragraph{Algorithme de Dijkstra} ~
+			
+			L'algorithme de Dijkstra est l'un des algorithme de résolution du problème du 
+			\emph{plus court chemin} les plus connus. Cette algorithme s'applique à des graphes pondérés orientés ou non.
+
 			L'algorithme de \emph{Dijkstra} :
 			\begin{lstlisting}
 liste_sommets = [+oo pour i dans sommets]
 S(liste_sommets[0]) = 0
 tant que taille(liste_sommets) != 0; faire
     element_courant = min(liste_sommets)
-    pour chaque element_voisin dans liste_sommets; faire
-        mettre_a_jour(element_voisin)
-    fin pour
+    mettre_a_jour(element_courant)
     supprimer element_courant de liste_sommets
 fin tant que
 			\end{lstlisting}
-			Pour mettre à jour un sommet i:
+			Pour mettre à jour un sommet i: 
+
 				Pour chaque autre sommet j qui est reliée à ce sommet i on vérifie si
 				la valeurs de j est supérieur à la valeurs de i plus la valeurs l'arc entre i et j
 
@@ -230,8 +238,10 @@ fin tant que
 mettre_a_jour(sommet):
 pour chaque sommet_choisit dans graphe; faire
 	si sommet_choisit.visiter == faux; faire
-		si sommet_choisit.valeur > sommet.valeur + distance entre les deux sommets
-			sommet_choisit.valeur = sommet.valeur +distance entre les deux sommets
+		si sommet_choisit.valeur > sommet.valeur + ...
+				... distance entre les deux sommets ; alors
+			sommet_choisit.valeur = sommet.valeur + ...
+				... distance entre les deux sommets
 		fin si
 	fin si
 fin pour
