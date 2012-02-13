@@ -115,6 +115,7 @@ class iutbm:
                 self.display.fill((1, 0, 0))  #temp fix : please use a backgrounf for your algo !
                 algo._draw()
             elif inHelp: # else if we are in a help screen
+                self.display.fill((1, 0, 0))
                 algo._explain()
             pygame.display.flip()  # draw on display
             self.clock.tick(self.fpsLimit)  # limit the fps
