@@ -17,7 +17,7 @@ class Algo:
         #help screen
         self.text = 'generic algo'
         self.description = 'algorithm\'s description# for a carriage return#>o_/'
-        self.help = 'help for the algorithm'
+        self.explain = 'explication for the algorithm'
 
         #repere
         self.minx = 0.0
@@ -40,7 +40,7 @@ class Algo:
         self.display.blit(text, (10, 10))
 
         # display "description" with carriage return on "#"
-        for cpt, line in enumerate(self.description.split('#')):
+        for cpt, line in enumerate(self.explain.split('#')):
             text = self.font.render(line, True, (255, 0, 0))
             self.display.blit(text, (10, 10 * cpt + 30))
 
@@ -53,7 +53,7 @@ class Algo:
         self.display.blit(text, (10, 10))
 
         # display "description" with carriage return on "#"
-        for cpt, line in enumerate(self.help.split('#')):
+        for cpt, line in enumerate(self.description.split('#')):
             text = self.font.render(line, True, (255, 0, 0))
             self.display.blit(text, (10, 10 * cpt + 30))
 
