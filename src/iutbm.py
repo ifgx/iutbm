@@ -50,7 +50,6 @@ class iutbm:
         inMenu = True
         inAlgo = False
         inHelp = False
-        inExplain = False
         while True:
             button = None
             pos = (0, 0)  # reset mouse position
@@ -79,9 +78,6 @@ class iutbm:
                             #h is the help key
                             inHelp = True
                             inAlgo = False
-                        elif event.key == pygame.K_e:
-                            inExplain = True
-                            inAlgo = False
 
                     if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
                         # The escape and q key are bind to action INSIDE and OUTSIDE the menu
@@ -93,9 +89,7 @@ class iutbm:
                         elif inHelp: # if we are inside a helpscreen
                             inAlgo = True
                             inHelp = False
-                        elif inExplain:
-                            inAlgo = True
-                            inExplain = False
+
 
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -126,9 +120,6 @@ class iutbm:
             elif inHelp: # else if we are in a help screen
                 self.display.fill((1, 0, 0))
                 algo._help()
-            elif inExplain:
-                self.display.fill((1, 0, 0))
-                algo._explain()
             pygame.display.flip()  # draw on display
             self.clock.tick(self.fpsLimit)  # limit the fps
 
