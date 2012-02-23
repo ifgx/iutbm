@@ -19,13 +19,13 @@ class Sac_A_Dos(algo.Algo):
             Object("Bread",4,5,picRoot + "pain.png"),
             Object("Radish",6,7,picRoot + "radis.png"),
             Object("Onion",7,8,picRoot + "oignon.png"),
-            Object("Potatoes",7,8,picRoot + "pommeterre.png"),
-            Object("Mushrooms",7,8,picRoot + "champignon.png"),
+            Object("Potatoes",7,3,picRoot + "pommeterre.png"),
+            Object("Mushrooms",5,8,picRoot + "champignon.png"),
             Object("Alapinios",7,8,picRoot + "piment.png"),
-            Object("Carotte",7,8,picRoot + "carotte.png"),
-            Object("Avocado",7,8,picRoot + "avocat.png"),
-            Object("Peppers",7,8,picRoot + "poivrons.png"),
-            Object("Cauliflower",7,8,picRoot + "brocoli.png")
+            Object("Carotte",7,3,picRoot + "carotte.png"),
+            Object("Avocado",2,8,picRoot + "avocat.png"),
+            Object("Peppers",7,5,picRoot + "poivrons.png"),
+            Object("Cauliflower",2,8,picRoot + "brocoli.png")
         ]
         self.ingredients = random.sample(self.allIngredients, 5)
         
@@ -35,6 +35,9 @@ class Sac_A_Dos(algo.Algo):
         
         self.weight = 0
         self.value = 0
+
+        self.bag.solve()
+        self.optimal_value = self.bag.optimal_value 
 
     def _update(self, (x, y),button):
         for i in self.ingredients:
@@ -59,7 +62,11 @@ class Sac_A_Dos(algo.Algo):
         self.display.blit(titre, titreRect)
 
         #Legend 2
-        titre = self.font.render("Red number shows weight, green number shows the value.", True, (255, 255, 255) )
+        if(self.value ==  self.optimal_value):
+            text = "Congragulation!! you found the answers"
+        else:
+            text = "Red number shows weight, green number shows the value. "
+        titre = self.font.render(text, True, (255, 255, 255) )
         titreRect = titre.get_rect()
         titreRect.top = 64
         titreRect.centerx = self.display.get_rect().width / 2
@@ -74,9 +81,9 @@ class Sac_A_Dos(algo.Algo):
         
         for c,i in enumerate(self.ingredients):
             if i.inBag:
-                ingx = 600
+                ingx = (self._get_corres_pixel(75,0))[0]
             else:
-                ingx = 200
+                ingx = (self._get_corres_pixel(25,0))[0]
 
             i.draw(self.display,self.font,ingx,c*64+128)
 
@@ -119,11 +126,13 @@ class Object(object):
         display.blit(objn, objnRect)
 
         #Affichage valeur
-        objn = font.render(str(self.weight), True, (0, 255, 0) )
+        objn = font.render(str(self.value), True, (0, 255, 0) )
         objnRect = objn.get_rect()
         objnRect.top = y + (self.pict.get_rect().bottom / 4) * 3
         objnRect.centerx = x + self.pict.get_rect().right + 5
         display.blit(objn, objnRect)
+
+        #Afficher le bouton "solve"
 
     def swapInBag(self):
         self.inBag = not self.inBag
@@ -173,6 +182,7 @@ class Bag(object):
         self.Lobject = Lobject[:]
         self.numObj = len(Lobject)
         self.weight = weight
+        self.optimal_weight = 0
         self.tab = [[ Case() for j in range(self.weight + 1)] for i in range(self.numObj + 1)]
 
     def solve(self):
@@ -202,14 +212,4 @@ class Bag(object):
                         #then just copy the case of the previous object at the same weight
                         self.tab[i][j].copy(self.tab[i-1][j])
                         
-        print('object: ' + ''.join([i.name for i in self.Lobject]))
-        print('weight of the bag: %s' % self.weight)
-        self.tab[self.numObj][self.weight].show()  
-
-#L = []
-#for i in xrange(5):
-#    weight = random.randint(1,10)
-#    value = random.randint(1,10)
-#    L.append(Object(str(i),weight,value))    
-    
-#bag = Bag(L,15)
+        self.optimal_value = self.tab[self.numObj][self.weight].value
