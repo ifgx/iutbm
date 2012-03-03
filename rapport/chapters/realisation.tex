@@ -136,10 +136,6 @@ comuted_len = computed_len + matrix[1][tmp]
         des objets dans le sac, le poids maximal que peut supporter le sac, et le
         poids restant (différence entre ces deux résultats).
 
-        On pourra scénariste ce jeu avec, par exemple, une histoire où un personnage
-        doit quitter son château assiégé en emportant un maximum d'objets de valeur.
-
-
             Dans ce mini-jeu, le but du joueur est d'aider un pizzaiolo à
             sélectionner des ingrédients à transporter à un concours de pizza.
             Il ne peut pas prendre tout ce qu'il souhaite et doit faire des
@@ -177,13 +173,36 @@ comuted_len = computed_len + matrix[1][tmp]
             On notera aussi que si il n'y a pas d'objet on a : $V(0,y) = 0$
             De plus si le poids est nul on a: $V(k,0) = 0$
 
+	\emph{Algorithme}
+
+\begin{lstlisting}
+solution = []
+pour i allant de 0 a nombre_Objet+ 1 faire
+    pour j allant de 0 a poids_maximum + 1 faire
+        si i != 0 et j != 0 alors
+            w = Objet[i].poids
+            si j > w alors
+                si solution[i-1][j].poids > Objet[i].valeur+
+                            ...solution[i-1][j-w].valeur alors
+                    solution[i][j] = solution[i-1][j]
+                sinon
+                    solution[i][j] = solution[i-1][j-w] + Objet[i]
+                fsi    
+            sinon 
+                solution[i][j] = solution[i-1]
+            fsi
+        sinon 
+            solution[i][j] = 0
+        fsi
+    fpour
+fpour
+\end{lstlisting}
 
 
 \subsection{Problème du plus court chemin}
 
         \paragraph{Contexte}
-	    Dans ce mini-jeu vous travaillerez en tant que livreur de pizza. On vous a demander de livrer 
-	    une pizza à l'autre bout de la ville. On vous demande d'utiliser le plus court chemin 
+	    Dans ce mini-jeu vous travaillerez en tant que livreur de pizza. On vous a demander de 			livrer  une pizza à l'autre bout de la ville. Pour cela il vous faudra trouver le plus court chemin 
 	    pour vous rendre de la pizzeria jusqu'au lieu de la livraison.
         \paragraph{Moteur}
             Au démarrage du jeu, le programme génère un graphe
@@ -192,7 +211,7 @@ comuted_len = computed_len + matrix[1][tmp]
 
         \paragraph{Interface}
 
-        L'utilisateur pourra cliquer sur les différentes lieux, tour à tour,
+        L'utilisateur pourra cliquer sur les différents lieux, tour à tour,
         pour ce déplacer. Un compteur kilométrique indiquera la
         distance parcourue en temps réel.
 
