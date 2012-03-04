@@ -108,20 +108,20 @@ comuted_len = computed_len + matrix[1][tmp]
 
 			\begin{lstlisting}
 			solution = []
-			tant que taille(la) != 0 faire
-				pour i allant de 1 a maxoccur() + 1 faire
-					pour pers dans nboccurence(i) faire
-						pour obj dans associera(pers) faire
+			tantque taille(la) != 0 faire
+				pour i allant de 1 a maxoccur() + 1
+					pour pers dans nboccurence(i)
+						pour obj dans associera(pers)
 							si capacite(pers) alors
 								solution = [pers,obj]
 								la.supprimercouple([pers,obj])
 							sinon
 								la.supprimercouple([pers,none])
-							fsi
-						fpour
-					fpour
-				fpour
-			ftantque
+							finsi
+						finpour
+					finpour
+				finpour
+			fintantque
 			\end{lstlisting}
 
 
@@ -177,32 +177,32 @@ comuted_len = computed_len + matrix[1][tmp]
 
 \begin{lstlisting}
 solution = []
-pour i allant de 0 a nombre_Objet+ 1 faire
-    pour j allant de 0 a poids_maximum + 1 faire
-        si i != 0 et j != 0 alors
+pour i allant de 0 a nombre_Objet+ 1
+    pour j allant de 0 a poids_maximum + 1
+        si i != 0 et j != 0
             w = Objet[i].poids
             si j > w alors
                 si solution[i-1][j].poids > Objet[i].valeur+
-                            ...solution[i-1][j-w].valeur alors
+                            ...solution[i-1][j-w].valeur
                     solution[i][j] = solution[i-1][j]
                 sinon
                     solution[i][j] = solution[i-1][j-w] + Objet[i]
-                fsi    
-            sinon 
+                finsi
+            sinon
                 solution[i][j] = solution[i-1]
-            fsi
-        sinon 
+            finsi
+        sinon
             solution[i][j] = 0
-        fsi
-    fpour
-fpour
+        finsi
+    finpour
+finpour
 \end{lstlisting}
 
 
 \subsection{Problème du plus court chemin}
 
         \paragraph{Contexte}
-	    Dans ce mini-jeu vous travaillerez en tant que livreur de pizza. On vous a demander de 			livrer  une pizza à l'autre bout de la ville. Pour cela il vous faudra trouver le plus court chemin 
+	    Dans ce mini-jeu vous travaillerez en tant que livreur de pizza. On vous a demander de 			livrer  une pizza à l'autre bout de la ville. Pour cela il vous faudra trouver le plus court chemin
 	    pour vous rendre de la pizzeria jusqu'au lieu de la livraison.
         \paragraph{Moteur}
             Au démarrage du jeu, le programme génère un graphe
@@ -224,7 +224,7 @@ fpour
         le plus court. Il peut aussi cliquer sur \og solution\fg, qui
         affichera le chemin segment par segment.
 
-          
+
 
         \paragraph{Résolution}
             Lorsque la ville de début et la ville finale sont reliées,
@@ -233,35 +233,35 @@ fpour
             Le programme affiche ensuite si le joueur à trouvé la solution optimale.
 
 		\paragraph{Algorithme de Dijkstra} ~
-			
-			L'algorithme de Dijkstra est l'un des algorithme de résolution du problème du 
+
+			L'algorithme de Dijkstra est l'un des algorithme de résolution du problème du
 			\emph{plus court chemin} les plus connus. Cette algorithme s'applique à des graphes pondérés orientés ou non.
 
 			L'algorithme de \emph{Dijkstra} :
 			\begin{lstlisting}
 liste_sommets = [+oo pour i dans sommets]
 S(liste_sommets[0]) = 0
-tant que taille(liste_sommets) != 0; faire
+tantque taille(liste_sommets) != 0
     element_courant = min(liste_sommets)
     mettre_a_jour(element_courant)
     supprimer element_courant de liste_sommets
-fin tant que
+fintantque
 			\end{lstlisting}
-			Pour mettre à jour un sommet i: 
+			Pour mettre à jour un sommet i:
 
 				Pour chaque autre sommet j qui est reliée à ce sommet i on vérifie si
 				la valeurs de j est supérieur à la valeurs de i plus la valeurs l'arc entre i et j
 
 			\begin{lstlisting}
 mettre_a_jour(sommet):
-pour chaque sommet_choisit dans graphe; faire
-	si sommet_choisit.visiter == faux; faire
-		si sommet_choisit.valeur > sommet.valeur + ...
-				... distance entre les deux sommets ; alors
-			sommet_choisit.valeur = sommet.valeur + ...
-				... distance entre les deux sommets
-		fin si
-	fin si
-fin pour
+pour chaque sommet_choisit dans graphe
+    si sommet_choisit.visiter == faux
+        si sommet_choisit.valeur > sommet.valeur + ...
+            ... distance entre les deux sommets
+		    sommet_choisit.valeur = sommet.valeur + ...
+            ... distance entre les deux sommets
+        finsi
+	finsi
+finpour
 			\end{lstlisting}
 

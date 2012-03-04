@@ -1,11 +1,55 @@
 % a bit hackish
 \setcounter{footnote}{0}
 
+\section{But du projet}
 Le but de ce projet est de créer un logiciel éducatif de sensibilisation à la recherche
 opérationnelle. La recherche opérationnelle (aussi appelée aide à la décision) peut être définie
 comme l'ensemble des méthodes et techniques rationnelles orientées vers la recherche de
-la meilleure façon d'opérer des choix en vue d'aboutir au résultat visé ou au meilleur résultat possible1.
+la meilleure façon d'opérer des choix en vue d'aboutir au résultat visé ou au meilleur résultat possible.%
+~\cite{ref.yrr}
 
-Ce logiciel permettra à des non-initiés (étudiants, entre autres) de s'initier
+Ce logiciel permettra à des non-initiés (étudiants entre autres) de s'initier
 de manière ludique aux problématiques de la recherche opérationnelle, qui font partie de notre
 vie de tous les jours.
+
+
+\section{Notion de complexité}
+\subsection{Émergence de la notion}
+La \emph{Théorie algorithmique de l'information} fut initiée par Kolmogorov~\cite{ref.kol}, Solomonov%
+~\cite{ref.sol} et Chaitin~\cite{ref.cha}
+dans les années 1960, et vise à quantifier et qualifier le contenu en information d'un ensemble de données.
+C'est cette théorie qui a permis de formaliser la notion de complexité qui nous intéresse ici,
+en considérant qu'un objet est d'autant plus complexe qu'il nécessite d'informations pour être décrit.
+\subsection{La théorie de la complexité}
+La théorie de la complexité des algorithmes étudie de manière formelle la quantité de ressources
+temporelles et spatiales (la quantité de mémoire requise par exemple) nécessitée
+par l'exécution d'un programme.
+\subsection{Notation} La complexité d'un algorithme se note en général en utilisant
+la notation $O$.
+Par exemple, le parcours d'une liste de 700 éléments demandera au pire 700 étapes.
+La complexité dans le pire des cas pour n entrées se note $O(n)$, ce qui signifie que dans le pire
+des cas, le temps de calcul est de l'ordre de grandeur de n : il faut parcourir tous les n
+éléments une fois.
+
+\begin{center}
+    \begin{table}[h]
+        \begin{tabular}{| l | c | c |}
+            \hline
+            Notation & Type & Exemple \\
+            \hline
+            $O(1)$ & complexité constante & accès dans un tableau\\
+            $O(n)$ & complexité linéaire & parcours de liste\\
+            $O(n log(n))$ & complexité linéarithmique & tri optimal d'un tableau\\
+            $O(n^{2})$  & complexité quadratique & parcours de tableaux 2D\\
+            $O(n!)$ & complexité factorielle & problème du voyageur de commerce\\
+            \hline
+        \end{tabular}
+        \caption{Exemple de complexités~\cite{ref.table}}
+    \end{table}
+\end{center}
+
+
+\section{Notion de recherche opérationnelle}
+La recherche opérationnelle (également appellée \emph{aide à la decision})
+est la recherche de la meilleure façon d'aboutir au meilleur résultat
+possible, ou à un résultat visé.

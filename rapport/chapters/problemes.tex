@@ -2,18 +2,15 @@
     \subsection{Le plus court chemin}
         \subsubsection{Description}
         Le problème du \emph{plus court chemin} consiste à trouver
-        le plus court trajet permettant de relier deux points donnés dans un graphe pondéré orienté ou non.
+        le plus court trajet permettant de relier deux points donnés dans un graphe pondéré.
         \subsubsection{Applications pratiques}
             L'application la plus évidente de ce problème sont les systèmes de type
-            GPS. On l'utilise notamment pour permettre un routage internet très efficace 
-            des informations en cherchant le parcours le plus efficace.
-        \subsubsection{Algorithme}
-	L'algorithme implémenté est l'algorithme de \emph{Dijkstra}: 
-	Pour réaliser cette algorithme nous représenterons le problème sous 
-	forme d'un graphe. Les noeuds du graphe représenteront les différentes destinations possibles, 
-	les arrêtes les chemins possibles entre ces différentes destinations. Chaque arrêtes possède 
-	une valeur qui représente la distance entre les deux destinations qu'elle relie.
-			
+            GPS, ou de manière générale dans tous les problèmes necessitant
+            un parcours optimal, comme le réseau internet, pour la commutation de
+            paquets, ou encore les livreurs.
+        \subsubsection{Algorithme} % TODO : rapide presentation de l'algo
+	L'algorithme implémenté est l'algorithme de \emph{Dijkstra}:
+
     \subsection{Le couplage}
         \subsubsection{Description}
             Le problème du couplage est un problème de répartition \emph{au mieux}.
@@ -31,7 +28,7 @@
 		 et les arrêtes, les préférences des personnes.
 		L'algorithme implémenté est donc un algorithme permettant
 		 de résoudre ce genre de graphe.
-		Les arrêtes ont des capacités de 1 car chaque préférences est unique 
+		Les arrêtes ont des capacités de 1 car chaque préférences est unique
 		 pour chaque client.
 		Le but est de contenter chaque préférences, donc nous utilisons un
 		 algorithme permettant de résoudre un problème de flot maximal
@@ -52,8 +49,8 @@
             on comprend aisément leur nécessité d'optimiser le contenu de leur
             chargements afin de minimiser les coûts de transports.
         \subsubsection{Algorithme}
-            On utilisera un algorithme de progrmmation dynamique. La programmation dynamique s'appuie sur un principe simple : 
-	    toute solution optimale s'appuie elle-même sur des sous-problèmes résolus localement de façon optimale.  
+            On utilisera un algorithme de progrmmation dynamique. La programmation dynamique s'appuie sur un principe simple :
+	    toute solution optimale s'appuie elle-même sur des sous-problèmes résolus localement de façon optimale.
 
 
 
