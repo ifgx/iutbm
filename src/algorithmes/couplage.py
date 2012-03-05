@@ -40,67 +40,88 @@ class Couplage(algo.Algo):
         self.desserts = [allDesserts[i] for i in range(nbDesserts)]
         
         self.fourmiSelectionnee = (-1, None)
+        # handles the selection of a dessert in the preferences list, to highlight it on the right
+        self.dessertSelectionne = None
         
         self.erreur = ""
         
         self.model = ModelisationCouplage(self.fourmis, self.desserts, 5)
         self.model.resoudre()
+        
+        self.marge_prefs = 20
+        self.marge_gauche = 35
+        self.marge_droite = 35
+        self.marge_haut = 30
+        
+        self.largeur_icone = self.imgFourmis[0].get_rect().width * self.maxx / self.display.get_rect().width 
+        self.hauteur_icone = self.imgFourmis[0].get_rect().height * self.maxy / self.display.get_rect().height
+        
+        self.pas_vertical = 2 + self.hauteur_icone
+        self.pas_horizontal = 2 + self.largeur_icone
     
-    def _update(self, (x, y),button):
+    def _update(self, (x, y), button):
         # reset error
         self.erreur = ""
         
         if button == 1:
-            # if we have selected a fourmi, then create a line from the fourmi to the dessert
-            dessertSelectionne = False
-            for i, dessert in enumerate(self.desserts):
-                # check whether the user clicked on the dessert
-                if x >= 128 + 384 and x <= 128 + 384 + 32: # x coordinate is good
-                    y_coord = 192 + (64 * i)
-                    if y >= y_coord and y <= y_coord + 32: # y coordinate is good
-                        # a dessert is clicked
-                        if self.fourmiSelectionnee != (-1, None):
-                            fourmi = self.fourmiSelectionnee[1]
-                            dessertSelectionne = True
-                            # print "Cliqué sur le dessert", i, "(", dessert[0], ")"
-                            # check if the fourmi or dessert is not already involved
-                            if not self.model.fourmi_dans(fourmi, self.model.proposition):
-                                if not self.model.dessert_dans(dessert, self.model.proposition):
-                                    # print "Validé la combinaison (", fourmi[0], ",", dessert[0], ")"
-                                    self.model.proposition.append((fourmi, dessert))
-                                else:
-                                    # print "Le dessert", dessert[0], "est déjà attribué"
-                                    self.erreur = "The pizza " + dessert[0] + " is already assigned"
-                            else:
-                                # print "La fourmi", fourmi[0], "est déjà attribuée"
-                                self.erreur = "The customer " + fourmi[0] + " has already a pizza"
-                            
-                        else:
-                            self.erreur = "Please select a customer first."
-            if not dessertSelectionne:
-                # deselect the fourmi
-                self.fourmiSelectionnee = (-1, None)
+            bgClick = True
             
-            for i, fourmi in enumerate(self.fourmis):
-                # check whether the user clicked on the fourmi
-                if x >= 128 and x <= 128 + 32: # x coordinate is good
-                    y_coord = 192 + (64 * i)
-                    if y >= y_coord and y <= y_coord + 32: # y coordinate is good
-                        # print "Cliqué sur la fourmi", i, "(", fourmi[0], ")"
-                        self.fourmiSelectionnee = (i, fourmi)
+            # Check if a fourmi is selected
+            for i, fourmi in self.rectFourmis:
+                if fourmi.collidepoint(x, y):
+                    self.fourmiSelectionnee = (i, self.fourmis[i])
+                    bgClick = False
+            
+            # Check if a dessert is selected
+            for i, rect in self.rectDesserts:
+                if rect.collidepoint(x, y):
+                    # a dessert is clicked
+                    dessert = self.desserts[i]
+                    if self.fourmiSelectionnee != (-1, None):
+                        fourmi = self.fourmiSelectionnee[1]
+                        dessertSelectionne = True
+                        # print "Cliqué sur le dessert", i, "(", dessert[0], ")"
+                        # check if the fourmi or dessert is not already involved
+                        if not self.model.fourmi_dans(fourmi, self.model.proposition):
+                            if not self.model.dessert_dans(dessert, self.model.proposition):
+                                # print "Validé la combinaison (", fourmi[0], ",", dessert[0], ")"
+                                self.model.proposition.append((fourmi, dessert))
+                            else:
+                                # print "Le dessert", dessert[0], "est déjà attribué"
+                                self.erreur = "The pizza " + dessert[0] + " is already assigned"
+                        else:
+                            # print "La fourmi", fourmi[0], "est déjà attribuée"
+                            self.erreur = "The customer " + fourmi[0] + " has already a pizza"
+                    else:
+                        self.erreur = "Please select a customer first."
+                    bgClick = False
+            
+            # Check if a preference is selected (if so, highlight the corresponding dessert)
+            for dessert, rect in self.rectPrefs:
+                if rect.collidepoint(x, y):
+                    self.dessertSelectionne = dessert
+                    bgClick = False
+            
+            if bgClick:
+                self.fourmiSelectionnee = (-1, None)
+                self.dessertSelectionne = None
         elif button == 3:
             if len(self.model.proposition) != 0:
                 self.model.proposition.pop()
         
     
     def _draw(self):
+        self.rectFourmis = []
+        self.rectDesserts = []
+        self.rectPrefs = []
+        
         titre = self.font.render("Help the pizza deliveryman to deliver pizzas to his customers", True, (0, 255, 0) )
         titreRect = titre.get_rect()
         titreRect.top = 48
         titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
         
-        desc = self.font.render("Click on a customer to see which pizza they like. Then, click on the pizza you have chosen for this customer.", True, (255, 255, 255) )
+        desc = self.font.render("Click on a customer to select it. Then, click on the pizza you have chosen for this customer.", True, (255, 255, 255) )
         descRect = desc.get_rect()
         descRect.top = 64
         descRect.centerx = self.display.get_rect().width / 2
@@ -116,46 +137,58 @@ class Couplage(algo.Algo):
         for couple in self.model.proposition:
             fourmiI = self.fourmis.index(couple[0])
             dessertI = self.desserts.index(couple[1])
-            pygame.draw.line(self.display, (255, 0, 0), (128 + 16, 192 + (64 * fourmiI) + 16), (128 + 384 + 16, 192 + (64 * dessertI) + 16), 3)
+            pygame.draw.line(self.display, (255, 0, 0),
+                self._get_corres_pixel(self.marge_gauche             + (self.largeur_icone / 2), self.marge_haut + (self.pas_vertical * fourmiI)  + (self.hauteur_icone / 2)),
+                self._get_corres_pixel(self.maxx - self.marge_droite + (self.largeur_icone / 2), self.marge_haut + (self.pas_vertical * dessertI) + (self.hauteur_icone / 2)),
+                3)
         
-        if len(self.model.proposition) == len(self.model.solution):
+        if False: # bouton solution
             for couple in self.model.solution:
                 fourmiI = self.fourmis.index(couple[0])
                 dessertI = self.desserts.index(couple[1])
                 pygame.draw.line(self.display, (0, 255, 255), (128 + 16, 192 + (64 * fourmiI) + 16), (128 + 384 + 16, 192 + (64 * dessertI) + 16), 3)
-
+        
+        pref = self.font.render("Preferences for each customer:", True, (255, 255, 255))
+        prefRect = pref.get_rect()
+        prefRect.right, prefRect.bottom = self._get_corres_pixel(self.marge_prefs + self.pas_horizontal, self.marge_haut - 2)
+        self.display.blit(pref, prefRect)
+        
         for i, fourmi in enumerate(self.fourmis):
-            nom = self.font.render(fourmi[0], True, (255, 255, 255))
+            if (i, fourmi) == self.fourmiSelectionnee:
+                couleur = (0, 255, 0)
+            else:
+                couleur = (255, 255, 255)
+            
+            nom = self.font.render(fourmi[0], True, couleur)
+            x, y = self._get_corres_pixel(self.marge_gauche - 2, self.marge_haut + (i * self.pas_vertical) + (self.hauteur_icone / 2))
             nomRect = nom.get_rect()
-            nomRect.centery = 192 + (64 * i) + 18
-            nomRect.right = 128 - 8
+            nomRect.right = x
+            nomRect.centery = y
             self.display.blit(nom, nomRect)
-            self.display.blit(self.imgFourmis[i], (128, 192 + (64 * i)))
+            self.rectFourmis.append((i, self.display.blit(self.imgFourmis[i], self._get_corres_pixel(self.marge_gauche, self.marge_haut + (self.pas_vertical * i)))))
+            
+            # draw the preferences of the fourmi
+            for j, pref in enumerate(self.model.desserts_correspondants(fourmi)):
+                self.rectPrefs.append((pref, self.display.blit(
+                    self.imgDesserts[self.desserts.index(pref)],
+                    self._get_corres_pixel(self.marge_prefs - (j * self.pas_horizontal), self.marge_haut + (self.pas_vertical * i))
+                )))
         
         for i, dessert in enumerate(self.desserts):
-            nom = self.font.render(dessert[0], True, (255, 255, 255))
-            nomRect = nom.get_rect()
-            nomRect.centery = 192 + (64 * i) + 18
-            nomRect.left = 128 + 384 + 32 + 8
-            self.display.blit(nom, nomRect)
-            self.display.blit(self.imgDesserts[i], (128 + 384, 192 + (64 * i)))
+            if dessert == self.dessertSelectionne:
+                couleur = (0, 255, 0)
+            else:
+                couleur = (255, 255, 255)
         
-        if self.fourmiSelectionnee != (-1, None):
-            # draw the preferences of the fourmi at the bottom of the screen
-            # fourmi pic
-            pic = self.imgFourmis[self.fourmiSelectionnee[0]]
-            self.display.blit(pic, (192, self.display.get_rect().height - 64))
-            
-            # fourmi name
-            nom = self.font.render(self.fourmiSelectionnee[1][0] + " likes:", True, (0, 255, 0) )
+            nom = self.font.render(dessert[0], True, couleur)
+            x, y = self._get_corres_pixel(self.maxx - self.marge_droite + self.largeur_icone + 2, self.marge_haut + (i * self.pas_vertical) + (self.hauteur_icone / 2))
             nomRect = nom.get_rect()
-            nomRect.bottom = self.display.get_rect().height - 40
-            nomRect.left = 192 + 32 + 8
+            nomRect.left = x
+            nomRect.centery = y
             self.display.blit(nom, nomRect)
-            
-            # fourmi preferences
-            for i, pref in enumerate(self.model.desserts_correspondants(self.fourmiSelectionnee[1])):
-                self.display.blit(self.imgDesserts[self.desserts.index(pref)], (192 + 32 + 128 + (i * 64), self.display.get_rect().height - 64))
+            self.rectDesserts.append((i, self.display.blit(self.imgDesserts[i], self._get_corres_pixel(self.maxx - self.marge_droite, self.marge_haut + (self.pas_vertical * i)))))
+        
+        
 
 class ModelisationCouplage:
     """
