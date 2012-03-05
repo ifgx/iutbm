@@ -39,7 +39,7 @@ class iutbm:
         self.bg = pygame.transform.scale(bg, (self.width, self.height))#, None)
 
         # initialisation of the menu
-        self.menu = rM.RotatingMenu(x=320, y=240, radius=220, arc=math.pi,
+        self.menu = rM.RotatingMenu(x=self.width/2, y=self.height/2, radius=min(self.height/3, self.width/3), arc=math.pi,
                 defaultAngle = math.pi / 2.0)
         items = ['Exit', 'Saleman traveller', 'Shortest path',
                 'Coupling', 'Backpack']
