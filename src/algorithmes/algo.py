@@ -17,7 +17,7 @@ class Algo:
         #help screen
         self.text = 'generic algo'
         self.description = 'algorithm\'s description# for a carriage return#>o_/'
-
+    
         #repere
         self.minx = 0.0
         self.maxx = 100.0
@@ -43,6 +43,38 @@ class Algo:
         for cpt, line in enumerate(self.description.split('#')):
             text = self.font.render(line, True, (255, 0, 0))
             self.display.blit(text, (10, 10 * cpt + 30))
+
+
+        # 
+        text_1 = self.font.render("previous menu", True, (255, 0, 0))
+        rect_1 = text_1.get_rect()
+        rect_1.midtop = self._get_corres_pixel(50,50)
+        self.display.blit(text_1, rect_1)
+
+        text_1 = pygame.image.load("ui/pix/help/return.jpg")
+        rect_1 = text_1.get_rect()
+        rect_1.center = self._get_corres_pixel(50,60)
+        self.display.blit(text_1, rect_1)
+
+        text_1 = self.font.render("select", True, (255, 0, 0))
+        rect_1 = text_1.get_rect()
+        rect_1.center = self._get_corres_pixel(30,70)
+        self.display.blit(text_1, rect_1)
+
+        text_1 = self.font.render("cancel", True, (255, 0, 0))
+        rect_1 = text_1.get_rect()
+        rect_1.center = self._get_corres_pixel(70,70)
+        self.display.blit(text_1, rect_1)
+
+        text_1 = pygame.image.load("ui/pix/help/clic-right.jpg")
+        rect_1 = text_1.get_rect()
+        rect_1.center = self._get_corres_pixel(70,80)
+        self.display.blit(text_1, rect_1)
+
+        text_1 = pygame.image.load("ui/pix/help/clic-left.jpg")
+        rect_1 = text_1.get_rect()
+        rect_1.center = self._get_corres_pixel(30,80)
+        self.display.blit(text_1, rect_1)
 
     def _get_corres_pixel(self, x, y):
         '''
