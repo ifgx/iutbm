@@ -58,6 +58,10 @@ class Couplage(algo.Algo):
         
         self.pas_vertical = 2 + self.hauteur_icone
         self.pas_horizontal = 2 + self.largeur_icone
+        
+        self.rectFourmis = []
+        self.rectDesserts = []
+        self.rectPrefs = []
     
     def _update(self, (x, y), button):
         # reset error
