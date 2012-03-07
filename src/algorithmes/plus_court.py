@@ -128,7 +128,8 @@ class Graphe(algo.Algo):
                 previous = previous.previous
             path.reverse()
             tmp = 0
-            
+            self.weight = 0
+            self.state_game = 0
             for i in xrange(1,len(path)):
                 self.drawLien(tmp, path[i].indice,theme.correction_color)
                 tmp = path[i].indice
@@ -150,7 +151,7 @@ class Graphe(algo.Algo):
 
 
 
-        if self.state_game == 1: 
+        if self.state_game == 1 and not self.show_solution: 
             if (self.weight > self.end.score):
                 text = self.font.render("You did not found the shortest path",True , (0,255,0))
             else:
