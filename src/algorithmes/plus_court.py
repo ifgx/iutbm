@@ -34,7 +34,7 @@ class Graphe(algo.Algo):
         # creation of an adjacency matrix 
         self.Matrix = [[float('inf') for i in xrange(self.numSommet)] for i in xrange(self.numSommet)]
 
-        minimum_weight = 20 
+        minimum_weight = 5 
         maximum_weight = 90 
         self.init_connex(minimum_weight,maximum_weight)
         self.init_add_link(minimum_weight,maximum_weight)
@@ -86,7 +86,7 @@ class Graphe(algo.Algo):
                     if self.Matrix[j][i] == float('inf'):
                         chance = random.random() * 100
                         if chance <40:  
-                            # there is 40 % chance that we will create a new link between the two sommet
+                            # there is 30 % chance that we will create a new link between the two sommet
                             weight = random.randint(minimum_weight, maximum_weight)
                             self.Matrix[j][i] = weight
                     self.Matrix[i][j] = self.Matrix[j][i]
@@ -98,6 +98,9 @@ class Graphe(algo.Algo):
 
 
     def _draw(self):
+
+
+
         titre = self.font.render("Help the pizza deliveryman to deliver pizzas to his customers", True, (0, 255, 0) )
         titreRect = titre.get_rect()
         titreRect.top = 48
@@ -113,22 +116,39 @@ class Graphe(algo.Algo):
         for i in xrange(self.numSommet): 
             [self.drawLien(i, j,theme.road_color) for j in xrange(i) if self.Matrix[i][j] != float('inf')]# if the link between two point is define in the matrix then we draw the link 
 
+        pygame.draw.rect(self.display,(255,0,0),self.start.rect,2)
+        pygame.draw.rect(self.display,(0,255,0),self.end.rect,2)
 
-        tmp = 0
-        for i in xrange(len(self.selected)):
-            self.drawLien(tmp, self.selected[i].indice,theme.correction_color)
-            tmp = self.selected[i].indice   
-
-        # then we draw the picture of the town
-        [self.display.blit(i.image, i.rect) for i in self.LSommet]
-
-        # then we draw the weight of the link
-        [pygame.draw.rect(self.display, (255, 0, 255), i.rect,2) for i in self.selected]
+        if self.show_solution:
+            self._solve()
+            previous = self.end 
+            path = []
+            while previous != None :
+                path.append(previous)
+                previous = previous.previous
+            path.reverse()
+            tmp = 0
+            
+            for i in xrange(1,len(path)):
+                self.drawLien(tmp, path[i].indice,theme.correction_color)
+                tmp = path[i].indice
+            self.selected = []
+            self.current = self.start
+            [self.display.blit(i.image, i.rect) for i in self.LSommet]
+        else:
+            tmp = 0
+            for i in xrange(len(self.selected)):
+                self.drawLien(tmp, self.selected[i].indice,theme.correction_color)
+                tmp = self.selected[i].indice   
+            [self.display.blit(i.image, i.rect) for i in self.LSommet]
+            self.display.blit(self.pizzaiolo,self.current.rect)
+            # then we draw the weight of the link
+        
 
         pygame.draw.rect(self.display,(255,0,0),self.start.rect,2)
         pygame.draw.rect(self.display,(0,255,0),self.end.rect,2)
 
-        self.display.blit(self.pizzaiolo,self.current.rect)
+
 
         if self.state_game == 1: 
             if (self.weight > self.end.score):
@@ -148,13 +168,15 @@ class Graphe(algo.Algo):
             self.misejour(sommet1)
         self.state_game = 1
 
+
+        
     def _update(self, (x, y),button): 
         # calculate of the coordinate relative to the screen
         for i in self.LSommet:
             i.rect.center = self._get_corres_pixel(i.x,i.y)
         if button == 1:
             for i in self.LSommet: # for all the sommet in the graphe
-                if i.rect.collidepoint(x, y) : # if the current position of the mouse is over the rect of the sommet
+                if not self.show_solution and i.rect.collidepoint(x, y) : # if the current position of the mouse is over the rect of the sommet
                     if i in self.next_sommet and i not in self.selected: # if the sommet is one of sommet in list of the next sommet avaible
                         self.weight += self.Matrix[self.current.indice][i.indice] # then you add at the current weight the weight of the selected sommet
                         self.selected.append(i) 
@@ -166,6 +188,7 @@ class Graphe(algo.Algo):
                         self.weight = self.state_game = 0
                         self.selected = []
                         self.nextSommet(i)
+
 
         if button == 3:
             self.state_game = 0
@@ -184,6 +207,7 @@ class Graphe(algo.Algo):
             if self.LSommet[i].visited == False:
                 if self.Matrix[sommet1.indice][i]+sommet1.score < self.LSommet[i].score:
                     self.LSommet[i].score = self.Matrix[sommet1.indice][i]+sommet1.score
+                    self.LSommet[i].previous = sommet1
 
     def drawLien(self,i,j,color):
         start     = self.LSommet[i].rect
