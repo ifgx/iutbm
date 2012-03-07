@@ -230,16 +230,25 @@ It is a special case of the Traveling purchaser problem.#'
         if self.computed_path == self.user_path:
             self.user_len = self.computed_len
 
+        if self.show_solution:  # show solution
+            if self.first_som == -1:
+                self.first_som = 1
+                self._solve()
+            self.user_path = self.computed_path[:]
+            self.user_len = self.computed_len
+            self._draw_finished()
+
+
         #user's length
         width, height = self.display.get_size()
         text = self.font.render('User: ' +
                 str(self.user_len), True, theme.secondary_text_color)
-        self.display.blit(text, (width * 0.6, height - 30))
+        self.display.blit(text, (width * 0.5, height - 30))
 
         #computed lenght
         text = self.font.render('Computed: ' +
                 str(self.computed_len), True, theme.secondary_text_color)
-        self.display.blit(text, (width * 0.3, height - 30))
+        self.display.blit(text, (width * 0.25, height - 30))
 
     def _update(self, (x, y), button):
         '''
