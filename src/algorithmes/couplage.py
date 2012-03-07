@@ -58,6 +58,10 @@ class Couplage(algo.Algo):
         
         self.pas_vertical = 2 + self.hauteur_icone
         self.pas_horizontal = 2 + self.largeur_icone
+        
+        self.rectFourmis = []
+        self.rectDesserts = []
+        self.rectPrefs = []
     
     def _update(self, (x, y), button):
         # reset error
@@ -142,11 +146,14 @@ class Couplage(algo.Algo):
                 self._get_corres_pixel(self.maxx - self.marge_droite + (self.largeur_icone / 2), self.marge_haut + (self.pas_vertical * dessertI) + (self.hauteur_icone / 2)),
                 3)
         
-        if False: # bouton solution
+        if self.show_solution:
             for couple in self.model.solution:
                 fourmiI = self.fourmis.index(couple[0])
                 dessertI = self.desserts.index(couple[1])
-                pygame.draw.line(self.display, (0, 255, 255), (128 + 16, 192 + (64 * fourmiI) + 16), (128 + 384 + 16, 192 + (64 * dessertI) + 16), 3)
+                pygame.draw.line(self.display, (0, 128, 0),
+                    self._get_corres_pixel(self.marge_gauche             + (self.largeur_icone / 2), self.marge_haut + (self.pas_vertical * fourmiI)  + (self.hauteur_icone / 2)),
+                    self._get_corres_pixel(self.maxx - self.marge_droite + (self.largeur_icone / 2), self.marge_haut + (self.pas_vertical * dessertI) + (self.hauteur_icone / 2)),
+                    3)
         
         pref = self.font.render("Preferences for each customer:", True, (255, 255, 255))
         prefRect = pref.get_rect()
