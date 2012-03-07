@@ -47,6 +47,10 @@ class iutbm:
                    ("knapsack", (0, 1), sac_a_dos.Sac_A_Dos(self.display)),
                    ("exit",     (2, 1), "EXIT")]
         )
+        
+        self.menuButton = None
+        self.helpButton = None
+        self.solutionButton = None
 
     def main(self):
         inMenu = True
@@ -88,20 +92,70 @@ class iutbm:
                             algo = alg
                             inMenu = False
                             inAlgo = True
+                            # prevent update for now
+                            button = None
 
             # update
             if inAlgo and pos != (0, 0)\
                     and button != None:
+                
+                if self.buttonMenu.collidepoint(pos):
+                    inAlgo = False
+                    inMenu = True
+                
+                if self.buttonHelp.collidepoint(pos):
+                    inAlgo = False
+                    inHelp = True
+                
+                if self.buttonSolution.collidepoint(pos):
+                    algo.show_solution = not algo.show_solution
+                
                 algo._update(pos, button)
+            
+            if inHelp and pos != (0, 0) and button is not None:
+                if self.buttonMenu.collidepoint(pos):
+                    inHelp = False
+                    inAlgo = True
 
             # drawing's handling
             if inMenu:  # if we are inside the main menu
                 self.menu.draw(self.display)
             elif inAlgo:  # else if we are inside an algorithm
                 self.display.fill((1, 0, 0))  #temp fix : please use a backgrounf for your algo !
+                # Add some buttons
+                width, height = self.display.get_size()
+                
+                imgMenu = pygame.image.load('ui/pix/menu/back.png').convert_alpha()
+                rectMenu = imgMenu.get_rect()
+                rectMenu.bottom = height - 5
+                rectMenu.left = 5
+                self.buttonMenu = self.display.blit(imgMenu, rectMenu)
+                
+                imgHelp = pygame.image.load('ui/pix/menu/help.png').convert_alpha()
+                rectHelp = imgHelp.get_rect()
+                rectHelp.bottom = height - 5
+                rectHelp.right = width - 155
+                self.buttonHelp = self.display.blit(imgHelp, rectHelp)
+                
+                imgSolution = pygame.image.load('ui/pix/menu/solution.png').convert_alpha()
+                rectSolution = imgSolution.get_rect()
+                rectSolution.bottom = height - 5
+                rectSolution.right = width - 5
+                self.buttonSolution = self.display.blit(imgSolution, rectSolution)
+                
                 algo._draw()
             elif inHelp: # else if we are in a help screen
                 self.display.fill((1, 0, 0))
+                
+                # back button
+                width, height = self.display.get_size()
+                
+                imgMenu = pygame.image.load('ui/pix/menu/back.png').convert_alpha()
+                rectMenu = imgMenu.get_rect()
+                rectMenu.bottom = height - 5
+                rectMenu.left = 5
+                self.buttonMenu = self.display.blit(imgMenu, rectMenu)
+                
                 algo._help()
             pygame.display.flip()  # draw on display
             self.clock.tick(self.fpsLimit)  # limit the fps

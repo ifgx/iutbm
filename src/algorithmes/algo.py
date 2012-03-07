@@ -23,6 +23,8 @@ class Algo:
         self.maxx = 100.0
         self.miny = 0.0
         self.maxy = 100.0
+        
+        self.show_solution = False
 
     def _solve(self, ):
         '''

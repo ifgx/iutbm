@@ -46,7 +46,6 @@ class Menu:
         
     
     def update(self, (x, y)):
-        print("update (", x, ",", y,")")
         for nom, rect, algo in self.buttons:
             if rect.collidepoint(x, y):
                 if algo == "EXIT":
