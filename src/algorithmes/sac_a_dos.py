@@ -27,7 +27,7 @@ class Sac_A_Dos(algo.Algo):
             Object("Peppers",7,5,picRoot + "poivrons.png"),
             Object("Cauliflower",2,8,picRoot + "brocoli.png")
         ]
-        self.ingredients = random.sample(self.allIngredients, 5)
+        self.ingredients = random.sample(self.allIngredients, 7)
         
         self.max_weight = 20
 
@@ -78,15 +78,23 @@ class Sac_A_Dos(algo.Algo):
         titreRect.top = 86
         titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
-        
-        for c,i in enumerate(self.ingredients):
-            if i.inBag:
-                ingx = (self._get_corres_pixel(75,0))[0]
-            else:
-                ingx = (self._get_corres_pixel(25,0))[0]
+        if not self.show_solution: 
+            for c,i in enumerate(self.ingredients):
+                if i.inBag:
+                    ingx = (self._get_corres_pixel(75,0))[0]
+                else:
+                    ingx = (self._get_corres_pixel(25,0))[0]
 
-            i.draw(self.display,self.font,ingx,c*64+128)
+                i.draw(self.display,self.font,ingx,c*64+128)
+        else:
+            lob = self.bag.tab[self.bag.numObj][self.bag.weight].content
+            for c,i in enumerate(self.ingredients):
+                if i in lob:
+                    ingx = (self._get_corres_pixel(75,0))[0]
+                else:
+                    ingx = (self._get_corres_pixel(25,0))[0]
 
+                i.draw(self.display,self.font,ingx,c*64+128)
     def _explain(self):
         return None
 
