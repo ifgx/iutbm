@@ -92,6 +92,8 @@ class iutbm:
                             algo = alg
                             inMenu = False
                             inAlgo = True
+                            # reset algo
+                            algo.__init__(self.display)
                             # prevent update for now
                             button = None
 
