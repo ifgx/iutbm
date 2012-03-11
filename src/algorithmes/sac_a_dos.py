@@ -22,14 +22,18 @@ class Sac_A_Dos(algo.Algo):
             Object("Potatoes",7,3,picRoot + "pommeterre.png"),
             Object("Mushrooms",5,8,picRoot + "champignon.png"),
             Object("Alapinios",7,8,picRoot + "piment.png"),
-            Object("Carotte",7,3,picRoot + "carotte.png"),
+            Object("Carot",7,3,picRoot + "carotte.png"),
             Object("Avocado",2,8,picRoot + "avocat.png"),
             Object("Peppers",7,5,picRoot + "poivrons.png"),
             Object("Cauliflower",2,8,picRoot + "brocoli.png")
         ]
-        self.ingredients = random.sample(self.allIngredients, 7)
-        
-        self.max_weight = 20
+        self.ingredients = random.sample(self.allIngredients, 6)        
+
+        ingsum = 0
+        for i in self.ingredients:
+            ingsum += i.weight
+
+        self.max_weight = ingsum - random.randint(1,ingsum-5)
 
         self.bag = Bag(self.ingredients , self.max_weight)
         
@@ -54,25 +58,25 @@ class Sac_A_Dos(algo.Algo):
                 
 
     def _draw(self):
-        #Legend 1
+        #Legend 1 : Goal
         titre = self.font.render("Help the pizzaiolo choosing the best ingredients for the pizza contest", True, (255, 255, 255) )
         titreRect = titre.get_rect()
         titreRect.top = 48
         titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
 
-        #Legend 2
+        #Legend 2 : Win or what colors
         if(self.value ==  self.optimal_value):
-            text = "Congragulation!! you found the answers"
+            text = "Congratulation ! You found the best solution !"
         else:
-            text = "Red number shows weight, green number shows the value. "
+            text = "Red number shows weight, green number shows value. "
         titre = self.font.render(text, True, (255, 255, 255) )
         titreRect = titre.get_rect()
         titreRect.top = 64
         titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
 
-        #Legend 3
+        #Legend 3 : Max weight
         titre = self.font.render("Max weight : "+str(self.max_weight)+"  Weight : "+str(self.weight) +" Value : "+str(self.value), True, (255, 255, 255) )
         titreRect = titre.get_rect()
         titreRect.top = 86
