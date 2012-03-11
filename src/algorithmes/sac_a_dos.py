@@ -11,6 +11,13 @@ class Sac_A_Dos(algo.Algo):
 
     def __init__(self, display):
         algo.Algo.__init__(self, display)
+
+        self.text = 'Knapsack problem'
+        self.description = 'Given a list of objects and their\
+values and a maximum weight, try to find the best valuable solution.#\
+To put or remove an object in the knapsack, just click it.#\
+When you have the correct solution, the instruction text will turn green.'
+
         picRoot = "ui/pix/bagpack/"
 
         self.allIngredients = [
@@ -22,14 +29,18 @@ class Sac_A_Dos(algo.Algo):
             Object("Potatoes",7,3,picRoot + "pommeterre.png"),
             Object("Mushrooms",5,8,picRoot + "champignon.png"),
             Object("Alapinios",7,8,picRoot + "piment.png"),
-            Object("Carotte",7,3,picRoot + "carotte.png"),
+            Object("Carot",7,3,picRoot + "carotte.png"),
             Object("Avocado",2,8,picRoot + "avocat.png"),
             Object("Peppers",7,5,picRoot + "poivrons.png"),
             Object("Cauliflower",2,8,picRoot + "brocoli.png")
         ]
-        self.ingredients = random.sample(self.allIngredients, 7)
-        
-        self.max_weight = 20
+        self.ingredients = random.sample(self.allIngredients, 6)        
+
+        ingsum = 0
+        for i in self.ingredients:
+            ingsum += i.weight
+
+        self.max_weight = ingsum - random.randint(1,ingsum-5)
 
         self.bag = Bag(self.ingredients , self.max_weight)
         
@@ -54,30 +65,42 @@ class Sac_A_Dos(algo.Algo):
                 
 
     def _draw(self):
-        #Legend 1
+        #Legend 1 : Goal
         titre = self.font.render("Help the pizzaiolo choosing the best ingredients for the pizza contest", True, (255, 255, 255) )
         titreRect = titre.get_rect()
         titreRect.top = 48
         titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
 
-        #Legend 2
-        if(self.value ==  self.optimal_value):
-            text = "Congragulation!! you found the answers"
-        else:
-            text = "Red number shows weight, green number shows the value. "
-        titre = self.font.render(text, True, (255, 255, 255) )
+        #Legend 2 : Win or what colors
         titreRect = titre.get_rect()
-        titreRect.top = 64
-        titreRect.centerx = self.display.get_rect().width / 2
+        if(self.value ==  self.optimal_value):
+            text = "Congratulation ! You found the best solution !"
+            color = (0,255,0);
+            titreRect.top = self.display.get_rect().height / 2
+            titreRect.x = self.display.get_rect().width / 8 * 3
+        else:
+            text = "Red number shows weight, green number shows value. "
+            color = (255,255,255)
+            titreRect.top = 64
+            titreRect.centerx = self.display.get_rect().width / 2
+        titre = self.font.render(text, True, color)
         self.display.blit(titre, titreRect)
 
-        #Legend 3
-        titre = self.font.render("Max weight : "+str(self.max_weight)+"  Weight : "+str(self.weight) +" Value : "+str(self.value), True, (255, 255, 255) )
+        #Legend 3 : Max weight
+        titre = self.font.render("Max weight : "+str(self.max_weight), True, (255, 64, 32) )
         titreRect = titre.get_rect()
         titreRect.top = 86
         titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
+
+        #Legend 4 : Bag Weight
+        titre = self.font.render("Bag | Weight : "+str(self.weight) +" Value : "+str(self.value), True, (255, 255, 255) )
+        titreRect = titre.get_rect()
+        titreRect.top = 112
+        titreRect.centerx = 3 * self.display.get_rect().width / 4
+        self.display.blit(titre, titreRect)        
+
         if not self.show_solution: 
             for c,i in enumerate(self.ingredients):
                 if i.inBag:
@@ -95,8 +118,6 @@ class Sac_A_Dos(algo.Algo):
                     ingx = (self._get_corres_pixel(25,0))[0]
 
                 i.draw(self.display,self.font,ingx,c*64+128)
-    def _explain(self):
-        return None
 
 class Object(object):
     '''
