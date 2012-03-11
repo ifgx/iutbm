@@ -16,8 +16,13 @@ class Graphe(algo.Algo):
     '''
     def __init__(self,window):
         algo.Algo.__init__(self, window)
-        self.text = 'shortest path problem'
-        self.description = 'You need to find the shortest path between the red town and the green town. # '
+        self.text = 'Shortest path problem'
+        self.description = 'Given towns and their connections,\
+you need to find the shortest path between the red town and the green town.#\
+Use left click to move to another town, however you must be able to.#\
+Use right click to undo the last move you did.#\
+When arrived to the green town, your result will be shown \
+on the top of the screen.'
         self.numSommet = 7 # the number of Sommet in the game
         self.state_game = self.weight = 0 # the state 0 correspond to the usall state of the game
         # the state 1 correspond to the end of the game
