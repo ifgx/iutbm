@@ -11,6 +11,13 @@ class Sac_A_Dos(algo.Algo):
 
     def __init__(self, display):
         algo.Algo.__init__(self, display)
+
+        self.text = 'Knapsack problem'
+        self.description = 'Given a list of objects and their\
+values and a maximum weight, try to find the best valuable solution.#\
+To put or remove an object in the knapsack, just click it.#\
+When you have the correct solution, the instruction text will turn green.'
+
         picRoot = "ui/pix/bagpack/"
 
         self.allIngredients = [
