@@ -73,16 +73,18 @@ When you have the correct solution, the instruction text will turn green.'
         self.display.blit(titre, titreRect)
 
         #Legend 2 : Win or what colors
+        titreRect = titre.get_rect()
         if(self.value ==  self.optimal_value):
             text = "Congratulation ! You found the best solution !"
             color = (0,255,0);
+            titreRect.top = self.display.get_rect().height / 2
+            titreRect.x = self.display.get_rect().width / 8 * 3
         else:
             text = "Red number shows weight, green number shows value. "
             color = (255,255,255)
+            titreRect.top = 64
+            titreRect.centerx = self.display.get_rect().width / 2
         titre = self.font.render(text, True, color)
-        titreRect = titre.get_rect()
-        titreRect.top = 64
-        titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
 
         #Legend 3 : Max weight
@@ -116,8 +118,6 @@ When you have the correct solution, the instruction text will turn green.'
                     ingx = (self._get_corres_pixel(25,0))[0]
 
                 i.draw(self.display,self.font,ingx,c*64+128)
-    def _explain(self):
-        return None
 
 class Object(object):
     '''
