@@ -31,14 +31,7 @@ class iutbm:
         self.drawalgo = ['QUIT', voyage.Voyage(self.display),
         plus_court.Graphe(self.display), couplage.Couplage(self.display),
         sac_a_dos.Sac_A_Dos(self.display)]
-
-        # caption
-        pygame.display.set_caption('IUTBM')
-
-        #theme
-        bg = pygame.image.load(theme.main_background)
-        self.bg = pygame.transform.scale(bg, (self.width, self.height))#, None)
-
+        
         # initialisation of the menu
         self.menu = bM.Menu(
                   [("salesman", (0, 0), voyage.Voyage(self.display)),
@@ -51,6 +44,9 @@ class iutbm:
         self.menuButton = None
         self.helpButton = None
         self.solutionButton = None
+
+        # caption
+        pygame.display.set_caption('IUTBM')
 
     def main(self):
         inMenu = True

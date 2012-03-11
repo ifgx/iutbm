@@ -9,7 +9,7 @@ class Sac_A_Dos(algo.Algo):
         The class Sac_A_Dos manages the whole game
     '''
 
-    def __init__(self, display):
+    def __init__(self, display,difficulty=0):
         algo.Algo.__init__(self, display)
 
         self.text = 'Knapsack problem'
@@ -34,7 +34,7 @@ When you have the correct solution, the instruction text will turn green.'
             Object("Peppers",7,5,picRoot + "poivrons.png"),
             Object("Cauliflower",2,8,picRoot + "brocoli.png")
         ]
-        self.ingredients = random.sample(self.allIngredients, 6)        
+        self.ingredients = random.sample(self.allIngredients, 3 + 2*difficulty)        
 
         ingsum = 0
         for i in self.ingredients:
