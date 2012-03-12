@@ -91,8 +91,8 @@ class iutbm:
                         if selected_algo:
                             self.algo = selected_algo
                             self.inMenu = False
-                            self.inAlgo = True
-                            self.inHelp = False
+                            self.inAlgo = False
+                            self.inHelp = True
                             # reset algo
                             self.algo.__init__(self.display)
                             # prevent update for now
