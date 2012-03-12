@@ -7,8 +7,6 @@ class Menu:
     def __init__(self, choices):
         self.path = "ui/pix/menu/"
         
-        self.difficulty = 0
-        
         #repere
         self.minx = 0.0
         self.maxx = 3.0
@@ -40,13 +38,6 @@ class Menu:
         titleRect.centerx = display.get_rect().width / 2
         display.blit(title, titleRect)
         
-        #Difficulty button
-        diffimg = [pygame.image.load(self.path + "level-" + str(i) + ".png").convert_alpha() for i in range(1,4)]
-        self.diffRect = diffimg[self.difficulty].get_rect()
-        self.diffRect.top = 480
-        self.diffRect.centerx = display.get_rect().width / 2
-        display.blit(diffimg[self.difficulty], self.diffRect)      
-        
         self.buttons = []
         
         for button, coords, algo in self.choices:
@@ -61,8 +52,4 @@ class Menu:
                     sys.exit(0)
                 else:
                     return algo
-        if self.diffRect.collidepoint(x,y):
-            self.difficulty += 1
-            if self.difficulty == 3 :
-                self.difficulty = 0
         return None
