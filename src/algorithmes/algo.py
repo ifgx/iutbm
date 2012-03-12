@@ -38,13 +38,15 @@ class Algo:
             Display an helping text
         '''
         # display "text"
-        text = self.font.render(self.text, True, (255, 0, 0))
+        self.nameFont = pygame.font.Font('freesansbold.ttf', 40)
+        text = self.nameFont.render(self.text, True, (255, 0, 0))
         self.display.blit(text, (10, 10))
 
         # display "description" with carriage return on "#"
+        self.descFont = pygame.font.Font(None, 25)
         for cpt, line in enumerate(self.description.split('#')):
-            text = self.font.render(line, True, (255, 0, 0))
-            self.display.blit(text, (10, 10 * cpt + 30))
+            text = self.descFont.render(line, True, (255, 255, 255))
+            self.display.blit(text, (10, 25 * cpt + 80))
 
 
         # 
