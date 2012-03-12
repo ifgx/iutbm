@@ -17,7 +17,7 @@ class Graphe(algo.Algo):
     def __init__(self,window):
         algo.Algo.__init__(self, window)
         self.text = 'Shortest path problem'
-        self.description = 'Given towns and their connections,\
+        self.description = 'Given towns and their connections,#\
 you need to find the shortest path between the red town and the green town.#\
 Use left click to move to another town, however you must be able to.#\
 Use right click to undo the last move you did.#\
