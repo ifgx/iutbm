@@ -91,8 +91,8 @@ class iutbm:
                         if selected_algo:
                             self.algo = selected_algo
                             self.inMenu = False
-                            self.inAlgo = False
-                            self.inHelp = True
+                            self.inAlgo = True
+                            self.inHelp = False
                             # reset algo
                             self.algo.__init__(self.display)
                             # prevent update for now
@@ -107,7 +107,7 @@ class iutbm:
                     self.inAlgo = False
                     self.inHelp = True
                 elif self.buttonSolution.collidepoint(pos):
-                    self.algo.show_solution = True
+                    self.algo.show_solution = not self.algo.show_solution
                 self.algo._update(pos, button)
 
             self._drawHandling(pos, button)
