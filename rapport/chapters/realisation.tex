@@ -202,17 +202,18 @@ finpour
 \subsection{Problème du plus court chemin}
 
         \paragraph{Contexte}
-	    Dans ce mini-jeu vous travaillerez en tant que livreur de pizza. On vous a demander de 			livrer  une pizza à l'autre bout de la ville. Pour cela il vous faudra trouver le plus court chemin
+	    Dans ce mini-jeu vous travaillerez en tant que livreur de pizza. On vous a demandé de 
+	    livrer  une pizza à l'autre bout de la ville. Pour cela il vous faudra trouver le plus court chemin
 	    pour vous rendre de la pizzeria jusqu'au lieu de la livraison.
         \paragraph{Moteur}
             Au démarrage du jeu, le programme génère un graphe
-            représentant des lieux de la ville. Ces lieux sont reliées par des arcs pondérés.
+            représentant des lieux de la ville. Ces lieux sont reliés par des arcs pondérés.
             Le poids des arcs corresponds à la distance entre chaque lieux.
 
         \paragraph{Interface}
 
         L'utilisateur pourra cliquer sur les différents lieux, tour à tour,
-        pour ce déplacer. Un compteur kilométrique indiquera la
+        pour se déplacer. Un compteur kilométrique indiquera la
         distance parcourue en temps réel.
 
         Le joueur peut effectuer un clic droit pour annuler son dernier
@@ -224,10 +225,8 @@ finpour
         le plus court. Il peut aussi cliquer sur \og solution\fg, qui
         affichera le chemin segment par segment.
 
-
-
         \paragraph{Résolution}
-            Lorsque la ville de début et la ville finale sont reliées,
+            Lorsque la ville de début et la ville finale sont reliés,
             on appelle la méthode de résolution par l'algorithme de \emph{Dijkstra}.
 
             Le programme affiche ensuite si le joueur à trouvé la solution optimale.
@@ -264,4 +263,11 @@ pour chaque sommet_choisit dans graphe
 	finsi
 finpour
 			\end{lstlisting}
+
+\begin{figure}[H]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{plus_court_1.png} % pour faire tenir sur une page
+    \caption{Interface pour le problème du plus court chemin}
+\end{center}
+\end{figure}
 
