@@ -58,16 +58,29 @@
      \subsection{Le problème du voyageur de commerce}
         \subsubsection{Description}
                 Le problème de voyageur de commerce consiste à trouver le plus
-                court chemin reliant tous les points d'un graphe pondéré.
+                court parcours reliant tous les points d'un graphe pondéré.
                 Ce problème n'est (à ce jour) pas solvable en un temps
-                polynomial de manière exacte, c'est pourquoi une \emph{heuristique}
-                est utilisée ici.
+                polynomial de manière exacte pour de très grands graphes.
+                Actuellement, avec de très gros calculateurs, il est possible
+                de résoudre de manière exacte ce problème pour des graphes
+                de la taille d'un pays (environ 15.000 villes).
+
+                Pour des graphes de tailles superieure, ou tout simplement
+                si la puissance de calcul est moindre, on utilise des heuristiques,
+                comme par exemple le plus proche voisin ou encore l'algorithme de Christophide.
+
+                On utilise également des meta-heuristiques (k-opt, v-opt, \ldots),
+                qui sont en fait des combinaisons
+                d'heuristiques, permettant d'obtenir des résultats encore plus intéressants,
+                sans alourdir de manière excessive le temps de calcul.
+
         \subsubsection{Applications pratiques}
             Toutes les entreprises devant effectuer des tournées sont concernées
             par ce type de problèmes, comme par exemple \emph{EDF},
             la \emph{Poste}, ou encore les entreprises de transport routier.
         \subsubsection{Algorithme}
-            L'algorithme implémenté est algorithme de type \emph{plus proche voisin} :
-            Il consiste à avancer
-            de proche en proche, en prenant à chaque itération le plus
-            proche voisin du point actuel.
+            L'heuristique choisi ici est l'algorithme du plus proche voisin,
+            en raison de sa facilité d'implémentation, et sa relative efficacité.
+            Il consiste à avancer de proche en proche, en prenant à chaque itération le plus
+            proche voisin du point actuel, jusqu'à ce que tous les points aient
+            été parcourus.
