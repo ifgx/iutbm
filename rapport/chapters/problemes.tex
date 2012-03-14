@@ -2,14 +2,34 @@
     \subsection{Le plus court chemin}
         \subsubsection{Description}
         Le problème du \emph{plus court chemin} consiste à trouver
-        le plus court trajet permettant de relier deux points donnés dans un graphe pondéré.
+        le plus court trajet permettant de relier deux points donnés dans un graphe pondéré. 
+	Il s'agit d'un algorithme en temps polynomiale. Un algorithme en temps polynomial est 
+	une algorithme dont le temps d'exécution est proportionnel à un polynôme en fonction des entrées.
+	
         \subsubsection{Applications pratiques}
             L'application la plus évidente de ce problème sont les systèmes de type
             GPS, ou de manière générale dans tous les problèmes necessitant
             un parcours optimal, comme le réseau internet, pour la commutation de
             paquets, ou encore les livreurs.
         \subsubsection{Algorithme} % TODO : rapide presentation de l'algo
-	L'algorithme implémenté est l'algorithme de \emph{Dijkstra}:
+	Il existe plusieurs algorithmes pour résoudre le problème du plus court chemin. 
+	Notamment des algorithmes à origine unique :
+\begin{enumerate}
+ \item Algorithme de Dijkstra
+ \item Algorithme de Ford-Bellman
+ \item Algorithme de Gabow
+\end{enumerate}
+	Ainsi que des algorithmes pour tout couple de sommets :
+\begin{enumerate}
+ \item Algorithme de Dantzig-Ford
+ \item Algorithme de Floyd-Warshall
+ \item Algorithme de Johnson
+ \item Algorithme du flot maximum
+\end{enumerate}
+
+	L'algorithme implémenté est l'algorithme de \emph{Dijkstra}. L'algorithme porte le nom de son inventeur, 
+	l'informaticien néerlandais Edsger Dijkstra et a été publié en 1959. Cet algorithme s'applique sur un graphe pondérée 
+	qui de ne possède pas de boucle infinie (pas de pondération négative).
 
     \subsection{Le couplage}
         \subsubsection{Description}
