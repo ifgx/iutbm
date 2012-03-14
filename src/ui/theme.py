@@ -1,8 +1,9 @@
 import glob
 import pygame
 
-primary_text_color = (255, 0, 0)
-secondary_text_color = (0, 255, 0)
+primary_text_color = (0, 0, 0)
+secondary_text_color = (255, 255, 255)
+
 
 main_background = 'ui/pix/menu_bg.jpg'
 
