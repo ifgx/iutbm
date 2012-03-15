@@ -109,6 +109,14 @@ When you have the correct solution, the instruction text will turn green.'
                     ingx = (self._get_corres_pixel(25,0))[0]
 
                 i.draw(self.display,self.font,ingx,c*64+128)
+                #Rayure si trop lourd
+                if i.weight + self.weight > self.max_weight and not i.inBag:
+                    pygame.draw.line(self.display,
+                        (255,0,0),
+                        (ingx,c*64+128),
+                        (ingx+64,
+                        (c+1)*64+128),
+                        5)
         else:
             lob = self.bag.tab[self.bag.numObj][self.bag.weight].content
             for c,i in enumerate(self.ingredients):
