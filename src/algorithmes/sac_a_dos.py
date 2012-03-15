@@ -1,5 +1,6 @@
 #!/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import division
 import random
 import pygame
 import algo
@@ -36,9 +37,11 @@ When you have the correct solution, the instruction text will turn green.'
         ]
         self.ingredients = random.sample(self.allIngredients, 6)        
 
+        self.max_value = 0
         ingsum = 0
         for i in self.ingredients:
             ingsum += i.weight
+            self.max_value += i.value
 
         self.max_weight = ingsum - random.randint(1,ingsum-5)
 
@@ -99,7 +102,39 @@ When you have the correct solution, the instruction text will turn green.'
         titreRect = titre.get_rect()
         titreRect.top = 112
         titreRect.centerx = 3 * self.display.get_rect().width / 4
-        self.display.blit(titre, titreRect)        
+        self.display.blit(titre, titreRect)
+        
+        
+        screen = self.display.get_rect()
+        #Jauge de poids
+        pygame.draw.rect(self.display,(255,64,32),
+            pygame.Rect(
+                (self._get_corres_pixel(85,0))[0],128,
+                25,len(self.ingredients)*68),
+            1)
+        ratio = float(self.weight / self.max_weight)
+        pygame.draw.rect(self.display,(255,64,32),
+            pygame.Rect(
+                (self._get_corres_pixel(85,0))[0],
+                128+len(self.ingredients)*68*(1-ratio),
+                25,
+                len(self.ingredients)*68*ratio),
+            0)
+            
+        #Jauge de valeur
+        pygame.draw.rect(self.display,(64,255,32),
+            pygame.Rect(
+                (self._get_corres_pixel(90,0))[0],128,
+                25,len(self.ingredients)*68),
+            1)
+        ratio = float(self.value / self.max_value)
+        pygame.draw.rect(self.display,(64,255,32),
+            pygame.Rect(
+                (self._get_corres_pixel(90,0))[0],
+                128+len(self.ingredients)*68*(1-ratio),
+                25,
+                len(self.ingredients)*68*ratio),
+            0)
 
         if not self.show_solution: 
             for c,i in enumerate(self.ingredients):
@@ -111,11 +146,9 @@ When you have the correct solution, the instruction text will turn green.'
                 i.draw(self.display,self.font,ingx,c*64+128)
                 #Rayure si trop lourd
                 if i.weight + self.weight > self.max_weight and not i.inBag:
-                    pygame.draw.line(self.display,
-                        (255,0,0),
+                    pygame.draw.line(self.display,(255,0,0),
                         (ingx,c*64+128),
-                        (ingx+64,
-                        (c+1)*64+128),
+                        (ingx+64,(c+1)*64+128),
                         5)
         else:
             lob = self.bag.tab[self.bag.numObj][self.bag.weight].content
@@ -168,8 +201,6 @@ class Object(object):
         objnRect.top = y + (self.pict.get_rect().bottom / 4) * 3
         objnRect.centerx = x + self.pict.get_rect().right + 5
         display.blit(objn, objnRect)
-
-        #Afficher le bouton "solve"
 
     def swapInBag(self):
         self.inBag = not self.inBag
