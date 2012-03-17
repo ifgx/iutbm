@@ -272,4 +272,54 @@ finpour
 			\end{lstlisting}
 
 
+Présentation de l'Algorithme de \emph{Dijkstra} par un exemple:
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot1.png} 
+    \caption{Graphe connexe non orientée et pondéré}
 
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot2.png} 
+    \caption{Étape 1 : à partir de la ville A, 2 villes sont accessibles, B et C qui se voient donc affectées des poids respectifs de 3 et 2 tandis que les autres villes sont affectées d'une distance infinie.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot3.png} 
+    \caption{Étape 2 : On choisi de mettre à jour les villes voisines du point C car c'est lui qui possède la plus petite valeur. Depuis C on a accès à deux point B et D mais on mets seulement D à jour car le chemin de A à B en passant par C n'est pas inférieur au chemin de A à B.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot4.png} 
+    \caption{Étape 3 : On choisi de mettre à jour les villes voisines du point  B car c'est lui qui possède la plus petite valeur. Depuis B on a accès au point E.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot5.png} 
+    \caption{Étape 4 : On choisi de mettre à jour les villes voisines du point D.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot6.png} 
+    \caption{Étape 5 : On choisi de mettre à jour les villes voisines du point E.}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot7.png} 
+    \caption{Pour aller du point A au point F la distance la plus court et de 8 }
+\end{center}
+\end{figure}
