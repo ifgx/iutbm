@@ -35,8 +35,8 @@ class Voyage(algorithmes.algo.Algo):
         self.maxy = 100
         self.matrix = self._create_matrix(nbpoints)
         self.text = 'Travelling saleman problem'
-        self.description = 'Given a list of cities and their\
-pairwise distances,# the task is to find a shortest possible\
+        self.description = 'Given a list of cities and their \
+pairwise distances,#the task is to find the shortest possible \
 tour that visits each city exactly once.#\
 It is a special case of the Traveling purchaser problem.#'
         self.first_som = -1  # will be set later

@@ -2,33 +2,53 @@
     \subsection{Le plus court chemin}
         \subsubsection{Description}
         Le problème du \emph{plus court chemin} consiste à trouver
-        le plus court trajet permettant de relier deux points donnés dans un graphe pondéré.
+        le plus court trajet permettant de relier deux points donnés dans un graphe pondéré. 
+	Il s'agit d'un algorithme en temps polynomiale. Un algorithme en temps polynomial est 
+	une algorithme dont le temps d'exécution est proportionnel à un polynôme en fonction des entrées.
+	
         \subsubsection{Applications pratiques}
             L'application la plus évidente de ce problème sont les systèmes de type
             GPS, ou de manière générale dans tous les problèmes necessitant
             un parcours optimal, comme le réseau internet, pour la commutation de
             paquets, ou encore les livreurs.
         \subsubsection{Algorithme} % TODO : rapide presentation de l'algo
-	L'algorithme implémenté est l'algorithme de \emph{Dijkstra}:
+	Il existe plusieurs algorithmes pour résoudre le problème du plus court chemin. 
+	Notamment des algorithmes à origine unique :
+\begin{enumerate}
+ \item Algorithme de Dijkstra
+ \item Algorithme de Ford-Bellman
+ \item Algorithme de Gabow
+\end{enumerate}
+	Ainsi que des algorithmes pour tout couple de sommets :
+\begin{enumerate}
+ \item Algorithme de Dantzig-Ford
+ \item Algorithme de Floyd-Warshall
+ \item Algorithme de Johnson
+ \item Algorithme du flot maximum
+\end{enumerate}
+
+	L'algorithme implémenté est l'algorithme de \emph{Dijkstra}. L'algorithme porte le nom de son inventeur, 
+	l'informaticien néerlandais Edsger Dijkstra et a été publié en 1959. Cet algorithme s'applique sur un graphe pondérée 
+	qui de ne possède pas de boucle infinie (pas de pondération négative).
 
     \subsection{Le couplage}
         \subsubsection{Description}
             Le problème du couplage est un problème de répartition \emph{au mieux}.
             En effet, il s'agit de répartir un certain nombre d'objets
-            entre plusieurs personnes, chacun ayant une liste d'objets
+            entre plusieurs personnes ayant chacunes une liste d'objets
             préférés, en contentant un maximum de personnes.
         \subsubsection{Applications pratiques}
-            Ce problème interesse particulièrement les entreprises
+            Ce problème intéresse particulièrement les entreprises
             de distribution, comme \emph{Amazon},
             ou la \emph{Redoute}, qui doivent
-            repartir au mieux leurs marchandises.
+            répartir au mieux leurs marchandises.
         \subsubsection{Algorithme}
 		Nous pouvons penser le problème du couplage comme un graphe,
 		 où les sommets représentent les personnes et les objets,
 		 et les arrêtes, les préférences des personnes.
 		L'algorithme implémenté est donc un algorithme permettant
 		 de résoudre ce genre de graphe.
-		Les arrêtes ont des capacités de 1 car chaque préférences est unique
+		Les arêtes ont des capacités de 1 car chaque préférence est unique
 		 pour chaque client.
 		Le but est de contenter chaque préférences, donc nous utilisons un
 		 algorithme permettant de résoudre un problème de flot maximal
@@ -40,16 +60,16 @@
     \subsection{Le problème du sac à dos}
         \subsubsection{Description}
             Le \emph{problème du sac à dos} consiste à sélectionner
-            des \emph{objets} auxquelles sont associés un couple (valeur, poids).
+            des \emph{objets} auxquels sont associés un couple (valeur, poids).
             Le but étant d'amasser un maximum de valeur, tout en ne dépassant
             pas une limite de poids fixée.
         \subsubsection{Applications pratiques}
             Cette problématique s'applique par exemple aux espaces portuaires.
             Les ports de marchandises utilisent des conteneurs aux formats standardisés,
-            on comprend aisément leur nécessité d'optimiser le contenu de leur
+            on comprend aisément leur nécessité d'optimiser le contenu de leurs
             chargements afin de minimiser les coûts de transports.
         \subsubsection{Algorithme}
-            On utilisera un algorithme de progrmmation dynamique. La programmation dynamique s'appuie sur un principe simple :
+            On utilisera un algorithme de programmation dynamique. La programmation dynamique s'appuie sur un principe simple :
 	    toute solution optimale s'appuie elle-même sur des sous-problèmes résolus localement de façon optimale.
 
 
@@ -57,17 +77,30 @@
 \section{Algorithmes en temps exponentiels}
      \subsection{Le problème du voyageur de commerce}
         \subsubsection{Description}
-                Le problème de voyageur de commerce consiste à trouver le plus
-                court chemin reliant tous les points d'un graphe pondéré.
+                Le problème du voyageur de commerce consiste à trouver le plus
+                court parcours reliant tous les points d'un graphe pondéré.
                 Ce problème n'est (à ce jour) pas solvable en un temps
-                polynomial de manière exacte, c'est pourquoi une \emph{heuristique}
-                est utilisée ici.
+                polynomial de manière exacte pour de très grands graphes.
+                Actuellement, avec de très gros calculateurs, il est possible
+                de résoudre de manière exacte ce problème pour des graphes
+                de la taille d'un pays (environ 15.000 villes).
+
+                Pour des graphes de taille superieure, ou tout simplement
+                si la puissance de calcul est moindre, on utilise des heuristiques,
+                comme par exemple le plus proche voisin ou encore l'algorithme de Christophide.
+
+                On utilise également des meta-heuristiques (k-opt, v-opt, \ldots),
+                qui sont en fait des combinaisons
+                d'heuristiques, permettant d'obtenir des résultats encore plus intéressants,
+                sans alourdir de manière excessive le temps de calcul.
+
         \subsubsection{Applications pratiques}
             Toutes les entreprises devant effectuer des tournées sont concernées
             par ce type de problèmes, comme par exemple \emph{EDF},
             la \emph{Poste}, ou encore les entreprises de transport routier.
         \subsubsection{Algorithme}
-            L'algorithme implémenté est algorithme de type \emph{plus proche voisin} :
-            Il consiste à avancer
-            de proche en proche, en prenant à chaque itération le plus
-            proche voisin du point actuel.
+            L'heuristique choisi ici est l'algorithme du plus proche voisin,
+            en raison de sa facilité d'implémentation, et sa relative efficacité.
+            Il consiste à avancer de proche en proche, en prenant à chaque itération le plus
+            proche voisin du point actuel, jusqu'à ce que tous les points aient
+            été parcourus.

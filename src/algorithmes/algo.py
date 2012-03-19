@@ -38,44 +38,42 @@ class Algo:
             Display an helping text
         '''
         # display "text"
-        text = self.font.render(self.text, True, (255, 0, 0))
+        self.nameFont = pygame.font.Font('freesansbold.ttf', 40)
+        text = self.nameFont.render(self.text, True, (255, 0, 0))
         self.display.blit(text, (10, 10))
 
         # display "description" with carriage return on "#"
+        self.descFont = pygame.font.Font(None, 25)
         for cpt, line in enumerate(self.description.split('#')):
-            text = self.font.render(line, True, (255, 0, 0))
-            self.display.blit(text, (10, 10 * cpt + 30))
+            text = self.descFont.render(line, True, (255, 255, 255))
+            self.display.blit(text, (10, 25 * cpt + 80))
 
 
         # 
-        text_1 = self.font.render("previous menu", True, (255, 0, 0))
+        text_1 = self.descFont.render("KeyControle", True, (255, 0, 0))
         rect_1 = text_1.get_rect()
-        rect_1.midtop = self._get_corres_pixel(50,50)
+        rect_1.midtop = self._get_corres_pixel(50,60)
         self.display.blit(text_1, rect_1)
 
-        text_1 = pygame.image.load("ui/pix/help/return.jpg")
+
+        text_1 = self.descFont.render("select", True, (255, 0, 0))
         rect_1 = text_1.get_rect()
-        rect_1.center = self._get_corres_pixel(50,60)
+        rect_1.center = self._get_corres_pixel(35,70)
         self.display.blit(text_1, rect_1)
 
-        text_1 = self.font.render("select", True, (255, 0, 0))
+        text_1 = self.descFont.render("cancel", True, (255, 0, 0))
         rect_1 = text_1.get_rect()
-        rect_1.center = self._get_corres_pixel(30,70)
-        self.display.blit(text_1, rect_1)
-
-        text_1 = self.font.render("cancel", True, (255, 0, 0))
-        rect_1 = text_1.get_rect()
-        rect_1.center = self._get_corres_pixel(70,70)
+        rect_1.center = self._get_corres_pixel(65,70)
         self.display.blit(text_1, rect_1)
 
         text_1 = pygame.image.load("ui/pix/help/clic-right.jpg")
         rect_1 = text_1.get_rect()
-        rect_1.center = self._get_corres_pixel(70,80)
+        rect_1.center = self._get_corres_pixel(65,80)
         self.display.blit(text_1, rect_1)
 
         text_1 = pygame.image.load("ui/pix/help/clic-left.jpg")
         rect_1 = text_1.get_rect()
-        rect_1.center = self._get_corres_pixel(30,80)
+        rect_1.center = self._get_corres_pixel(35,80)
         self.display.blit(text_1, rect_1)
 
     def _get_corres_pixel(self, x, y):

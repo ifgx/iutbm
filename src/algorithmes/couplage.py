@@ -7,6 +7,12 @@ import algo
 class Couplage(algo.Algo):
     def __init__(self, display):
         algo.Algo.__init__(self, display)
+        self.text = 'Coupling problem'
+        self.description = 'Given a list of customers and a list of pizzas,#\
+you have to link both entities so as to satisfy them all, taking into#\
+account that each pizza can only be given once.#\
+A client is satisfied when he has been given one pizza.'
+
         
         # Génération aléatoire des fourmis et des desserts
         nbFourmis = randrange(3, 6)

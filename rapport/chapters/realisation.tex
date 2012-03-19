@@ -12,9 +12,9 @@
             A chaque point sélectionné, le programme
             affiche la distance totale entre les points reliés.
             Dès lors qu'un point a été sélectionné, le programme
-            affiche la distance minimum calculée, au-dessus de
+            affiche la distance minimum calculée, à coté de
             la distance actuelle parcourue par l'utilisateur.
-            Lorsque tout les points ont étés reliés entre eux,
+            Lorsque tout les points ont été reliés entre eux,
             le programme raccorde automatiquement le premier
             et le dernier point, afin de former une boucle.
         \subsubsection{Résolution}
@@ -53,7 +53,7 @@ comuted_len = computed_len + matrix[1][tmp]
 
 	\subsection{Couplage}
 		\paragraph{Contexte}
-			Le probleme de couplage est modélisé par un jeu de choix.
+			Le problème du couplage est modélisé par un jeu de choix.
 			Il y a plusieurs clients, avec leurs préférences qui ont
 			 le choix entre plusieurs pizzas, et le joueur doit
 			 satisfaire un maximum de clients.
@@ -61,12 +61,12 @@ comuted_len = computed_len + matrix[1][tmp]
 			Au demarrage de l'application, le nombre de pizzas et
 			 de clients est généré aléatoirement, dans un intervalle
 			 assez bas, par soucis de complexité.
-			Les préférences de chaque client sont aussi générés aléatoirement,
-			 mais dans l'optique qu'un client ait au minimum une préférences.
+			Les préférences de chaque client sont aussi générées aléatoirement,
+			 mais dans l'optique qu'un client ait au minimum une préférence.
 		\paragraph{Interface}
 		    L'écran est divisé en trois colonnes :
 		    \begin{itemize}
-		        \item[à gauche] les préférences de chancun des clients
+		        \item[à gauche] les préférences de chacun des clients
 		        \item[au centre] les clients
 		        \item[à droite] les pizzas disponibles
 		    \end{itemize}
@@ -77,18 +77,18 @@ comuted_len = computed_len + matrix[1][tmp]
 		    Si la pizza est déjà attribuée, ou si le client a déjà
 		    une pizza qui lui est affectée, un message d'erreur s'affiche.
 		    Si ni le client n'a de pizza, ni la pizza de client, l'association
-		    se fait, et est représentée par un trait.
+		    se fait et est représentée par un trait.
 		L'utilisateur a la possibilité d'annuler ses choix en cliquant avec le bouton
 		    droit de la souris (ce qui annule la dernière action).
 		\paragraph{Résolution}
 			L'algorithme permet d'avoir la solution comportant un maximum de clients
-			 satisfait et de verifier si la solution proposée par le joueur correspond
-			 a la meilleure solution possible.
+			 satisfaits et de vérifier si la solution proposée par le joueur correspond
+			 à la meilleure solution possible.
  			Si l'utilisateur n'a pas trouvé la solution optimale, la solution s'affiche
 			 en surimpression sur le choix du joueur.
 
 		\paragraph{Algorithme de résolution}
-			Tout d'abord, chaque sommet représentant les personnes est lié a un sommet
+			Tout d'abord, chaque sommet représentant les personnes est lié à un sommet
 			 Source, par des arrêtes de capacité 1, ce qui permet une unique satisfaction
 			 des personnes.
 			De même pour les objets, ce qui permet l'unique utilisation d'un objet.
@@ -97,9 +97,9 @@ comuted_len = computed_len + matrix[1][tmp]
 		        	\item lp : liste des sommets concernant les personnes
 		        	\item lo : liste des sommets concernant les objets
 				\item la : liste des couples de sommets correspondant aux arrêtes, et donc aux préférences
-				\item nboccurence(i) : fonction qui retourne les sommet dont le degré sortant est de i
-				\item associera(s2) : retourne les sommets associé a s2
-				\item capacite(s) : retourne vrai si l'on peut atteindre s a partir du sommet Source
+				\item nboccurence(i) : fonction qui retourne les sommets dont le degré sortant est de i
+				\item associera(s2) : retourne les sommets associés a s2
+				\item capacite(s) : retourne vrai si l'on peut atteindre s à partir du sommet Source
 				\item maxoccur() : retourne le degré sortant maximum du graphe
 				\item supprimercouple : supprimer un couple d'une liste de couples
             		\end{enumerate}
@@ -139,27 +139,27 @@ comuted_len = computed_len + matrix[1][tmp]
             Dans ce mini-jeu, le but du joueur est d'aider un pizzaiolo à
             sélectionner des ingrédients à transporter à un concours de pizza.
             Il ne peut pas prendre tout ce qu'il souhaite et doit faire des
-            choix entre qualité et quantité : de bons ingrédients lui donnera
-            plus de points par le jury, cependant la pizza présenté a un poids
+            choix entre qualité et quantité : de bons ingrédients lui donneront
+            plus de points par le jury, cependant la pizza présentée a un poids
             limité au gramme près.
         \paragraph{Moteur}
             Au démarrage de l'application, une liste d'ingrédients est créée.
-            Pour respecter une certaine logique, on ne peux pas générer des
-            chiffre aléatoirement. (Il semblerait assez illogique qu'une
+            Pour respecter une certaine logique, on ne peut pas générer des
+            chiffres aléatoirement. (Il semblerait assez illogique qu'une
             garniture au fromage pèse plusieurs centaines de grammes par
             exemple.)
         \paragraph{Interface}
             L'interface se présente en 2 colonnes. La première, à gauche,
-            contient les objets disponible pour la pizza. La seconde, à droite,
-            montre le contenu actuel de la pizza que le joueur à choisi.
-            Un clic sur une icone d'un ingrédients permet de l'échanger entre
+            contient les objets disponibles pour la pizza. La seconde, à droite,
+            montre le contenu actuel de la pizza que le joueur a choisi.
+            Un clic sur l'icone d'un ingrédient permet de l'échanger entre
             les deux colonnes.
             Lorsque l'utilisateur a terminé, il clique sur le bouton de
-            validation pour savoir si il a trouvé la solution correcte.
+            validation pour savoir s'il a trouvé la solution correcte.
         \paragraph{Résolution}
-            La résolution du problème s'effectue grâce à un calcule de la solution optimale
+            La résolution du problème s'effectue grâce à un calcul de la solution optimale
             par programmation dynamique. Notons $V(k,y)$ la valeur optimale au problème du sac à dos
-            réduit au $k$ premier objet avec un sac de poids maximale de $y$.
+            réduit au $k$ premier objet avec un sac de poids maximal de $y$.
             $y_{k}$ le poids de l'objet k et $v_{k}$ la valeur de l'objet $k$.
 
             Si $ y - y_{k} >= 0 $
@@ -202,17 +202,18 @@ finpour
 \subsection{Problème du plus court chemin}
 
         \paragraph{Contexte}
-	    Dans ce mini-jeu vous travaillerez en tant que livreur de pizza. On vous a demander de 			livrer  une pizza à l'autre bout de la ville. Pour cela il vous faudra trouver le plus court chemin
+	    Dans ce mini-jeu vous travaillerez en tant que livreur de pizza. On vous a demandé de 
+	    livrer une pizza à l'autre bout de la ville. Pour cela, il vous faudra trouver le plus court chemin
 	    pour vous rendre de la pizzeria jusqu'au lieu de la livraison.
         \paragraph{Moteur}
             Au démarrage du jeu, le programme génère un graphe
-            représentant des lieux de la ville. Ces lieux sont reliées par des arcs pondérés.
-            Le poids des arcs corresponds à la distance entre chaque lieux.
+            représentant des lieux de la ville. Ces lieux sont reliés par des arcs pondérés.
+            Le poids des arcs correspond à la distance entre chaque lieu.
 
         \paragraph{Interface}
 
         L'utilisateur pourra cliquer sur les différents lieux, tour à tour,
-        pour ce déplacer. Un compteur kilométrique indiquera la
+        pour se déplacer. Un compteur kilométrique indiquera la
         distance parcourue en temps réel.
 
         Le joueur peut effectuer un clic droit pour annuler son dernier
@@ -224,7 +225,12 @@ finpour
         le plus court. Il peut aussi cliquer sur \og solution\fg, qui
         affichera le chemin segment par segment.
 
-
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{plus_court_1.png} 
+    \caption{Interface pour le problème du plus court chemin}
+\end{center}
+\end{figure}
 
         \paragraph{Résolution}
             Lorsque la ville de début et la ville finale sont reliées,
@@ -234,8 +240,8 @@ finpour
 
 		\paragraph{Algorithme de Dijkstra} ~
 
-			L'algorithme de Dijkstra est l'un des algorithme de résolution du problème du
-			\emph{plus court chemin} les plus connus. Cette algorithme s'applique à des graphes pondérés orientés ou non.
+			L'algorithme de Dijkstra est l'un des algorithmes de résolution du problème du
+			\emph{plus court chemin} les plus connus. Cet algorithme s'applique à des graphes pondérés orientés ou non.
 
 			L'algorithme de \emph{Dijkstra} :
 			\begin{lstlisting}
@@ -249,8 +255,8 @@ fintantque
 			\end{lstlisting}
 			Pour mettre à jour un sommet i:
 
-				Pour chaque autre sommet j qui est reliée à ce sommet i on vérifie si
-				la valeurs de j est supérieur à la valeurs de i plus la valeurs l'arc entre i et j
+				Pour chaque autre sommet j qui est relié à ce sommet i on vérifie si
+				la valeur de j est supérieure à la valeur de i plus la valeur de l'arc entre i et j.
 
 			\begin{lstlisting}
 mettre_a_jour(sommet):
@@ -265,3 +271,55 @@ pour chaque sommet_choisit dans graphe
 finpour
 			\end{lstlisting}
 
+
+Présentation de l'Algorithme de \emph{Dijkstra} par un exemple:
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot1.png} 
+    \caption{Graphe connexe non orienté et pondéré}
+
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot2.png} 
+    \caption{Étape 1 : à partir de la ville A, 2 villes sont accessibles, B et C qui se voient donc affecter des poids respectifs de 3 et 2 tandis que les autres villes sont affectées d'une distance infinie.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot3.png} 
+    \caption{Étape 2 : On choisit de mettre à jour les villes voisines du point C, car c'est lui qui possède la plus petite valeur. Depuis C on a accès à deux point B et D mais on met seulement D à jour car le chemin de A à B en passant par C n'est pas inférieur au chemin de A à B.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot4.png} 
+    \caption{Étape 3 : On choisit de mettre à jour les villes voisines du point B, car c'est lui qui possède la plus petite valeur. Depuis B on a accès au point E.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot5.png} 
+    \caption{Étape 4 : On choisi de mettre à jour les villes voisines du point D.}
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot6.png} 
+    \caption{Étape 5 : On choisit de mettre à jour les villes voisines du point E.}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{dot7.png} 
+    \caption{Pour aller du point A au point F, la distance la plus courte et de 8.}
+\end{center}
+\end{figure}
