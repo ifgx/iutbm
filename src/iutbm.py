@@ -107,7 +107,7 @@ class iutbm:
                     self.inAlgo = False
                     self.inHelp = True
                 elif self.buttonSolution.collidepoint(pos):
-                    self.algo.show_solution = not self.algo.show_solution
+                    self.algo.show_solution = True
                 self.algo._update(pos, button)
 
             self._drawHandling(pos, button)
