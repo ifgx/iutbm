@@ -158,9 +158,9 @@ on the top of the screen.'
 
         if self.state_game == 1 and not self.show_solution: 
             if (self.weight > self.end.score):
-                text = self.font.render("You did not found the shortest path",True , (0,255,0))
+                text = self.font.render("You did not find the shortest path",True , (0,255,0))
             else:
-                text = self.font.render("Congratulation : you've found the shortest path : " + str(self.end.score).replace('[',' ') + " km",True , (0,255,0))
+                text = self.font.render("Congratulations : you've found the shortest path : " + str(self.end.score).replace('[',' ') + " km",True , (0,255,0))
             textRect = text.get_rect()
             textRect.center =(self.display.get_width()/2, 10)
             self.display.blit(text,textRect)
