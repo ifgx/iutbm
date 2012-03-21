@@ -202,6 +202,15 @@ A client is satisfied when he has been given one pizza.'
             self.rectDesserts.append((i, self.display.blit(self.imgDesserts[i], self._get_corres_pixel(self.maxx - self.marge_droite, self.marge_haut + (self.pas_vertical * i)))))
         
         
+class Edge(object):
+    def __init__(self, u, v, w,chemin = False):
+        self.source = u
+        self.sink = v
+        self.capacity = w
+        self.passage = 0
+        self.chemin = chemin
+    def __repr__(self):
+        return "%s->%s:%s %s" % (self.source, self.sink, self.capacity,self.passage)
 
 class ModelisationCouplage:
     """
@@ -227,17 +236,61 @@ class ModelisationCouplage:
         """
         return self.element_en_liste(liste, dessert, 0)
 
+    def add_vertex(self, vertex):
+        self.adj[vertex] = []
+ 
+    def get_edges(self, v):
+        return self.adj[v]
+ 
+    def add_edge(self, u, v, w=0,chemin = False):
+        if u == v:
+            raise ValueError("u == v")
+        edge = Edge(u,v,w,chemin)
+        redge = Edge(v,u,0,chemin)
+        edge.redge = redge
+        redge.redge = edge
+        self.adj[u].append(edge)
+        self.adj[v].append(redge)
+        self.flow[edge] = 0
+        self.flow[redge] = 0
+ 
+    def find_path(self, source, sink, path):
+        if source == sink:
+            return path
+        for edge in self.get_edges(source):
+            residual = edge.capacity - self.flow[edge]
+            if residual > 0 and not (edge,residual) in path:
+                result = self.find_path( edge.sink, sink, path + [(edge,residual)] ) 
+                if result != None:
+                    return result
+
+
+
     def __init__(self, listeFourmis, listeDesserts, nbCouples):
         # Génération d'une liste de préférences pour les fourmis
         self.preferences = []
         self.solution = []
         self.proposition = []
+
+        self.adj = {}
+        self.flow = {}
         
         self.fourmis = listeFourmis
         self.desserts = listeDesserts
         
         assert nbCouples <= (len(listeFourmis) * len(listeDesserts))
         
+        self.add_vertex('S')
+        self.add_vertex('T')
+
+        for i in self.fourmis:
+            self.add_vertex(i)
+            self.add_edge('S',i,1)
+
+        for i in self.desserts:
+            self.add_vertex(i)
+            self.add_edge(i,'T',1)
+
         for i in xrange(nbCouples):
             fourmi = choice(listeFourmis)
             dessert = choice(listeDesserts)
@@ -245,6 +298,7 @@ class ModelisationCouplage:
                 fourmi = choice(listeFourmis)
                 dessert = choice(listeDesserts)
             self.preferences.append((fourmi, dessert))
+            self.add_edge(fourmi,dessert,100,True)
         
         # On ajoute un couple pour chaque fourmi et chaque dessert qui ne sont pas encore satisfaites/servis
         for fourmi in listeFourmis:
@@ -253,6 +307,7 @@ class ModelisationCouplage:
                 while self.preferences.count((fourmi, dessert)):
                     dessert = choice(listeDesserts)
                 self.preferences.append((fourmi, dessert))
+                self.add_edge(fourmi,dessert,100,True)
         
         for dessert in listeDesserts:
             if not self.element_en_liste(self.preferences, dessert, 0):
@@ -260,6 +315,7 @@ class ModelisationCouplage:
                 while self.preferences.count((fourmi, dessert)):
                     fourmi = choice(listeFourmis)
                 self.preferences.append((fourmi, dessert))
+                self.add_edge(fourmi,dessert,100,True)
     
     def desserts_correspondants(self, fourmi):
         """
@@ -324,8 +380,10 @@ class ModelisationCouplage:
             print fourmi[0], "=>", dessert[0]
     
     def resoudre(self):
+        source = 'S'
+        sink = 'T'
         self.solution = []
-        sav_preferences = list(self.preferences)
+        """sav_preferences = list(self.preferences)
         
         while len(self.preferences) != 0:
             for i in range(1, 1 + max(self.get_nb_occurrences())):
@@ -344,5 +402,19 @@ class ModelisationCouplage:
                 # print("- Fin du tour, il reste", len(self.preferences), "couples")
                 # print("- Couples restants:", self.preferences, ", couples trouvés:", self.solution)
         
-        self.preferences = sav_preferences
+        self.preferences = sav_preferences"""
 
+        path = self.find_path(source, sink, [])
+        while path != None:
+            flow = min(res for edge,res in path)
+            for edge,res in path:
+                self.flow[edge] += flow
+                edge.passage += flow
+                self.flow[edge.redge] -= flow
+                edge.redge.passage -= flow
+            path = self.find_path(source, sink, [])
+
+        for i in self.flow:
+            if i.passage  == 1 and i.chemin==True:
+                print(i)
+                self.solution.append((i.source,i.sink))
