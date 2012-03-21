@@ -209,6 +209,8 @@ class Edge(object):
         self.capacity = w
         self.passage = 0
         self.chemin = chemin
+
+
     def __repr__(self):
         return "%s->%s:%s %s" % (self.source, self.sink, self.capacity,self.passage)
 
@@ -323,24 +325,6 @@ class ModelisationCouplage:
         """
         return [p[1] for p in self.preferences if p[0] == fourmi]
     
-    def get_nb_occurrences(self):
-        """
-            Retourne une liste contenant la liste des occurrences
-             de chaque fourmi.
-        """
-        nb_occurrences = [0 for f in self.fourmis]
-        
-        for p in self.preferences:
-            nb_occurrences[self.fourmis.index(p[0])] += 1
-        
-        return nb_occurrences
-    
-    def occurrences_de_fourmi(self, nb_fois):
-        """
-            Retourne une liste des fourmis qui n'apparaissent que nb_fois dans
-             le tableau des préférences.
-        """ 
-        return [self.fourmis[i] for i, j in enumerate(self.get_nb_occurrences()) if j == nb_fois]
     
     def desserts_de_fourmi(self, fourmi):
         """
@@ -348,32 +332,6 @@ class ModelisationCouplage:
              à une fourmi donnée.
         """
         return [d for f, d in self.preferences if f == fourmi]
-    
-    def supprimer_preferences_de(self, fourmi, dessert):
-        """
-            Supprime tous les couples contenant la fourmi ou le dessert
-             fourni en paramètre.
-        """
-        
-        # print("---- [spd]", len(self.preferences), "couples à traiter (", self.preferences, ")")
-        
-        i = 0
-        while i < len(self.preferences):
-            # print("---- [spd] couple", preference)
-            if(self.preferences[i][0] == fourmi or self.preferences[i][1] == dessert):
-                # print("---- [spd] supprimé")
-                self.preferences.pop(i)
-            else:
-                i += 1
-    
-    def fourmi_satisfaite(self, fourmi):
-        """
-            Retourne si la fourmi fournie en paramètre est déjà satisfaite.
-        """
-        for f, d in self.solution:
-            if f == fourmi:
-                return True
-        return False
     
     def afficher(self, liste):
         for fourmi, dessert in liste:
@@ -383,26 +341,7 @@ class ModelisationCouplage:
         source = 'S'
         sink = 'T'
         self.solution = []
-        """sav_preferences = list(self.preferences)
-        
-        while len(self.preferences) != 0:
-            for i in range(1, 1 + max(self.get_nb_occurrences())):
-                # print("- Traitement des fourmis de niveau", i)
-                for fourmi in self.occurrences_de_fourmi(i):
-                    # print("-- Traitement de la fourmi", fourmi[0])
-                    for dessert in self.desserts_de_fourmi(fourmi):
-                        # print("--- La", fourmi[0], "aime le", dessert[0])
-                        if not self.fourmi_satisfaite(fourmi):
-                            # print("--- Succès! Don du dessert", dessert[0], "à la fourmi", fourmi[0])
-                            self.solution.append((fourmi, dessert))
-                            self.supprimer_preferences_de(fourmi, dessert)
-                        else:
-                            # print("--- Elle est déjà satisfaite")
-                            self.supprimer_preferences_de(fourmi, None)
-                # print("- Fin du tour, il reste", len(self.preferences), "couples")
-                # print("- Couples restants:", self.preferences, ", couples trouvés:", self.solution)
-        
-        self.preferences = sav_preferences"""
+
 
         path = self.find_path(source, sink, [])
         while path != None:
@@ -416,5 +355,4 @@ class ModelisationCouplage:
 
         for i in self.flow:
             if i.passage  == 1 and i.chemin==True:
-                print(i)
                 self.solution.append((i.source,i.sink))
