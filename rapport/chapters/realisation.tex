@@ -95,14 +95,25 @@ comuted_len = computed_len + matrix[1][tmp]
              maximum de Ford-Fulkerson.
 
         \paragraph{Définition d’un flot sur un graphe}
-            Soit  $G = (X,U)$ un graphe.
-            A chaque sommet x, on associe deux ensembles d'arcs :
-            \begin{itemize}
-                \item $ \omega^+ (x)= $ ensemble des arcs d'origine x et d'extrémité différente de x
 
-                \item $ \omega^- (x)= $ ensemble des arcs d'extrémité x et d'origine différente de x
+	    Dans la théorie des graphes, un réseau à flot est un graphe directe ou chaque arc à une capacité et un flot. 
+	    La valeur du flot sur l'arc ne peut pas dépasser la capacité de l'arc. Un flot doit respecter la condition que la valeur d'un flot entrant dans un arc 
+	    est égale à la valeur de flot qui sort de cet arc hormis la source et le puit. Un tel réseau peut être utilisé pour modeliser un traffic routier, des canalisations d'eau,
+	    le courant électrique dans un circuit ...
+	    Il s'agit là de la \emph{loi des noeuds} de Gustav Kirchhoff, physicien allemand de la fin du XIX\up{ème} siècle:
 
-            \end{itemize}
+
+\begin{quotation}
+ 	    En chaque point du réseau électrique, la somme des intensités entrantes est égale à la somme des intensités sortantes.
+
+\end{quotation}
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{flow.png} 
+    \caption{Exemple illustrant la notion de flot}
+
+\end{center}
+\end{figure}
 
 
 
