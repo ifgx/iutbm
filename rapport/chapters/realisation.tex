@@ -96,17 +96,20 @@ comuted_len = computed_len + matrix[1][tmp]
 
         \paragraph{Définition d’un flot sur un graphe}
 
-	    Dans la théorie des graphes, un réseau à flot est un graphe directe ou chaque arc à une capacité et un flot, il va d'un sommet dit source à un sommet puit. 
-	    La valeur du flot sur l'arc ne peut pas dépasser la capacité de l'arc. Un flot doit respecter la condition que la valeur d'un flot entrant dans un arc 
-	    est égale à la valeur de flot qui sort de cet arc hormis la source et le puit. Un tel réseau peut être utilisé pour modeliser un traffic routier, des canalisations d'eau,
+	    Dans la théorie des graphes, un réseau à flot est un graphe directe ou chaque arc à une capacité et un flot, il va d'un sommet initiale dit source à un sommet sortie dit puit. 
+	    La valeur du flot sur l'arc ne peut pas dépasser la capacité de l'arc, de plus un flot doit respecter la condition que la valeur d'un flot entrant dans un arc 
+	    est égale à la valeur de flot qui sort de cet arc hormis pour la source et le puit. Un tel réseau peut être utilisé pour modeliser un traffic routier, des canalisations d'eau,
 	    le courant électrique dans un circuit ...
-	    Il s'agit là de la \emph{loi des noeuds} de Gustav Kirchhoff, physicien allemand de la fin du XIX\up{ème} siècle:
+\newline
+	    Il s'agit de la loi de \emph{Kirchhoff} : 
+\begin{quote}
 
+en tout sommet d’un réseau de transport
+différent de la source et du puits, la somme des flots
+entrants est égale à la somme des flots sortants 
+ 
+\end{quote}
 
-\begin{quotation}
- 	    En chaque point du réseau électrique, la somme des intensités entrantes est égale à la somme des intensités sortantes.
-
-\end{quotation}
 \begin{figure}[h]
 \begin{center}
     \includegraphics[width=.8\textwidth]{flow.png} 
@@ -116,9 +119,9 @@ comuted_len = computed_len + matrix[1][tmp]
 \end{figure}
 
       \paragraph{modelisation du graphe correspondant au problème de couplage}
-      La source est liée à toute les clients par un arc de capacité égale à 1, en effet, un client ne peut pas choisir plusieurs pizza.
+      La source est liée à tout les clients par un arc de capacité égale à 1, puisqu'un client ne peut pas choisir plusieurs pizza.
       Ensuite chaque pizza est reliée au puit par un arc de capacité 1, chaque pizza ne peut être sélectionner qu'une seule fois.
-      Ensuite pour définir les préférence de chaque client, on relie le client au pizza qu'il aime avec un arc de capacité supérieur à 1.
+      Ensuite pour définir les préférences de chaque client, on relie le client aux pizzas qu'il aime avec un arc de capacité <= 1.
 
 \begin{figure}[h]
 \begin{center}
@@ -128,7 +131,7 @@ comuted_len = computed_len + matrix[1][tmp]
 \end{center}
 \end{figure}
 
-Ici on à trois client et trois pizzas disponibles. Le client 1 n'aime que la pizza 1, le client 2 aime la pizza 1 et la pizza 3 et le client 3 n'aime que la pizza 1 et la pizza 2.
+Ici on a trois clients et trois pizzas disponibles. Le client 1 n'aime que la pizza 1, le client 2 aime la pizza 1 et la pizza 3 et le client 3 n'aime que la pizza 1 et la pizza 2.
 
 
 \paragraph{algorithme de Ford-Fulkerson}
