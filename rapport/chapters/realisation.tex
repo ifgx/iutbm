@@ -89,14 +89,14 @@ comuted_len = computed_len + matrix[1][tmp]
             
 
 		\paragraph{Algorithme de résolution}
-			Pour résoudre ce problème il faut dans un premier temps le modéliser.
-            Pour cela, nous introduisons un nouveau problème standard qui est celui du flot maximal sur un
-            réseau. Pour trouver le flot maximale qui parcoure un graphe on utilisera l'algorithme de flot
-             maximum de Ford-Fulkerson.
+	    Pour résoudre ce problème il faut dans un premier temps le modéliser sous la forme d'un graphe. 
+	    Nous chercherons ensuite le flot maximale qui parcourt ce graphe. Pour trouver le flot maximale qui parcoure un graphe on utilisera l'algorithme 
+	    de flot maximum de Ford-Fulkerson.
 
         \paragraph{Définition d’un flot sur un graphe}
 
-	    Dans la théorie des graphes, un réseau à flot est un graphe directe ou chaque arc à une capacité et un flot, il va d'un sommet initiale dit source à un sommet sortie dit puit. 
+	    Dans la théorie des graphes, un réseau à flot est un graphe directe ou chaque arc à une capacité et un flot, il va d'un sommet initiale dit 
+	    source à un sommet sortie dit puit. 
 	    Un tel réseau peut être utilisé pour modeliser un traffic routier, des canalisations d'eau, le courant électrique dans un circuit ...
 	    La valeur du flot sur l'arc ne peut pas dépasser la capacité de l'arc, de plus un flot doit respecter la condition que la valeur d'un flot entrant dans un arc 
 	    est égale à la valeur de flot qui sort de cet arc hormis pour la source et le puit.
@@ -119,8 +119,8 @@ entrants est égale à la somme des flots sortants
 \end{figure}
 
       \paragraph{modelisation du graphe correspondant au problème de couplage}
-      La source est liée à tout les clients par un arc de capacité égale à 1, puisqu'un client ne peut pas choisir plusieurs pizza.
-      Ensuite chaque pizza est reliée au puit par un arc de capacité 1, chaque pizza ne peut être sélectionner qu'une seule fois.
+      La source est liée à tout les clients par un arc de capacité égale à 1 étant donné qu'un client ne peut pas choisir plusieurs pizzas.
+      Ensuite chaque pizza est reliée au puit par un arc de capacité 1, chaque pizza ne peut être sélectionnée qu'une seule fois.
       Ensuite pour définir les préférences de chaque client, on relie le client aux pizzas qu'il aime avec un arc de capacité <= 1.
 
 \begin{figure}[h]
@@ -131,13 +131,17 @@ entrants est égale à la somme des flots sortants
 \end{center}
 \end{figure}
 
-Ici on a trois clients et trois pizzas disponibles. Le client 1 n'aime que la pizza 1, le client 2 aime la pizza 1 et la pizza 3 et le client 3 n'aime que la pizza 1 et la pizza 2.
+Ici on a trois clients et trois pizzas disponibles. Le client 1 n'aime que la pizza 1, le client 2 aime la pizza 1 et 3, quand au client 3 il aime la pizza 1 et 2.
 
 
 \paragraph{algorithme de Ford-Fulkerson} ~\cite{ref.fordfulkerson}
 
 
-\emph{principe} Tant qu'il existe un chemin augementant dans le graphe on ajoute un flot le long de ce chemin.
+\emph{principe} L'algorithme de \emph{ford-fulkerson} repose sur un principe simple:
+\begin{quote}
+ Tant qu'il existe un chemin augementant dans le graphe on ajoute un flot le long de ce chemin.
+\end{quote}
+Toutefois il s'agit d'un algorithme relativement complexe.
 
 \begin{verbatim}
 Créer un graphe Gr
