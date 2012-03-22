@@ -91,12 +91,12 @@ comuted_len = computed_len + matrix[1][tmp]
 		\paragraph{Algorithme de résolution}
 			Pour résoudre ce problème il faut dans un premier temps le modéliser.
             Pour cela, nous introduisons un nouveau problème standard qui est celui du flot maximal sur un
-            réseau.Pour trouver le flot maximale qui parcoura ce graphe on utilisera l'algorithme de flot
+            réseau. Pour trouver le flot maximale qui parcoura ce graphe on utilisera l'algorithme de flot
              maximum de Ford-Fulkerson.
 
         \paragraph{Définition d’un flot sur un graphe}
 
-	    Dans la théorie des graphes, un réseau à flot est un graphe directe ou chaque arc à une capacité et un flot. 
+	    Dans la théorie des graphes, un réseau à flot est un graphe directe ou chaque arc à une capacité et un flot, il va d'un sommet dit source à un sommet puit. 
 	    La valeur du flot sur l'arc ne peut pas dépasser la capacité de l'arc. Un flot doit respecter la condition que la valeur d'un flot entrant dans un arc 
 	    est égale à la valeur de flot qui sort de cet arc hormis la source et le puit. Un tel réseau peut être utilisé pour modeliser un traffic routier, des canalisations d'eau,
 	    le courant électrique dans un circuit ...
@@ -114,6 +114,52 @@ comuted_len = computed_len + matrix[1][tmp]
 
 \end{center}
 \end{figure}
+
+      \paragraph{modelisation du graphe correspondant au problème de couplage}
+      La source est liée à toute les clients par un arc de capacité égale à 1, en effet, un client ne peut pas choisir plusieurs pizza.
+      Ensuite chaque pizza est reliée au puit par un arc de capacité 1, chaque pizza ne peut être sélectionner qu'une seule fois.
+      Ensuite pour définir les préférence de chaque client, on relie le client au pizza qu'il aime avec un arc de capacité supérieur à 1.
+
+\begin{figure}[h]
+\begin{center}
+    \includegraphics[width=.8\textwidth]{exemple_couplage.png}
+    \caption{Exemple illustrant la notion de flot}
+
+\end{center}
+\end{figure}
+
+Ici on à trois client et trois pizzas disponibles. Le client 1 n'aime que la pizza 1, le client 2 aime la pizza 1 et la pizza 3 et le client 3 n'aime que la pizza 1 et la pizza 2.
+
+
+\paragraph{algorithme de Ford-Fulkerson}
+
+
+\emph{principe} Tant qu'il existe un chemin augementant dans le graphe on ajoute un flot le long de ce chemin.
+
+\begin{verbatim}
+Créer un graphe Gr
+Initialement tous les arcs sont valués par leur capacité
+Déterminer un chemin augmentant
+TantQue il existe un chemin augmentant de s vers p Faire
+  mettre à jour le graphe résiduel
+  chercher un nouveau chemin augmentant
+finTantQue
+
+\end{verbatim}
+
+Mise à jour du graphe résiduel
+\begin{verbatim}
+
+Soit c un chemin augmentant
+Soit cr la capacité résiduelle de ce chemin
+  Pour tous les arcs (si , sj ) appartenant au chemin Faire
+    mettre à jour la capacité résiduelle de l’arc
+finPour
+ 
+\end{verbatim}
+La capacité résiduelle, pour un arc (si , sj ) donné, représente la quantité de flot pouvant encore passer par cet arc.
+
+
 
 
 
