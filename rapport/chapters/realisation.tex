@@ -86,45 +86,23 @@ comuted_len = computed_len + matrix[1][tmp]
 			 à la meilleure solution possible.
  			Si l'utilisateur n'a pas trouvé la solution optimale, la solution s'affiche
 			 en surimpression sur le choix du joueur.
+            
 
 		\paragraph{Algorithme de résolution}
-			Tout d'abord, chaque sommet représentant les personnes est lié à un sommet
-			 Source, par des arrêtes de capacité 1, ce qui permet une unique satisfaction
-			 des personnes.
-			De même pour les objets, ce qui permet l'unique utilisation d'un objet.
-			Ensuite, une liste des éléments nécessaire a l'algorithme :
-		        \begin{enumerate}
-		        	\item lp : liste des sommets concernant les personnes
-		        	\item lo : liste des sommets concernant les objets
-				\item la : liste des couples de sommets correspondant aux arrêtes, et donc aux préférences
-				\item nboccurence(i) : fonction qui retourne les sommets dont le degré sortant est de i
-				\item associera(s2) : retourne les sommets associés a s2
-				\item capacite(s) : retourne vrai si l'on peut atteindre s à partir du sommet Source
-				\item maxoccur() : retourne le degré sortant maximum du graphe
-				\item supprimercouple : supprimer un couple d'une liste de couples
-            		\end{enumerate}
+			Pour résoudre ce problème il faut dans un premier temps le modéliser.
+            Pour cela, nous introduisons un nouveau problème standard qui est celui du flot maximal sur un
+            réseau.Pour trouver le flot maximale qui parcoura ce graphe on utilisera l'algorithme de flot
+             maximum de Ford-Fulkerson.
 
-			\emph{L'algorithme :}
+        \paragraph{Définition d’un flot sur un graphe}
+            Soit  $G = (X,U)$ un graphe.
+            A chaque sommet x, on associe deux ensembles d'arcs :
+            \begin{itemize}
+                \item $ \omega^+ (x)= $ ensemble des arcs d'origine x et d'extrémité différente de x
 
-			\begin{lstlisting}
-			solution = []
-			tantque taille(la) != 0 faire
-				pour i allant de 1 a maxoccur() + 1
-					pour pers dans nboccurence(i)
-						pour obj dans associera(pers)
-							si capacite(pers) alors
-								solution = [pers,obj]
-								la.supprimercouple([pers,obj])
-							sinon
-								la.supprimercouple([pers,none])
-							finsi
-						finpour
-					finpour
-				finpour
-			fintantque
-			\end{lstlisting}
+                \item $ \omega^- (x)= $ ensemble des arcs d'extrémité x et d'origine différente de x
 
-
+            \end{itemize}
 
 
 
