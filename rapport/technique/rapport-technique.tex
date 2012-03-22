@@ -62,5 +62,64 @@ Pour réaliser le projet IUTBM, nous avons choisi le langage Python, qui permet 
  programmation plus aisée des différents algorithmes. Nous avons choisi le module
  Pygame (basé sur la bibliothèque SDL) pour la réalisation de l'interface graphique.
 
+Nous avons adopté une programmation modulaire : la classe Iutbm gère l'affichage de la
+ fenêtre, et interagit avec les différents modules (menu, algorithmes) en envoyant les
+ données de l'utilisateur (clics de la souris) et affichant les données renvoyées par
+ l'algorithme (le dessin à l'écran).
+
+\tableofcontents
+
+\section{iutbm.py : la classe iutbm}
+
+Dans le constructeur de la classe iutbm, la fenêtre principale est créée et le menu est
+ initialisé avec les différentes options. La méthode main représente la boucle principale
+ du programme : les différents évènements (clics de la souris, appui sur les touches clés
+ du programme, fermeture de la fenêtre) sont détectés et déclenchent soit le passage
+ dans un autre mode (mode algorithme, mode menu, mode aide), soit la transmission
+ de l'évènement à l'algorithme en cours d'exécution.
+
+Après la gestion des évènements, on appelle les différentes méthodes de dessin :
+
+\begin{description}
+	\item[dans le mode algorithme], on appelle la méthode \_drawInAlgo(), qui dessine
+	 d'abord les trois boutons (Retour, Aide et Solution) avant d'appeler la méthode
+	 \_draw() de l'algorithme en cours d'exécution, qui va lui-même dessiner le reste;
+	\item[dans le mode menu], on appelle directement la méthode draw() du menu, qui
+	 va dessiner le menu dans la fenêtre;
+	\item[dans le mode aide], on dessine le bouton Retour puis on appelle la méthode
+	 \_help() de l'algorithme en cours d'exécution, qui va dessiner le reste de la fenêtre
+	 d'aide.
+\end{description}
+
+\section{algo.py : la classe abstraite des algorithmes}
+
+La classe Algo représente un algorithme. Elle est étendue par tous les algorithmes
+ présents dans le programme.
+
+Le constructeur initialise quelques données par défaut : l'affichage initial pour le
+ dessin avec Pygame, le titre de l'algorithme et sa description pour l'écran d'aide,
+ et un repère standard (par défaut sur 0-100) qui servira à adapter l'affichage à la
+ résolution d'écran choisie par l'utilisateur.
+
+La méthode \_help() permet d'afficher un écran d'aide à l'utilisateur. Il affiche
+ le titre de l'algorithme, les différentes lignes de la description (séparées par
+ des #), ainsi que des images représentant les boutons utilisables par l'utilisateur.
+
+La méthode \_get\_corres\_pixel() permet de convertir les coordonnées x, y passées
+ en paramètre et faisant partie du repère défini dans le constructeur, en coordonnées
+ dans la fenêtre. Cela permet, sans toucher au code source de chaque algorithme, de
+ pouvoir changer la résolution du jeu et d'adapter les dessins en conséquence.
+
+La méthode \_reset() permet de réinitialiser l'algorithme.
+
+La méthode \_draw() utilise les principales méthodes de Pygame pour afficher une
+ représentation à l'écran de l'algorithme en cours.
+
+La méthode \_update() est appelée lorsque l'utilisateur clique dans la fenêtre de jeu.
+ Les coordonnées (x, y) sont passées en paramètre, ainsi que le bouton qui a été utilisé.
+ Cette méthode doit permettre à l'utilisateur d'interagir avec l'algorithme, et utilise
+ notamment la méthode Rect.collidepoint() pour vérifier si l'utilisateur a cliqué sur
+ un élément du décor.
+
 
 \end{document}
