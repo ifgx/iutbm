@@ -91,15 +91,15 @@ comuted_len = computed_len + matrix[1][tmp]
 		\paragraph{Algorithme de résolution}
 			Pour résoudre ce problème il faut dans un premier temps le modéliser.
             Pour cela, nous introduisons un nouveau problème standard qui est celui du flot maximal sur un
-            réseau. Pour trouver le flot maximale qui parcoura ce graphe on utilisera l'algorithme de flot
+            réseau. Pour trouver le flot maximale qui parcoure un graphe on utilisera l'algorithme de flot
              maximum de Ford-Fulkerson.
 
         \paragraph{Définition d’un flot sur un graphe}
 
 	    Dans la théorie des graphes, un réseau à flot est un graphe directe ou chaque arc à une capacité et un flot, il va d'un sommet initiale dit source à un sommet sortie dit puit. 
+	    Un tel réseau peut être utilisé pour modeliser un traffic routier, des canalisations d'eau, le courant électrique dans un circuit ...
 	    La valeur du flot sur l'arc ne peut pas dépasser la capacité de l'arc, de plus un flot doit respecter la condition que la valeur d'un flot entrant dans un arc 
-	    est égale à la valeur de flot qui sort de cet arc hormis pour la source et le puit. Un tel réseau peut être utilisé pour modeliser un traffic routier, des canalisations d'eau,
-	    le courant électrique dans un circuit ...
+	    est égale à la valeur de flot qui sort de cet arc hormis pour la source et le puit.
 \newline
 	    Il s'agit de la loi de \emph{Kirchhoff} : 
 \begin{quote}
