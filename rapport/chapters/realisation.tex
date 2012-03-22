@@ -116,7 +116,7 @@ comuted_len = computed_len + matrix[1][tmp]
 \end{figure}
 
       \paragraph{modelisation du graphe correspondant au problème de couplage}
-      La source est liée à toute les fourmis par un arc de capacité égale à 1, en effet, un client ne peut pas choisir plusieurs pizza.
+      La source est liée à toute les clients par un arc de capacité égale à 1, en effet, un client ne peut pas choisir plusieurs pizza.
       Ensuite chaque pizza est reliée au puit par un arc de capacité 1, chaque pizza ne peut être sélectionner qu'une seule fois.
       Ensuite pour définir les préférence de chaque client, on relie le client au pizza qu'il aime avec un arc de capacité supérieur à 1.
 
@@ -132,6 +132,35 @@ Ici on à trois client et trois pizzas disponibles. Le client 1 n'aime que la pi
 
 
 \paragraph{algorithme de Ford-Fulkerson}
+
+
+\emph{principe} Tant qu'il existe un chemin augementant dans le graphe on ajoute un flot le long de ce chemin.
+
+\begin{verbatim}
+Créer un graphe Gr
+Initialement tous les arcs sont valués par leur capacité
+Déterminer un chemin augmentant
+TantQue il existe un chemin augmentant de s vers p Faire
+  mettre à jour le graphe résiduel
+  chercher un nouveau chemin augmentant
+finTantQue
+
+\end{verbatim}
+
+Mise à jour du graphe résiduel
+\begin{verbatim}
+
+Soit c un chemin augmentant
+Soit cr la capacité résiduelle de ce chemin
+  Pour tous les arcs (si , sj ) appartenant au chemin Faire
+    mettre à jour la capacité résiduelle de l’arc
+finPour
+ 
+\end{verbatim}
+La capacité résiduelle, pour un arc (si , sj ) donné, représente la quantité de flot pouvant encore passer par cet arc.
+
+
+
 
 
     \subsection{Sac à Dos}
