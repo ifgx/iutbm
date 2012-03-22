@@ -56,7 +56,7 @@
 
 \newpage
 
-\section*{Introduction}
+\chapter*{Introduction}
 
 Pour réaliser le projet IUTBM, nous avons choisi le langage Python, qui permet une
  programmation plus aisée des différents algorithmes. Nous avons choisi le module
@@ -68,6 +68,27 @@ Nous avons adopté une programmation modulaire : la classe Iutbm gère l'afficha
  l'algorithme (le dessin à l'écran).
 
 \tableofcontents
+
+\chapter{Spécifications}
+
+Afin de fonctionner correctement, le projet IUTBM devra s'exécuter sur un ordinateur doté
+ d'un système d'exploitation quelconque (Linux, Windows), d'un interpréteur Python 2
+ (le projet a été programmé avec Python 2.7) et de la librairie Pygame (facilement
+ installable avec l'utilitaire easy\_install).
+
+Pour lancer le programme, il suffit de se placer dans le répertoire src, et d'invoquer
+ l'interpréteur Python avec en argument le fichier iutbm.py.
+
+Par exemple, sous le système d'exploitation Linux :
+
+\begin{verbatim}
+$ cd src/
+src $ python iutbm.py
+\end{verbatim}
+
+L'interface du jeu s'ouvre alors.
+
+\chapter{Description des fichiers}
 
 \section{iutbm.py : la classe iutbm}
 
@@ -121,5 +142,13 @@ La méthode \_update() est appelée lorsque l'utilisateur clique dans la fenêtr
  notamment la méthode Rect.collidepoint() pour vérifier si l'utilisateur a cliqué sur
  un élément du décor.
 
+\section{buttonMenu.py : le menu principal}
+
+Le menu principal est basé sur des boutons orange cliquables. Pour des raisons pratiques,
+ il réutilise le système de repère implémenté dans les algorithmes. La grille est découpée
+ en 6 sections dans lequelles sont placés les boutons dans la méthode draw().
+
+La méthode update() vérifie si l'utilisateur a cliqué sur un bouton. Si c'est le cas, elle
+ quitte l'application ou renvoie l'algorithme correspondant. Sinon, elle renvoie None.
 
 \end{document}
