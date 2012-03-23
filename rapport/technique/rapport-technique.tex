@@ -164,9 +164,33 @@ Cependant, c'est principalement une classe qui gère l'esthétique du menu, et l
 	Le jeu du couplage permet donc à l'utilisateur de résoudre un problème de graphe, qui en apparence est
 	 un jeu intéractif. Le problème étant de pouvoir atteindre un flot maximal dans un graphe composé de différents
 	 sommets, dont un sommet Source qui est le fournisseur du flot, et un sommet Puit qui est le recepteur. Les autres sommets
-	 qui composent sont soitreprésentatif de personnes (les sommets liés au sommet Source), soit de pizza (l'objet convoité, les 
+	 qui composent sont soit représentatif de personnes (les sommets liés au sommet Source), soit de pizza (l'objet convoité, les 
 	 sommets liés au sommet Puit).
 
-	Dans le fichier \emph{couplage.py}, nous avons la classe 
+
+	Dans le fichier \emph{couplage.py}, nous avons la classe Couplage, qui permet de déssiner l'interface graphique du jeu.
+
+	\begin{description}
+		\item[Le constructeur] permet d'initialiser les différents éléments de l'interface graphique, mais aussi les variables ​
+		 qui serviront tout au long de l'algorithme.
+		\item[La fonction update], gère la dynamique du jeu, lorsque l'utilisateur intéragit avec le programme.
+		 Elle permet principalement de gérer les erreurs, et les items selectionnés.
+		\item[La fonction draw], permet de dessiner l'interface de commencement, comportant les différents éléments du jeu,
+		 comme les pizzas, les clients, etc... Elle contient principalement des méthodes de dessins, des créations de labels,
+		 ou des placements d'items.
+	\end{description}
+
+	Ensuite, nous avons une classe Edge, qui va permettre de gérer une partie du problème de flot maximal, en modélisant le problème
+	 sous la forme d'un graphe.
+
+	Enfin, nous avons la classe ModelisationCouplage, qui permettra elle, de résoudre le problème avec les paramètres initialisés
+	 aléatoirement par la classe Couplage. Voici les principales fonctions de cette classe :
+
+	\begin{description}
+		\item[Le constructeur] qui va utiliser les paramètres initialisés par la classe Couplage, et la classe Edge, pour créer le
+		 graphe du problème. La méthode \emph{addedge} permet de créer les arcs, et de leur administrer une capacité. 
+		 La méthode \emph{addvertex} permet de créer les sommets du graphe. Enfin, il y a des fonctions qui gèrent les différentes informations
+		 du graphe comme les préférences, les capacités, les sommets atteignables etc..
+	\end{description}
 
 \end{document}
