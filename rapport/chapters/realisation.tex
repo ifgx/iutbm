@@ -9,19 +9,19 @@
         \subsubsection{Interface}
             L'utilisateur sélectionne les points par simple clic,
             et peut annuler ses actions par clic droit.
-            A chaque point sélectionné, le programme
+            \`A chaque point sélectionné, le programme
             affiche la distance totale entre les points reliés.
-            Dès lors qu'un point a été sélectionné, le programme
-            affiche la distance minimum calculée, à coté de
+            Dès qu'un point a été sélectionné, le programme
+            affiche la distance minimum calculée, à-côté de
             la distance actuelle parcourue par l'utilisateur.
-            Lorsque tout les points ont été reliés entre eux,
+            Lorsque tous les points ont été reliés entre eux,
             le programme raccorde automatiquement le premier
             et le dernier point, afin de former une boucle.
         \subsubsection{Résolution}
             Lors de la sélection du premier point,
             le programme calcule à l'aide de l'algorithme
             du \emph{plus proche voisin} le chemin le plus court.
-            Une fois que l'utilisateur a relié tout les points
+            Une fois que l'utilisateur a relié tous les points
             entre eux, le programme affiche la solution calculée
             en surimpression de celle proposée par l'utilisateur.
         \subsubsection{Algorithme}
@@ -58,9 +58,9 @@ comuted_len = computed_len + matrix[1][tmp]
 			 le choix entre plusieurs pizzas, et le joueur doit
 			 satisfaire un maximum de clients.
 		\paragraph{Moteur}
-			Au demarrage de l'application, le nombre de pizzas et
+			Au démarrage de l'application, le nombre de pizzas et
 			 de clients est généré aléatoirement, dans un intervalle
-			 assez bas, par soucis de complexité.
+			 assez bas, par souci de complexité.
 			Les préférences de chaque client sont aussi générées aléatoirement,
 			 mais dans l'optique qu'un client ait au minimum une préférence.
 		\paragraph{Interface}
@@ -90,23 +90,23 @@ comuted_len = computed_len + matrix[1][tmp]
 
 		\paragraph{Algorithme de résolution}
 	    Pour résoudre ce problème il faut dans un premier temps le modéliser sous la forme d'un graphe. 
-	    Nous chercherons ensuite le flot maximale qui parcourt ce graphe. Pour trouver le flot maximale qui parcoure un graphe on utilisera l'algorithme 
+	    Nous chercherons ensuite le flot maximal qui parcourt ce graphe. Pour trouver le flot maximal qui parcourt un graphe on utilisera l'algorithme 
 	    de flot maximum de Ford-Fulkerson.
 
         \paragraph{Définition d’un flot sur un graphe}
 
-	    Dans la théorie des graphes, un réseau à flot est un graphe directe ou chaque arc à une capacité et un flot, il va d'un sommet initiale dit 
-	    source à un sommet sortie dit puit. 
-	    Un tel réseau peut être utilisé pour modeliser un traffic routier, des canalisations d'eau, le courant électrique dans un circuit ...
-	    La valeur du flot sur l'arc ne peut pas dépasser la capacité de l'arc, de plus un flot doit respecter la condition que la valeur d'un flot entrant dans un arc 
-	    est égale à la valeur de flot qui sort de cet arc hormis pour la source et le puit.
+	    Dans la théorie des graphes, un réseau à flot est un graphe direct ou chaque arc a une capacité et un flot, il va d'un sommet initial (la source)
+	    à un sommet sortie (le puits).
+	    Un tel réseau peut être utilisé pour modéliser un trafic routier, des canalisations d'eau, le courant électrique dans un circuit\dots
+	    La valeur du flot sur l'arc ne peut pas dépasser la capacité de l'arc, et un flot doit respecter la condition que la valeur d'un flot entrant dans un arc 
+	    est égale à la valeur de flot qui sort de cet arc, hormis pour la source et le puits.
 \newline
 	    Il s'agit de la loi de \emph{Kirchhoff} : 
 \begin{quote}
 
-en tout sommet d’un réseau de transport
+En tout sommet d’un réseau de transport
 différent de la source et du puits, la somme des flots
-entrants est égale à la somme des flots sortants 
+entrants est égale à la somme des flots sortants.
  
 \end{quote}
 
@@ -118,10 +118,10 @@ entrants est égale à la somme des flots sortants
 \end{center}
 \end{figure}
 
-      \paragraph{modelisation du graphe correspondant au problème de couplage}
-      La source est liée à tout les clients par un arc de capacité égale à 1 étant donné qu'un client ne peut pas choisir plusieurs pizzas.
-      Ensuite chaque pizza est reliée au puit par un arc de capacité 1, chaque pizza ne peut être sélectionnée qu'une seule fois.
-      Ensuite pour définir les préférences de chaque client, on relie le client aux pizzas qu'il aime avec un arc de capacité <= 1.
+      \paragraph{Modélisation du graphe correspondant au problème de couplage}
+      La source est liée à tous les clients par un arc de capacité égale à 1 étant donné qu'un client ne peut pas choisir plusieurs pizzas.
+      Ensuite chaque pizza est reliée au puits par un arc de capacité 1, chaque pizza ne peut être sélectionnée qu'une seule fois.
+      Ensuite pour définir les préférences de chaque client, on relie le client aux pizzas qu'il aime avec un arc de capacité $\leq 1$.
 
 \begin{figure}[h]
 \begin{center}
@@ -131,13 +131,13 @@ entrants est égale à la somme des flots sortants
 \end{center}
 \end{figure}
 
-Ici on a trois clients et trois pizzas disponibles. Le client 1 n'aime que la pizza 1, le client 2 aime la pizza 1 et 3, quand au client 3 il aime la pizza 1 et 2.
+Ici on a trois clients et trois pizzas disponibles. Le client 1 n'aime que la pizza 1, le client 2 aime les pizzas 1 et 3, et le client 3 aime les pizzas 1 et 2.
 
 
-\paragraph{algorithme de Ford-Fulkerson} ~\cite{ref.fordfulkerson}
+\paragraph{Algorithme de Ford-Fulkerson} ~\cite{ref.fordfulkerson}
 
 
-\emph{principe} L'algorithme de \emph{ford-fulkerson} repose sur un principe simple:
+\emph{principe} L'algorithme de \emph{Ford-Fulkerson} repose sur un principe simple:
 \begin{quote}
  Tant qu'il existe un chemin augementant dans le graphe on ajoute un flot le long de ce chemin.
 \end{quote}
@@ -194,7 +194,7 @@ La capacité résiduelle, pour un arc (si , sj ) donné, représente la quantit�
             L'interface se présente en 2 colonnes. La première, à gauche,
             contient les objets disponibles pour la pizza. La seconde, à droite,
             montre le contenu actuel de la pizza que le joueur a choisi.
-            Un clic sur l'icone d'un ingrédient permet de l'échanger entre
+            Un clic sur l'icône d'un ingrédient permet de l'échanger entre
             les deux colonnes.
             Lorsque l'utilisateur a terminé, il clique sur le bouton de
             validation pour savoir s'il a trouvé la solution correcte.
