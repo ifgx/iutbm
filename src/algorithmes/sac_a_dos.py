@@ -43,7 +43,7 @@ When you have the correct solution, the instruction text will turn green.'
             ingsum += i.weight
             self.max_value += i.value
 
-        self.max_weight = ingsum - random.randint(1,ingsum-5)
+        self.max_weight = ingsum - random.randint(1,ingsum-max(self.ingredients,key=lambda x: x.weight).weight)
 
         self.bag = Bag(self.ingredients , self.max_weight)
         
