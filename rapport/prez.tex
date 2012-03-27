@@ -1,62 +1,274 @@
-\documentclass{beamer}
-
-% BASE PACKAGES
+\documentclass{beamer} 
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
-\usepackage{graphicx}\graphicspath{{images/}}
 \usepackage[T1]{fontenc}
-\usepackage{color}
+\usepackage{graphicx}
 
-\usepackage[absolute]{textpos}
-% PYTHON CODE INCLUSION
-\usepackage{listings}
-\definecolor{grey}{rgb}{0.95,0.95,0.95}
+%\useoutertheme{split}
+%\usecolortheme{whale}
+%\setbeamercolor*{titlelike}{parent=structure}
 
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
+%\setbeamertemplate{footline}[frame number]
 
-\lstset{tabsize=2,
-        frame=single,
-        numbers=left,
-        numberstyle=\footnotesize,
-        basicstyle=\ttfamily,
-        backgroundcolor=\color{grey},
-        showtabs=false,
-        showspaces=false,
-        showstringspaces=false,
-        tabsize=2,
-		language=Python,
-		keywordstyle=\color{blue},          % keyword style
-        commentstyle=\color{dkgreen},       % comment style
-        stringstyle=\color{mauve},          % string literal style
-		morekeywords={pour,de,finpour,finsi,si,sinon,tantque,fintantque,supprimer,dans}
-        }
+\usetheme{}
 
-%____________________________________________________________________________
-% TEMP FRONT PAGE
-\title{Sensibilisation à la complexité et à la recherche opérationnelle}
-\subtitle{IUT Belfort-Montbeliard - projet sous tutelle}
-\author{Benoit Marine \and Durosier Florian \and Nowinski David \and Sid Ali \and Voisin Julien \and Zambelli Cédric}
-\date{\today}
+\useinnertheme{rectangles}
+\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{itemize subsubitem}[circle]
 
-%____________________________________________________________________________
-% MAIN MATTER
+%\usecolortheme[RGB={21, 101, 178}]{structure} 
+
+%\setcounter{tocdepth}{1}
+
+\AtBeginSection[]{
+	%\begin{frame}{~}
+		%\tableofcontents[current]
+		%\begin{center}
+			%\huge\insertsection
+		%\end{center}
+	%\end{frame}
+	
+	\begin{frame}{Plan}
+		\begin{columns}[t]
+			\begin{column}{5cm}
+				\tableofcontents[sections={1-5},currentsection, hideothersubsections]
+			\end{column}
+			\begin{column}{5cm}
+				\tableofcontents[sections={6-9},currentsection, hideothersubsections]
+			\end{column}
+		\end{columns}
+	\end{frame}
+}
+
+
+
+\title[Projet tuteuré]{Projet tuteuré}
+\subtitle[Projet Tuteuré]{iutbm, introduction ludique à la recherche opérationnelle}
+\author[]{VOISIN Juelin}
+\institute{IUT informatique Belfort}
+\date{26 mars 2012}
+%\logo{\includegraphics[width=2cm]{iut_bm.jpg}}
+
 \begin{document}
-\begin{frame}
-    \maketitle
+
+\begin{frame}{~}
+	\titlepage
 \end{frame}
 
-\begin{frame}
-    \tableofcontents
+%
+% Ne pas oublier les remerciements à l'oral !
+%
+
+\begin{frame}{Plan}
+	\begin{columns}[t]
+		\begin{column}{5cm}
+			\tableofcontents[sections={1-5}, hideothersubsections]
+		\end{column}
+		\begin{column}{5cm}
+			\tableofcontents[sections={6-9}, hideothersubsections]
+		\end{column}
+	\end{columns}
 \end{frame}
 
-\section{Recherche Opérationnelle}
-    \begin{frame}
-    \end{frame}
+\section{Introduction}
+	\begin{frame}{Introduction}
+		\begin{itemize}
+			\setlength{\itemsep}{0.5cm}
+			\item La recherche opérationnelle fait partie de vie de tout les jours;
+			\item Mais beaucoup l'ignorent;
+			\item But du projet : sensibiliser les gens à la recherche
+			    opérationnelle.
+		\end{itemize}
+	\end{frame}
 
-\section{Algorithmes}
-    \begin{frame}
-    \end{frame}
+\section{Présentation}
+	\subsection{Sujet}
+		\begin{frame}{Présentation - Sujet}
+			\begin{itemize}
+				\setlength{\itemsep}{1cm}
+				\item Définir des problèmes pertinents ;
+				\item Implémenter les algorithmes ;
+				\item Enrober le tout de ludisme.
+			\end{itemize}
+		\end{frame}
+\section{Cahier des charges}
+	\subsection{Objectifs}
+		\begin{frame}{Cahier des charges - Objectifs généraux}
+			\begin{itemize}\setlength{\itemsep}{0.75cm}
+                \item Ludisme
+                \item Sensibilisation
+                \item Accessibilité
+                \item Portabilité
+			\end{itemize}
+		\end{frame}
+	\subsection{Moyens}
+		\begin{frame}{Cahier des charges - Moyens}
+		    Utiliser des technologies
+			\begin{itemize}
+				\item Libres;
+				\item gratuites
+			\end{itemize}
+		\end{frame}
+\section{Analyse}
+	\subsection{Solutions existantes}
+		\begin{frame}{Analyse - Solutions existantes }
+		\begin{itemize}
+            \item Pas de solutions interactives
+            \item Un vieil applet java moisi
+        \end{itemize}
+		\end{frame}
+	\subsection{Interface}
+		\begin{frame}{Analyse - Organisation de l'interface}
+			\begin{itemize}
+				\setlength{\itemsep}{0.5cm}
+				\item Un menu principal ;
+				\item Présentation de la solution ;
+				\item Réalisations pas-à-pas ;
+			\end{itemize}
+		\end{frame}
+	\subsection{Limites et choix}
+		\begin{frame}{Analyse - Limites et choix}
+			\begin{itemize}
+				\setlength{\itemsep}{0.3cm}
+				\item Langage : Python;
+					\begin{itemize}
+						\item Portabilité ;
+						\item Rapidité de développement ;
+						\item Langage connu.
+					\end{itemize}
+				\item Bibliothèque : \emph{pygame} :
+					\begin{itemize}
+						\item Bibliothèque complète ;
+						\item Libre ;
+						\item Reconnue.
+					\end{itemize}
+				\item Problèmes :
+					\begin{itemize}
+						\item Voyageur de commerce
+						\item Couplage
+						\item Plus court chemin
+						\item bleh
+					\end{itemize}
+			\end{itemize}
+		\end{frame}
+\section{Organisation}
+	\begin{frame}{Organisation}
+		\begin{itemize}
+			\setlength{\itemsep}{0.75cm}
+			\item Répartition des tâches :
+			\begin{itemize}
+			\setlength{\itemsep}{0.3cm}
+				\item Découpage des tâches ;
+				\item Répartition par binômes.
+			\end{itemize}
+			\item Plate-forme collaborative de travail : \emph{git}
+			\begin{itemize}
+			\setlength{\itemsep}{0.3cm}
+				\item Documentation ;
+				\item Développement ;
+				\item Tickets.
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+
+\section{Réalisation}
+    \subsection{Interface}
+        \begin{frame}
+            Menu, toussa
+        \end{frame}
+    \subsection{Voyageur de commerce}
+		\begin{frame}{Voyageur de commerce}
+			\begin{itemize}
+				\setlength{\itemsep}{0.3cm}
+				\item Problème NP-Complet
+			\end{itemize}
+		\end{frame}
+		\begin{frame}{Voyageur de commerce}
+			\begin{center}
+				%\includegraphics[width=5cm]{ImageRapport/p1.png}
+			\end{center}
+		\end{frame}
+	\subsection{Plus court chemin}
+		\begin{frame}{Recherche sur Internet}
+			\begin{itemize}
+			\setlength{\itemsep}{0.3cm}
+				\item BLEH
+			\end{itemize}
+		\end{frame}
+	\subsection{Couplage}
+		\begin{frame}{Moteur}
+			\begin{itemize}
+				\item Piloter les deux outils précédents ;
+			\end{itemize}
+			\begin{center}
+				%\includegraphics[width=7cm]{engine.png}
+			\end{center}
+		\end{frame}
+\section{Problèmes rencontrés}
+\subsection{Git(hub)}
+	\begin{frame}{Traitement des résultats de \emph{Google}}
+		\begin{itemize}
+		\setlength{\itemsep}{0.8cm}
+			\item Branches ;
+			\item Tickets.
+		\end{itemize}
+	\end{frame}
+\subsection{Humain}
+	\begin{frame}{Humain}
+	    Repartition de la charge de travail
+	\end{frame}
+
+
+\section{Bilans}
+\subsection{Bilan technique}
+	\begin{frame}{Bilan technique}
+		\begin{itemize}
+		\setlength{\itemsep}{0.3cm}
+			\item Nous n'avons pas regretté nos choix ;
+			\item Le Python permet de développer rapidement et efficacement.
+			\item Les questions de portabilité ne se posent pas ;
+		\end{itemize}
+	\end{frame}
+\subsection{Bilan humain}
+	\begin{frame}{Bilan humain}
+		\begin{itemize}
+			\item Travail d'équipe parcellaire ;
+			\vspace{1cm}
+			\item Absence du tuteur !
+		\end{itemize}
+	\end{frame}
+\subsection{Bilan pédagogique}
+	\begin{frame}{Bilan pédagogique}
+		\begin{itemize}
+		\setlength{\itemsep}{0.3cm}
+			\item Approfondissement des bases en \emph{Python} ;
+			\item Prise en main d'une bibliothèque totalement inconnue :
+			\emph{pygame} ;
+			\vspace{1cm}
+			\item Utilisation d'un gestionnaire de version ;
+			\item Documentation du code
+		\end{itemize}
+	\end{frame}
+\subsection{Perspectives d'évolution}
+	\begin{frame}{Perspectives d'évolution}
+		Quelques idées que nous n'avons pas eu le temps d'implémenter :
+		\begin{itemize}
+		\setlength{\itemsep}{0.3cm}
+			\item Implémenter plus d'algorithmes ;
+			\item Internationalisation ;
+			\item Peaufiner l'interface.
+		\end{itemize}
+	\end{frame}
+
+\section{Conclusion}
+	\begin{frame}{Conclusion}
+		\begin{itemize}
+		\setlength{\itemsep}{0.4cm}
+			\item Approfondissement de nos bases en Python ;
+			\item Découverte en autonomie de la bibliothèque \emph{pygame} ;
+			\item Découverte de méthodes/techniques de développement en groupe ;
+			\item Résultats bien meilleurs que nos espérances !
+		\end{itemize}
+	\end{frame}
 
 \end{document}
