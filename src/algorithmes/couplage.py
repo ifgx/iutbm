@@ -143,6 +143,14 @@ A client is satisfied when he has been given one pizza.'
             errRect.top = 96
             errRect.centerx = self.display.get_rect().width / 2
             self.display.blit(err, errRect)
+
+        if set(self.model.solution) == set(self.model.proposition):
+            congrats = self.font.render("Congratulations! You found the optimal solution.", True, (0, 255, 0) )
+            congratsRect = congrats.get_rect()
+            congratsRect.top = 128
+            congratsRect.centerx = self.display.get_rect().width / 2
+            self.display.blit(congrats, congratsRect)
+        
         
         for couple in self.model.proposition:
             fourmiI = self.fourmis.index(couple[0])
