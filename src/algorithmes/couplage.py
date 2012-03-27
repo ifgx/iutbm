@@ -94,8 +94,11 @@ A client is satisfied when he has been given one pizza.'
                         # check if the fourmi or dessert is not already involved
                         if not self.model.fourmi_dans(fourmi, self.model.proposition):
                             if not self.model.dessert_dans(dessert, self.model.proposition):
-                                # print "Validé la combinaison (", fourmi[0], ",", dessert[0], ")"
-                                self.model.proposition.append((fourmi, dessert))
+                                if dessert in self.model.desserts_de_fourmi(fourmi):
+                                    # print "Validé la combinaison (", fourmi[0], ",", dessert[0], ")"
+                                    self.model.proposition.append((fourmi, dessert))
+                                else:
+                                    self.erreur = fourmi[0] + " does not like this pizza"
                             else:
                                 # print "Le dessert", dessert[0], "est déjà attribué"
                                 self.erreur = "The pizza " + dessert[0] + " is already assigned"
@@ -144,8 +147,8 @@ A client is satisfied when he has been given one pizza.'
             errRect.centerx = self.display.get_rect().width / 2
             self.display.blit(err, errRect)
 
-        if set(self.model.solution) == set(self.model.proposition):
-            congrats = self.font.render("Congratulations! You found the optimal solution.", True, (0, 255, 0) )
+        if len(self.model.proposition) == self.model.max_flow: 
+            congrats = self.font.render("Congratulations! You have found one of the possible solutions.", True, (0, 255, 0) )
             congratsRect = congrats.get_rect()
             congratsRect.top = 128
             congratsRect.centerx = self.display.get_rect().width / 2
@@ -364,3 +367,5 @@ class ModelisationCouplage:
         for i in self.flow:
             if i.passage  == 1 and i.chemin==True:
                 self.solution.append((i.source,i.sink))
+
+        self.max_flow = sum(self.flow[edge] for edge in self.get_edges(source))
