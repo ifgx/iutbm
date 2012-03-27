@@ -15,7 +15,7 @@ class Sac_A_Dos(algo.Algo):
 
         self.text = 'Knapsack problem'
         self.description = 'Given a list of items with their \
-weight in green and their values in red,#try to find the best valuable solution.#\
+weight in red and their values in green,#try to find the best valuable solution.#\
 To put or remove an item from the knapsack, just click it.#\
 When you have the correct solution, the instruction text will turn green.'
 
