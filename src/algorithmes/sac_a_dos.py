@@ -55,7 +55,7 @@ When you have the correct solution, the instruction text will turn green.'
 
     def _update(self, (x, y),button):
         for i in self.ingredients:
-            if button == 1 and i.collidewith(x,y):
+            if button == 1 and i.collidewith(x,y) and not self.show_solution:
                 if(i.inBag):
                     self.weight -= i.weight
                     self.value -= i.value
@@ -77,7 +77,7 @@ When you have the correct solution, the instruction text will turn green.'
 
         #Legend 2 : Win or what colors
         titreRect = titre.get_rect()
-        if(self.value ==  self.optimal_value):
+        if(self.value ==  self.optimal_value) and not self.show_solution:
             text = "Congratulation ! You found the best solution !"
             color = (0,255,0);
             titreRect.top = self.display.get_rect().height / 2
@@ -150,8 +150,10 @@ When you have the correct solution, the instruction text will turn green.'
                         (ingx,c*64+128),
                         (ingx+64,(c+1)*64+128),
                         5)
-        else:
+        else:         
             lob = self.bag.tab[self.bag.numObj][self.bag.weight].content
+            self.weight = sum([obj.weight for obj in lob])
+            self.value = self.optimal_value
             for c,i in enumerate(self.ingredients):
                 if i in lob:
                     ingx = (self._get_corres_pixel(75,0))[0]
@@ -159,6 +161,12 @@ When you have the correct solution, the instruction text will turn green.'
                     ingx = (self._get_corres_pixel(25,0))[0]
 
                 i.draw(self.display,self.font,ingx,c*64+128)
+                #Rayure si trop lourd
+                if i not in lob:
+                    pygame.draw.line(self.display,(255,0,0),
+                        (ingx,c*64+128),
+                        (ingx+64,(c+1)*64+128),
+                        5)
 
 class Object(object):
     '''
