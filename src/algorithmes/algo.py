@@ -49,13 +49,6 @@ class Algo:
             self.display.blit(text, (10, 25 * cpt + 80))
 
 
-        # 
-        text_1 = self.descFont.render("KeyControle", True, (255, 0, 0))
-        rect_1 = text_1.get_rect()
-        rect_1.midtop = self._get_corres_pixel(50,60)
-        self.display.blit(text_1, rect_1)
-
-
         text_1 = self.descFont.render("select", True, (255, 0, 0))
         rect_1 = text_1.get_rect()
         rect_1.center = self._get_corres_pixel(35,70)
