@@ -8,9 +8,9 @@
 %\usecolortheme{whale}
 %\setbeamercolor*{titlelike}{parent=structure}
 
-%\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{footline}[frame number]
 
-\usetheme{}
+\usetheme{Madrid}
 
 \useinnertheme{rectangles}
 \setbeamertemplate{itemize subitem}[triangle]
@@ -44,7 +44,7 @@
 
 \title[Projet tuteuré]{Projet tuteuré}
 \subtitle[Projet Tuteuré]{iutbm, introduction ludique à la recherche opérationnelle}
-\author[]{VOISIN Juelin}
+\author[]{VOISIN Juelin, BENOIT Marine}
 \institute{IUT informatique Belfort}
 \date{26 mars 2012}
 %\logo{\includegraphics[width=2cm]{iut_bm.jpg}}
@@ -74,8 +74,10 @@
 	\begin{frame}{Introduction}
 		\begin{itemize}
 			\setlength{\itemsep}{0.5cm}
-			\item La recherche opérationnelle fait partie de vie de tout les jours;
+			\item La recherche opérationnelle fait partie de la vie de tout les jours;
+			\pause
 			\item Mais beaucoup l'ignorent;
+			\pause
 			\item But du projet : sensibiliser les gens à la recherche
 			    opérationnelle.
 		\end{itemize}
@@ -88,7 +90,7 @@
 				\setlength{\itemsep}{1cm}
 				\item Définir des problèmes pertinents ;
 				\item Implémenter les algorithmes ;
-				\item Enrober le tout de ludisme.
+				\item Présenter le tout sous un jour amusant.
 			\end{itemize}
 		\end{frame}
 \section{Cahier des charges}
@@ -105,17 +107,18 @@
 		\begin{frame}{Cahier des charges - Moyens}
 		    Utiliser des technologies
 			\begin{itemize}
-				\item Libres;
-				\item gratuites
+				\item libres ;
+				\item adaptées ;
+				\item gratuites.
 			\end{itemize}
 		\end{frame}
 \section{Analyse}
 	\subsection{Solutions existantes}
 		\begin{frame}{Analyse - Solutions existantes }
-		\begin{itemize}
-            \item Pas de solutions interactives
-            \item Un vieil applet java moisi
-        \end{itemize}
+		\begin{center}
+		Il n'existe pas de solutions existantes,
+		car le sujet est complexe, et restreint à une élite.
+		\end{center}
 		\end{frame}
 	\subsection{Interface}
 		\begin{frame}{Analyse - Organisation de l'interface}
@@ -123,7 +126,7 @@
 				\setlength{\itemsep}{0.5cm}
 				\item Un menu principal ;
 				\item Présentation de la solution ;
-				\item Réalisations pas-à-pas ;
+				\item Réalisations pas-à-pas.
 			\end{itemize}
 		\end{frame}
 	\subsection{Limites et choix}
@@ -147,7 +150,7 @@
 						\item Voyageur de commerce
 						\item Couplage
 						\item Plus court chemin
-						\item bleh
+						\item Ordonnancement
 					\end{itemize}
 			\end{itemize}
 		\end{frame}
@@ -173,49 +176,73 @@
 
 \section{Réalisation}
     \subsection{Interface}
-        \begin{frame}
-            Menu, toussa
+        \begin{frame}{Interface}
+            \begin{itemize}
+	            \item Menu clair
+	            \item Raccourcis clavier
+	            \item Aide contextuelle
+            \end{itemize}
         \end{frame}
     \subsection{Voyageur de commerce}
-		\begin{frame}{Voyageur de commerce}
-			\begin{itemize}
-				\setlength{\itemsep}{0.3cm}
-				\item Problème NP-Complet
-			\end{itemize}
-		\end{frame}
-		\begin{frame}{Voyageur de commerce}
-			\begin{center}
-				%\includegraphics[width=5cm]{ImageRapport/p1.png}
-			\end{center}
-		\end{frame}
+    \begin{frame}
+        \frametitle{Voyageur de commerce}
+        \begin{columns}
+            \begin{column}{0cm}
+                \includegraphics[width=3cm]{images/wts.jpg}
+            \end{column}
+            \begin{column}{8cm}
+                \begin{description}\itemsep15pt
+                    \item Problème NP-Complet
+                    \item Résolution gloutonne optimisée
+                    \item Résolution en arrière plan
+                \end{description}
+            \end{column}
+        \end{columns}
+    \end{frame}
+
 	\subsection{Plus court chemin}
-		\begin{frame}{Recherche sur Internet}
-			\begin{itemize}
-			\setlength{\itemsep}{0.3cm}
-				\item BLEH
-			\end{itemize}
+		\begin{frame}{Plus court chemin}
+        \begin{columns}
+            \begin{column}{0cm}
+                \includegraphics[width=3cm]{images/metro.jpg}
+            \end{column}
+            \begin{column}{8cm}
+                \begin{description}\itemsep15pt
+                    \item Problème Polynomial
+                    \item Résolution par Dijkstra
+                    \item Résolution en arrière plan
+                \end{description}
+            \end{column}
+        \end{columns}
 		\end{frame}
 	\subsection{Couplage}
-		\begin{frame}{Moteur}
-			\begin{itemize}
-				\item Piloter les deux outils précédents ;
-			\end{itemize}
-			\begin{center}
-				%\includegraphics[width=7cm]{engine.png}
-			\end{center}
+		\begin{frame}{Couplage}
+            TODo
 		\end{frame}
+	\subsection{Ordonnancement}
+		\begin{frame}{Ordonnancement}
+            TODo
+		\end{frame}
+
 \section{Problèmes rencontrés}
 \subsection{Git(hub)}
-	\begin{frame}{Traitement des résultats de \emph{Google}}
+	\begin{frame}{Git(hub)}
+	    Utiliser une forge logicielle n'est pas chose aisée :
 		\begin{itemize}
-		\setlength{\itemsep}{0.8cm}
+		\setlength{\itemsep}{0.5cm}
 			\item Branches ;
+			\item Travail en parallèle ;
 			\item Tickets.
 		\end{itemize}
 	\end{frame}
-\subsection{Humain}
+\subsection{Problèmes humain}
 	\begin{frame}{Humain}
-	    Repartition de la charge de travail
+	    \begin{itemize}
+		\setlength{\itemsep}{1cm}
+	        \item Répartition de la charge de travail
+	        \item Motivations inégales
+	        \item Soucis de communication
+        \end{itemize}
 	\end{frame}
 
 
@@ -224,17 +251,19 @@
 	\begin{frame}{Bilan technique}
 		\begin{itemize}
 		\setlength{\itemsep}{0.3cm}
-			\item Nous n'avons pas regretté nos choix ;
-			\item Le Python permet de développer rapidement et efficacement.
-			\item Les questions de portabilité ne se posent pas ;
+			\item Le Python nous a permis de développer rapidement et efficacement;
+			\item Les questions de portabilité ne se sont pas posées ;
+			\item Le code est propre et documenté.
 		\end{itemize}
 	\end{frame}
 \subsection{Bilan humain}
 	\begin{frame}{Bilan humain}
 		\begin{itemize}
 			\item Travail d'équipe parcellaire ;
+			\item Réunions/échanges
 			\vspace{1cm}
-			\item Absence du tuteur !
+			\item Travail en autonomie/binôme
+			\item Tuteur peu présent
 		\end{itemize}
 	\end{frame}
 \subsection{Bilan pédagogique}
@@ -247,6 +276,8 @@
 			\vspace{1cm}
 			\item Utilisation d'un gestionnaire de version ;
 			\item Documentation du code
+			\item Travail en équipe
+            \item Apprentissage d'algorithme complexe ;
 		\end{itemize}
 	\end{frame}
 \subsection{Perspectives d'évolution}
@@ -256,7 +287,8 @@
 		\setlength{\itemsep}{0.3cm}
 			\item Implémenter plus d'algorithmes ;
 			\item Internationalisation ;
-			\item Peaufiner l'interface.
+			\item Meilleure interface.
+            \item Selecteur de niveau
 		\end{itemize}
 	\end{frame}
 
