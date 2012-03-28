@@ -23,7 +23,7 @@ Use left click to move to another town, however you must be able to do so.#\
 Use right click to undo the last move you did.#\
 When arrived to the green town, your result will be shown \
 on the top of the screen.'
-        self.numSommet = 7 # the number of Sommet in the game
+        self.numSommet = 9 # the number of Sommet in the game
         self.state_game = self.weight = 0 # the state 0 correspond to the usall state of the game
         # the state 1 correspond to the end of the game
         self.next_sommet = [] # next_sommet is a list of the sommet that are avaible from the current sommet
@@ -34,19 +34,22 @@ on the top of the screen.'
         self.end = None
         self.LSommet = []
 
+        #creation of a list of numSommet Sommet, with there possition on the screen
         self.init_LSommet()
 
         # creation of an adjacency matrix 
         self.Matrix = [[float('inf') for i in xrange(self.numSommet)] for i in xrange(self.numSommet)]
-
+    
         minimum_weight = 5 
         maximum_weight = 90 
+        
+        #set the graphe connex
         self.init_connex(minimum_weight,maximum_weight)
+
+        #set more link in the graphe
         self.init_add_link(minimum_weight,maximum_weight)
 
         self.nextSommet(self.start)
-        for i in self.LSommet:
-            i.rect.center = self._get_corres_pixel(i.x,i.y)
 
     def init_LSommet(self):
         # creation of the list of sommet and the coordonate by using a circle
@@ -65,6 +68,9 @@ on the top of the screen.'
         self.end = self.LSommet[- 1]
         self.end.x = 85
         self.end.y = 85
+
+        for i in self.LSommet:
+            i.rect.center = self._get_corres_pixel(i.x,i.y)
         
         self.pizzaiolo = pygame.image.load('ui/pix/pizzaiolo.png').convert_alpha()
 
@@ -96,28 +102,26 @@ on the top of the screen.'
                             self.Matrix[j][i] = weight
                     self.Matrix[i][j] = self.Matrix[j][i]
 
-        # make sure that the is no direct connection between
-        # the start point, and the end point.
+        # make sure that the is no direct connection between the starting point, and the ending point.
         self.Matrix[self.start.indice][self.end.indice]= float('inf')
         self.Matrix[self.end.indice][self.start.indice]= float('inf')
 
 
     def _draw(self):
-
-
-
+        # Legend 1
         titre = self.font.render("Help the pizza deliveryman to deliver pizzas to his customers", True, (0, 255, 0) )
         titreRect = titre.get_rect()
         titreRect.top = 48
         titreRect.centerx = self.display.get_rect().width / 2
         self.display.blit(titre, titreRect)
         
+        #Legend 2
         text = self.font.render("User: " + str(self.weight) + " km " , True, (0,255, 0) )
         textRect = text.get_rect()
         textRect.top = textRect.left = 30
         self.display.blit(text,textRect)
 
-
+        # We first draw the link
         for i in xrange(self.numSommet): 
             [self.drawLien(i, j,theme.road_color) for j in xrange(i) if self.Matrix[i][j] != float('inf')]# if the link between two point is define in the matrix then we draw the link 
 
@@ -148,14 +152,12 @@ on the top of the screen.'
                 tmp = self.selected[i].indice   
             [self.display.blit(i.image, i.rect) for i in self.LSommet]
             self.display.blit(self.pizzaiolo,self.current.rect)
-            # then we draw the weight of the link
-        
 
         pygame.draw.rect(self.display,(255,0,0),self.start.rect,2)
         pygame.draw.rect(self.display,(0,255,0),self.end.rect,2)
 
 
-
+        # if we are at the end of the game or if we are in the solution
         if self.state_game == 1 and not self.show_solution: 
             if (self.weight > self.end.score):
                 text = self.font.render("You did not find the shortest path",True , (0,255,0))
@@ -166,6 +168,7 @@ on the top of the screen.'
             self.display.blit(text,textRect)
 
     def _solve(self):
+        #Dijkstra algorithm
         NotChecked = self.LSommet[:]
         while NotChecked:
             sommet1 = min(NotChecked, key = lambda x : x.visited == False and x.score or float('inf'))
@@ -174,19 +177,25 @@ on the top of the screen.'
             self.misejour(sommet1)
         self.state_game = 1
 
-
+    def misejour(self,sommet1):
+        for i in xrange(self.numSommet):
+            if self.LSommet[i].visited == False:
+                if self.Matrix[sommet1.indice][i]+sommet1.score < self.LSommet[i].score:
+                    self.LSommet[i].score = self.Matrix[sommet1.indice][i]+sommet1.score
+                    self.LSommet[i].previous = sommet1
         
     def _update(self, (x, y),button): 
-        # calculate of the coordinate relative to the screen
+        # calcul the coordinate relative to the screen
         for i in self.LSommet:
             i.rect.center = self._get_corres_pixel(i.x,i.y)
+
         if button == 1:
             for i in self.LSommet: # for all the sommet in the graphe
                 if not self.show_solution and i.rect.collidepoint(x, y) : # if the current position of the mouse is over the rect of the sommet
                     if i in self.next_sommet and i not in self.selected: # if the sommet is one of sommet in list of the next sommet avaible
                         self.weight += self.Matrix[self.current.indice][i.indice] # then you add at the current weight the weight of the selected sommet
-                        self.selected.append(i) 
-                        self.nextSommet(i)
+                        self.selected.append(i) # the current sommet became the selected sommet
+                        self.nextSommet(i) # search for the next sommet we will be able to select
                         self.state_game = 0 # we are in the state 0
                         if i == self.end: # if the sommet is the end we solve the graphe
                             self._solve()
@@ -196,24 +205,18 @@ on the top of the screen.'
                         self.nextSommet(i)
 
 
-        if button == 3:
-            self.state_game = 0
-            if len(self.selected)<=1:
+        if button == 3: # if we right click
+            self.state_game = 0 
+            if len(self.selected)<=1: #if there is one or less element
                 self.selected = []
                 self.weight = 0
                 self.nextSommet(self.start)
-            else:
+            else: # remove the last selected element
                 tmp=self.selected.pop()
                 self.nextSommet(self.selected[-1])
                 self.weight -= self.Matrix[tmp.indice][self.selected[-1].indice]
 
 
-    def misejour(self,sommet1):
-        for i in xrange(self.numSommet):
-            if self.LSommet[i].visited == False:
-                if self.Matrix[sommet1.indice][i]+sommet1.score < self.LSommet[i].score:
-                    self.LSommet[i].score = self.Matrix[sommet1.indice][i]+sommet1.score
-                    self.LSommet[i].previous = sommet1
 
     def drawLien(self,i,j,color):
         start     = self.LSommet[i].rect
