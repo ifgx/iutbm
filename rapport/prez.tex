@@ -1,4 +1,5 @@
-\documentclass{beamer} 
+\documentclass[xcolor=dvipsnames]{beamer}
+
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
 \usepackage[T1]{fontenc}
@@ -8,26 +9,16 @@
 %\usecolortheme{whale}
 %\setbeamercolor*{titlelike}{parent=structure}
 
-\setbeamertemplate{footline}[frame number]
-
 \usetheme{Madrid}
 
 \useinnertheme{rectangles}
 \setbeamertemplate{itemize subitem}[triangle]
 \setbeamertemplate{itemize subsubitem}[circle]
+\setbeamertemplate{navigation symbols}{}
 
-%\usecolortheme[RGB={21, 101, 178}]{structure} 
-
-%\setcounter{tocdepth}{1}
+\usecolortheme[RGB={32, 100, 32}]{structure} 
 
 \AtBeginSection[]{
-	%\begin{frame}{~}
-		%\tableofcontents[current]
-		%\begin{center}
-			%\huge\insertsection
-		%\end{center}
-	%\end{frame}
-	
 	\begin{frame}{Plan}
 		\begin{columns}[t]
 			\begin{column}{5cm}
@@ -40,14 +31,12 @@
 	\end{frame}
 }
 
-
-
 \title[Projet tuteuré]{Projet tuteuré}
 \subtitle[Projet Tuteuré]{iutbm, introduction ludique à la recherche opérationnelle}
-\author[]{VOISIN Julien, BENOIT Marine, NOWINSKI David, ZAMBELLI Cédric, SID Ali, DUROSSIER Florien}
+\author[]{VOISIN Julien, BENOIT Marine, NOWINSKI David, ZAMBELLI Cédric, SID Ali, DUROSSIER Florian}
 \institute{IUT informatique Belfort}
 \date{26 mars 2012}
-%\logo{\includegraphics[width=2cm]{iut_bm.jpg}}
+\logo{\includegraphics[width=2cm]{images/iut_bm.jpg}}
 
 \begin{document}
 
